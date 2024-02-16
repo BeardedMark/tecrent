@@ -1,0 +1,57 @@
+{
+    "title": "Карта сайта",
+    "description": "Описание страницы для мета-тега",
+    "content": "Исследуйте наш сайт с помощью карты сайта. На главной странице вы найдете все о нашей компании, увидите, как мы работаем, познакомитесь с нашими компьютерами и играми. Если у вас есть вопросы, обращайтесь в чат поддержки. Для заказов посетите страницу 'Заказ'. Свяжитесь с нами по указанным контактам на странице 'Контакты'. Приятного путешествия по нашему виртуальному миру!",
+    "routes": [
+        {
+            "title": "Главная",
+            "route": "main",
+            "image": "https://assets.website-files.com/636ff594b73c8dfbd3673fe8/645a47624f50fc1349ddb42c_ai-gaming_bddbee7594b8b8470d7fbeba0bb96d13_2000.jpeg"
+        },
+        {
+            "title": "О компании",
+            "route": "about",
+            "image": "https://img.freepik.com/premium-photo/man-sits-computer-with-computer-screen-showing-man-working-his-computer_950347-4951.jpg"
+        },
+        {
+            "title": "Как мы работаем",
+            "route": "work",
+            "image": "https://img.freepik.com/premium-photo/man-sits-computer-with-gaming-set-up-dark-room_889227-13535.jpg"
+        },
+        {
+            "title": "Аренда сервера",
+            "route": "servers",
+            "image": "https://img.freepik.com/premium-photo/artificial-intelligence-technology-hacker-digital-room-black-hat-hacker-hacking-pc-hacking-room-tech_669273-1179.jpg"
+        },
+        {
+            "title": "Сборка ПК",
+            "route": "assembly",
+            "image": "https://img.freepik.com/premium-photo/gamer-playing-on-desktop-pc-computer-gaming-illustration_691560-5821.jpg?w=2000"
+        },
+        {
+            "title": "Компьютеры",
+            "route": "computers.index",
+            "image": "https://img.freepik.com/premium-photo/shot-gamer-girl-is-sitting-by-pc_665569-1483.jpg"
+        },
+        {
+            "title": "Игры",
+            "route": "games.index",
+            "image": "https://img.freepik.com/premium-photo/computer-gaming-computer-game-table-dark-room-ai_607202-6409.jpg"
+        },
+        {
+            "title": "Чат поддержки",
+            "route": "chat",
+            "image": "https://media.licdn.com/dms/image/D4E12AQEWRaNiT-XgkQ/article-cover_image-shrink_600_2000/0/1690124506736?e=2147483647&v=beta&t=WgeXu8U0vlsPgMrVAqS_ax987qMTc4y-2hBtP1USsKk"
+        },
+        {
+            "title": "Контакты",
+            "route": "contacts",
+            "image": "https://www.analyticsinsight.net/wp-content/uploads/2023/07/game-g5aeaa121f_1280-1-1200x672.jpg"
+        },
+        {
+            "title": "Заказ",
+            "route": "basket.index",
+            "image": "https://img.freepik.com/premium-photo/gamer-playing-desktop-pc-computer-gaming-illustration-commercial-photography_950002-31764.jpg"
+        }
+    ]
+}

@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+// class AuthController extends Controller
+{
+    public function loginForm()
+    {
+        return view('auth.login');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            return redirect()->route('main')->with('success', 'Вход успешно совершен');
+        }
+
+        return back()->withErrors(['email' => 'Неверный email или пароль']);
+    }
+
+    public function registerForm()
+    {
+        return view('auth.register');
+    }
+
+    public function register(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|min:4|unique:users,name|max:255',
+            'email' => 'required|string|email|unique:users,email|max:255|regex:/^[a-zA-Z0-9._-]+@+[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/',
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[A-Z])(?=.*\d).+$/',
+        ], [
+            'name.required' => 'Поле "Наименование" обязательно для заполнения.',
+            'name.unique' => 'Такое "Наименование" уже существует.',
+            'name.min' => 'Поле "Наименование" должно содержать не менее :min символов.',
+            'name.max' => 'Поле "Наименование" не должно превышать :max символов.',
+            'email.required' => 'Поле "Почта" обязательно для заполнения.',
+            'email.email' => 'Поле "Почта" должно быть корректным адресом электронной почты.',
+            'email.unique' => 'Такая "Почта" уже используется.',
+            'email.max' => 'Поле "Почта" не должно превышать :max символов.',
+            'email.regex' => 'Поле "Почта" должно соответствовать маске "---@---.---".',
+            'password.required' => 'Поле "Пароль" обязательно для заполнения.',
+            'password.min' => 'Пароль должен содержать не менее :min символов.',
+            'password.confirmed' => 'Поле "Пароль" и поле "Подтверждение пароля" не совпадают.',
+            'password.regex' => 'Пароль должен содержать минимум 1 заглавную букву и 1 цифру.',
+        ]);
+        
+
+        User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => bcrypt($validatedData['password']),
+        ]);
+
+        return redirect()->route('auth.login')->with('success', 'Регистрация успешно пройдена');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('auth.login')->with('success', 'Выход успешно совершен');
+    }
+}
