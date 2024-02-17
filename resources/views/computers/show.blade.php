@@ -94,8 +94,8 @@
         <section id="description" class="bg-main">
             <div class="container">
                 <div class="fib-section">
-                    <div class="row">
-                        <div class="col">
+                    <div class="row justify-content-center">
+                        <div class="col col-lg-6">
                             <div class="fib fib-col fib-gap-8 fib-center font-center">
                                 {!! $computer->description !!}
                             </div>

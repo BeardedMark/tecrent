@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('requirement_gpu', function (Blueprint $table) {
             $table->comment('Видеокарты для требований');
+            
             $table->id()->comment('Номер');
             
             $table->unsignedBigInteger('requirement_id')->comment('Требование');

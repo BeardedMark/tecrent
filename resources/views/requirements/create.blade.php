@@ -5,8 +5,8 @@
 
 @section('page-content')
     <section id="form">
-        <div class="row">
-            <div class="col">
+        <div class="row justify-content-center">
+            <div class="col col-12 col-md-10 col-lg-8 col-xl-6">
                 <form class="fib fib-col fib-gap-21" method="POST" action="{{ route('requirements.store') }}">
                     @csrf
 
@@ -17,8 +17,6 @@
                                     <label for="game_id">Игра</label>
 
                                     <select id="game_id" name="game_id" class="fib fib-p-8 bord-second bg-main pos-w-100">
-                                        <option value="">нет</option>
-
                                         @foreach ($games as $game)
                                             <option value="{{ $game->id }}"
                                                 @if ($game->id == $gameId) selected @endif>
@@ -141,9 +139,9 @@
                     <div class="row">
                         <div class="col">
                             <div class="fib fib-end">
-                                <a class="fib-button hover-contrast emoji" href="{{ redirect()->back() }}">❎ Отмена</a>
+                                {{-- <a class="fib-button hover-contrast emoji" href="{{ redirect()->back() }}">❎ Отмена</a> --}}
 
-                                <input class="fib-button hover-contrast emoji" type="reset" value="⏮️ Сбросить">
+                                <input class="fib-button hover-second emoji" type="reset" value="⏮️ Сбросить">
                                 <button type="submit" class="fib-button hover-accent emoji">✅ Создать</button>
                             </div>
                         </div>

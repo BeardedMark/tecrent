@@ -24,22 +24,36 @@ class Game extends Model
 
     public function requirements()
     {
-        return $this->hasMany(Requirement::class);
+        if (Auth::user() && Auth::user()->is_admin) {
+            return $this->hasMany(Requirement::class)->withTrashed();
+        } else {
+            return $this->hasMany(Requirement::class);
+        }
     }
+    
 
-    public function computers()
+    public function computers($limit = null)
     {
         $computersId = [];
-        foreach ($this->requirements as $requirement) {
+        $requirements = $this->requirements()->whereNull('deleted_at')->get();
+        foreach ($requirements as $requirement) {
             foreach ($requirement->computers() as $computer) {
                 $computersId[] = $computer->id;
             }
         }
         $computersId = array_unique($computersId);
-        $computers = Computer::whereIn('id', $computersId)->get();
-
+    
+        $query = Computer::whereIn('id', $computersId);
+    
+        if ($limit) {
+            $query->take($limit);
+        }
+    
+        $computers = $query->get();
+    
         return $computers;
     }
+    
 
     public function title()
     {
@@ -49,10 +63,5 @@ class Game extends Model
     public function imageUrl()
     {
         return asset('storage/img/games/' . $this->image);
-    }
-
-    public static function getTableColumns()
-    {
-        return (new self())->fillable;
     }
 }

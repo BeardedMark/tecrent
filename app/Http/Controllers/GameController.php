@@ -70,7 +70,7 @@ class GameController extends Controller
             'commentary' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:1000',
             'content' => 'nullable|string|max:5000',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
 
             'autor' => 'nullable|string|max:255',
             'release' => 'nullable|date',
@@ -81,9 +81,9 @@ class GameController extends Controller
             'commentary.max' => 'Длина комментария не должна превышать :max символов.',
             'description.max' => 'Длина описания не должна превышать :max символов.',
             'content.max' => 'Длина контента не должна превышать :max символов.',
-            'image.image' => 'Загруженный файл должен быть изображением.',
-            'image.mimes' => 'Поддерживаются только следующие форматы изображений: :values.',
-            'image.max' => 'Максимальный размер файла изображения не должен превышать :max КБ.',
+            // 'image.image' => 'Загруженный файл должен быть изображением.',
+            // 'image.mimes' => 'Поддерживаются только следующие форматы изображений: :values.',
+            // 'image.max' => 'Максимальный размер файла изображения не должен превышать :max КБ.',
 
             'autor.max' => 'Длина автора не должна превышать :max символов.',
             'release.date' => 'Поле "Релиз" должно быть датой в формате ГГГГ-ММ-ДД.',
@@ -144,7 +144,8 @@ class GameController extends Controller
             'commentary' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:1000',
             'content' => 'nullable|string|max:5000',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => 'nullable|string|max:255',
+            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
 
             'autor' => 'nullable|string|max:255',
             'release' => 'nullable|date',
@@ -155,9 +156,9 @@ class GameController extends Controller
             'commentary.max' => 'Длина комментария не должна превышать :max символов.',
             'description.max' => 'Длина описания не должна превышать :max символов.',
             'content.max' => 'Длина контента не должна превышать :max символов.',
-            'image.image' => 'Загруженный файл должен быть изображением.',
-            'image.mimes' => 'Поддерживаются только следующие форматы изображений: :values.',
-            'image.max' => 'Максимальный размер файла изображения не должен превышать :max КБ.',
+            // 'image.image' => 'Загруженный файл должен быть изображением.',
+            // 'image.mimes' => 'Поддерживаются только следующие форматы изображений: :values.',
+            // 'image.max' => 'Максимальный размер файла изображения не должен превышать :max КБ.',
 
             'autor.max' => 'Длина автора не должна превышать :max символов.',
             'release.date' => 'Поле "Релиз" должно быть датой в формате ГГГГ-ММ-ДД.',
@@ -165,17 +166,17 @@ class GameController extends Controller
 
         $game->fill($validatedData);
 
-        if ($request->hasFile('image')) {
-            if ($game->image) {
-                Storage::delete('public/img/games/' . $game->image);
-            }
+        // if ($request->hasFile('image')) {
+        //     if ($game->image) {
+        //         Storage::delete('public/img/games/' . $game->image);
+        //     }
 
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/img/games', $imageName);
+        //     $image = $request->file('image');
+        //     $imageName = time() . '.' . $image->getClientOriginalExtension();
+        //     $image->storeAs('public/img/games', $imageName);
 
-            $game->image = $imageName;
-        }
+        //     $game->image = $imageName;
+        // }
 
         $game->save();
 

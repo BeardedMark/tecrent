@@ -47,10 +47,32 @@ class Requirement extends Model
             $cpuPower = $this->cpus()->orderByDesc('power')->first()->power;
         }
 
-        $query->whereHas('gpu', function ($query) use ($gpuPower) {
-            $query->where('power', '>=', $gpuPower);
-        })->whereHas('cpu', function ($query) use ($cpuPower) {
-            $query->where('power', '>=', $cpuPower);
+        // $query->whereHas('gpu', function ($query) use ($gpuPower) {
+        //     $query->where('power', '>=', $gpuPower);
+        // })->whereHas('cpu', function ($query) use ($cpuPower) {
+        //     $query->where('power', '>=', $cpuPower);
+        // });
+
+        
+        $driveRequire = $this->drive_require;
+        $ramRequire = $this->ram_require;
+
+        $query->where(function ($query) use ($driveRequire, $ramRequire, $gpuPower, $cpuPower) {
+            $query->whereHas('gpu', function ($query) use ($gpuPower) {
+                $query->where('power', '>=', $gpuPower);
+            })->orWhereDoesntHave('gpu');
+            
+            $query->whereHas('cpu', function ($query) use ($cpuPower) {
+                $query->where('power', '>=', $cpuPower);
+            })->orWhereDoesntHave('gpu');
+
+            $query->whereHas('drive', function ($query) use ($driveRequire) {
+                $query->where('capacity', '>=', $driveRequire);
+            });
+
+            $query->whereHas('ram', function ($query) use ($ramRequire) {
+                $query->where('capacity', '>=', $ramRequire);
+            });
         });
 
         if ($limit)

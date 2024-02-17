@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('gpus', function (Blueprint $table) {
             $table->comment('Видеокарты');
+            
             $table->id()->comment('Номер');
             $table->string('name')->comment('Наименование');
             $table->string('commentary')->nullable()->comment('Комментарий');

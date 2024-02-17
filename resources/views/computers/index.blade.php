@@ -24,8 +24,8 @@
     <section class="bg-main">
         <div class="container">
             <div class="fib-section fib-center font-center">
-                <div class="row">
-                    <div class="col">
+                <div class="row justify-content-center">
+                    <div class="col col-12 col-md-10 col-lg-8 col-xl-6">
                         <div class="fib fib-col fib-gap-8">
                             <p class="font-size-4">{{ $content['content']}}</p>
                         </div>

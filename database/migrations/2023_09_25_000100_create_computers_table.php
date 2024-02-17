@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('computers', function (Blueprint $table) {
             $table->comment('Компьютеры');
+            
             $table->id()->comment('Номер');
             $table->string('name')->unique()->comment('Наименование');
             $table->string('commentary')->nullable()->comment('Комментарий');

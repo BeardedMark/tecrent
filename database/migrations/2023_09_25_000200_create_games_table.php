@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->comment('Игры');
+            
             $table->id()->comment('Номер');
             $table->string('name')->comment('Наименование');
             $table->string('commentary')->nullable()->comment('Комментарий');

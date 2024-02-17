@@ -60,10 +60,10 @@ class RequirementController extends Controller
      */
     public function create(Request $request)
     {
-        $games = Game::all();
+        $games = Game::withTrashed()->get();
         $gameId = $request->input('game');
 
-        return view('requirements.create', compact('gpus', 'cpus', 'games', 'gameId'));
+        return view('requirements.create', compact('games', 'gameId'));
     }
 
     /**
@@ -130,11 +130,15 @@ class RequirementController extends Controller
     {
         if (Auth::user() && Auth::user()->is_admin) {
             $requirement = Requirement::withTrashed()->find($id);
-            return view('requirements.item', compact('requirement'));
         } else {
             $requirement = Requirement::find($id);
-            return view('requirements.show', compact('requirement'));
         }
+
+        $gpus = Gpu::all();
+        $cpus = Cpu::all();
+        $games = Game::withTrashed()->get();
+
+        return view('requirements.show', compact('requirement', 'gpus', 'cpus', 'games'));
     }
 
     /**
@@ -146,7 +150,7 @@ class RequirementController extends Controller
 
         $gpus = Gpu::all();
         $cpus = Cpu::all();
-        $games = Game::all();
+        $games = Game::withTrashed()->get();
 
         return view('requirements.edit', compact('requirement', 'gpus', 'cpus', 'games'));
     }

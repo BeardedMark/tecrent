@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('rams', function (Blueprint $table) {
             $table->comment('Оперативки');
+            
             $table->id()->comment('Номер');
             $table->string('name')->comment('Наименование');
             $table->string('commentary')->nullable()->comment('Комментарий');

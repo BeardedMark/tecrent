@@ -91,17 +91,21 @@
                         <div class="col">
                             <div class="fib fib-col fib-gap-8 fib-center font-center">
                                 <h2 class="font-size-1 font-bold">Подходящие сборки</h2>
-                                <p class="font-size-5">Найдите подходящуюя для себя конфигурацию</p>
+                                <p class="font-size-5">Наши сборки, которые подходят для запуска этой игры</p>
                             </div>
                         </div>
                     </div>
 
-                    @component('computers.components.list', ['computers' => $game->computers()])
+                    @component('computers.components.list', ['computers' => $game->computers(4)])
                     @endcomponent
 
                     <div class="row justify-content-center">
                         <div class="col col-auto">
-                            <a class="fib-button hover-accent" href="{{ route('computers.index') }}">Все компьютеры »</a>
+                            @if (count($game->computers()) > 4)
+                            <a class="fib-button hover-accent" href="{{ route('computers.index') }}">Всего {{ count($game->computers()) }} подходящих »</a>
+                            @else
+                            <a class="fib-button hover-accent" href="{{ route('computers.index') }}">Все сборки »</a>
+                            @endif
                         </div>
                     </div>
                 </div>

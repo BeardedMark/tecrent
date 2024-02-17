@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Ram extends Model
 {
@@ -24,7 +25,12 @@ class Ram extends Model
     
     public function title()
     {
-        return "$this->manufacturer $this->capacity" . "Gb" . ($this->count ? " x$this->count" : null);
+        $result = "$this->manufacturer $this->capacity" . "Gb" . ($this->count ? " x$this->count" : null);
+
+        if (Auth::user() && Auth::user()->is_admin) {
+            $result = "[id:$this->id] " . $result;
+        }
+        return $result;
     }
 }
 

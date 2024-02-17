@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('requirement_cpu', function (Blueprint $table) {
             $table->comment('Процессоры для требований');
+            
             $table->id()->comment('Номер');
             
             $table->unsignedBigInteger('requirement_id')->comment('Требование');

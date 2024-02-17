@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('cpus', function (Blueprint $table) {
             $table->comment('Процессоры');
+            
             $table->id()->comment('Номер');
             $table->string('name')->comment('Наименование');
             $table->string('commentary')->nullable()->comment('Комментарий');

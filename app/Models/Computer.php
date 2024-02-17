@@ -37,17 +37,10 @@ class Computer extends Model
 
     public function requirements($limit = null)
     {
-        $query = Requirement::query();
+        $query = Requirement::query()->with('gpus', 'cpus');
 
-        $gpuPower = 0;
-        $cpuPower = 0;
-
-        if ($this->gpu) {
-            $gpuPower = $this->gpu->power;
-        }
-        if ($this->cpus) {
-            $cpuPower = $this->cpus->power;
-        }
+        $gpuPower = $this->gpu ? $this->gpu->power : 0;
+        $cpuPower = $this->cpus ? $this->cpus->power : 0;
 
         $query->where(function ($query) use ($gpuPower, $cpuPower) {
             $query->where(function ($query) use ($gpuPower) {
@@ -67,12 +60,33 @@ class Computer extends Model
             });
         });
 
-        if ($limit) {
-            $query->limit($limit);
-        }
+        $driveRequire = $this->drive->capacity;
+        $ramRequire = $this->ram->capacity;
+
+        $query->where(function ($query) use ($driveRequire, $ramRequire) {
+
+            $query->where(function ($query) use ($driveRequire) {
+                $query->where('drive_require', '<=', $driveRequire);
+            });
+
+            $query->where(function ($query) use ($ramRequire) {
+                $query->where('ram_require', '<=', $ramRequire);
+            });
+        });
+
+        // $query->where(function ($query) use ($driveRequire) {
+        //     $query->whereHas('drive_require')->where('drive_require', '<=', $driveRequire);
+        // })->orWhere(function ($query) use ($ramRequire) {
+        //     $query->whereHas('drive_require')->where('drive_require', '<=', $driveRequire);
+        // });
+
+        $query->when($limit, function ($query, $limit) {
+            return $query->limit($limit);
+        });
 
         return $query->get();
     }
+
 
     public function games()
     {

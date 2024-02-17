@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Cpu extends Model
 {
@@ -29,6 +30,11 @@ class Cpu extends Model
     
     public function title()
     {
-        return "$this->manufacturer $this->name" ;
+        $result = "$this->manufacturer $this->name";
+
+        if (Auth::user() && Auth::user()->is_admin) {
+            $result = "[id:$this->id] " . $result . " [🗲$this->power]";
+        }
+        return $result;
     }
 }

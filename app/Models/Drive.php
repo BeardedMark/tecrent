@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Drive extends Model
 {
@@ -24,6 +25,11 @@ class Drive extends Model
 
     public function title()
     {
-        return  ($this->string ? "$this->string " : null) . $this->capacity . "Gb";
+        $result = ($this->type ? "$this->type " : null) . $this->capacity . "Gb";
+
+        if (Auth::user() && Auth::user()->is_admin) {
+            $result = "[id:$this->id] " . $result;
+        }
+        return $result;
     }
 }

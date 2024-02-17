@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('requirements', function (Blueprint $table) {
             $table->comment('Требования');
+            
             $table->id()->comment('Номер');
             $table->string('name')->comment('Наименование');
             $table->string('commentary')->nullable()->comment('Комментарий');
