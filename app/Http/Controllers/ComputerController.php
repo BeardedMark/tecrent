@@ -21,52 +21,17 @@ class ComputerController extends Controller
     public function index(Request $request)
     {
         $computersQuery = Computer::query();
-    
-        // if (Auth::user() && Auth::user()->is_admin) {
-        //     switch ($request->input('trashed')) {
-        //         case 'with':
-        //             $computersQuery->withTrashed();
-        //             break;
-    
-        //         case 'only':
-        //             $computersQuery->onlyTrashed();
-        //             break;
-        //     }
-        // }
-    
-        if ($request->has('gpu')) {
-            $computersQuery->where('gpu_id', $request->input('gpu'));
-        }
-        if ($request->has('cpu')) {
-            $computersQuery->where('cpu_id', $request->input('cpu'));
-        }
-        if ($request->has('ram')) {
-            $computersQuery->where('ram_id', $request->input('ram'));
-        }
-        if ($request->has('drive')) {
-            $computersQuery->where('drive_id', $request->input('drive'));
-        }
-        if ($request->has('search')) {
-            $searchTerm = '%' . $request->input('search') . '%';
-    
-            $computersQuery->where(function ($query) use ($searchTerm) {
-                $query->where('name', 'like', $searchTerm)
-                      ->orWhere('commentary', 'like', $searchTerm)
-                      ->orWhere('description', 'like', $searchTerm)
-                      ->orWhere('content', 'like', $searchTerm);
-            });
-        }
-    
-        $computers = $computersQuery->get();
-    
-        // if (Auth::user() && Auth::user()->is_admin) {
-        //     return view('computers.table', compact('computers'));
-        // } else {
-        //     return view('computers.index', compact('computers'));
-        // }
         
+        if (Auth::user() && Auth::user()->is_admin) {
+            $computers = Computer::withTrashed()->get();
+        } else {
+            $computers = Computer::all();
+        }
+    
+        $games = Game::inRandomOrder()->limit(4)->get();
         $content = json_decode(file_get_contents(storage_path('content/computers.json')), true);
-        return view('computers.index', compact('computers', 'content'));
+
+        return view('computers.index', compact('computers', 'content', 'games'));
     }
     
 
@@ -80,7 +45,7 @@ class ComputerController extends Controller
         $rams = Ram::all();
         $drives = Drive::all();
 
-        return view('computers.form', compact('gpus', 'cpus', 'rams', 'drives'));
+        return view('computers.create', compact('gpus', 'cpus', 'rams', 'drives'));
     }
 
     /**
@@ -132,7 +97,7 @@ class ComputerController extends Controller
 
         $computer->save();
 
-        return redirect()->route('computers.show', compact('computer'))->with('success', "Компьютер №$computer->id успешно создан.");
+        return redirect()->route('computers.edit', compact('computer'))->with('success', "Компьютер №$computer->id успешно создан.");
     }
 
 
@@ -141,7 +106,11 @@ class ComputerController extends Controller
      */
     public function show($id)
     {
-        $computer = Computer::find($id);
+        if (Auth::user() && Auth::user()->is_admin) {
+            $computer = Computer::withTrashed()->find($id);
+        } else {
+            $computer = Computer::findOrFail($id);
+        }
         return view('computers.show', compact('computer'));
     }
 
@@ -157,7 +126,7 @@ class ComputerController extends Controller
         $rams = Ram::all();
         $drives = Drive::all();
 
-        return view('computers.form', compact('computer', 'gpus', 'cpus', 'rams', 'drives'));
+        return view('computers.edit', compact('computer', 'gpus', 'cpus', 'rams', 'drives'));
     }
 
     /**
@@ -172,12 +141,13 @@ class ComputerController extends Controller
             'commentary' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:1000',
             'content' => 'nullable|string|max:5000',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
 
             'price' => 'integer|min:0',
             'gpu_id' => 'nullable|exists:gpus,id',
             'cpu_id' => 'nullable|exists:cpus,id',
             'ram_id' => 'nullable|exists:rams,id',
+            'ram_count' => 'integer|min:1',
             'drive_id' => 'nullable|exists:drives,id',
         ], [
             'name.required' => 'Поле "Наименование" обязательно для заполнения.',
@@ -186,32 +156,33 @@ class ComputerController extends Controller
             'commentary.max' => 'Длина комментария не должна превышать :max символов.',
             'description.max' => 'Длина описания не должна превышать :max символов.',
             'content.max' => 'Длина контента не должна превышать :max символов.',
-            'image.image' => 'Загруженный файл должен быть изображением.',
-            'image.mimes' => 'Поддерживаются только следующие форматы изображений: :values.',
-            'image.max' => 'Максимальный размер файла изображения не должен превышать :max КБ.',
+            // 'image.image' => 'Загруженный файл должен быть изображением.',
+            // 'image.mimes' => 'Поддерживаются только следующие форматы изображений: :values.',
+            // 'image.max' => 'Максимальный размер файла изображения не должен превышать :max КБ.',
             
             'price.integer' => 'Поле "Цена" должно быть целым числом.',
             'price.min' => 'Поле "Цена" должно быть не меньше :min.',
             'gpu_id.exists' => 'Выбранная видеокарта не существует.',
             'cpu_id.exists' => 'Выбранный процессор не существует.',
             'ram_id.exists' => 'Выбранная оперативка не существует.',
+            'ram_count.integer' => 'Поле "Количество оперативной памяти" должно быть целым числом.',
             'drive_id.exists' => 'Выбранный накопитель не существует.',
         ]);
         
 
         $computer->fill($validatedData);
 
-        if ($request->hasFile('image')) {
-            if ($computer->image) {
-                Storage::delete('public/img/computers/' . $computer->image);
-            }
+        // if ($request->hasFile('image')) {
+        //     if ($computer->image) {
+        //         Storage::delete('public/img/computers/' . $computer->image);
+        //     }
 
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/img/computers', $imageName);
+        //     $image = $request->file('image');
+        //     $imageName = time() . '.' . $image->getClientOriginalExtension();
+        //     $image->storeAs('public/img/computers', $imageName);
 
-            $computer->image = $imageName;
-        }
+        //     $computer->image = $imageName;
+        // }
 
         $computer->save();
 
@@ -231,10 +202,10 @@ class ComputerController extends Controller
 
         if ($computer->trashed()) {
             $computer->restore();
-            return redirect()->back()->with('success', "Компьютер №$id успешно восстановлен");
+            return redirect()->route('computers.show', compact('computer'))->with('success', "Компьютер №$id успешно восстановлен");
         } else {
             $computer->delete();
-            return redirect()->back()->with('success', "Компьютер №$id успешно удален");
+            return redirect()->route('computers.show', compact('computer'))->with('success', "Компьютер №$id успешно удален");
         }
     }
 }

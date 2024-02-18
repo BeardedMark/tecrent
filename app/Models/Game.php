@@ -21,6 +21,20 @@ class Game extends Model
         'autor',
         'release',
     ];
+    public function title()
+    {
+        return "$this->name ($this->release, $this->autor)";
+    }
+
+    public function imageUrl()
+    {
+        return asset('storage/img/games/' . $this->image);
+    }
+
+    public function getRandomRecords($limit = 1)
+    {
+        return self::inRandomOrder()->limit($limit)->get();
+    }
 
     public function requirements()
     {
@@ -30,7 +44,7 @@ class Game extends Model
             return $this->hasMany(Requirement::class);
         }
     }
-    
+
 
     public function computers($limit = null)
     {
@@ -42,26 +56,15 @@ class Game extends Model
             }
         }
         $computersId = array_unique($computersId);
-    
+
         $query = Computer::whereIn('id', $computersId);
-    
+
         if ($limit) {
             $query->take($limit);
         }
-    
+
         $computers = $query->get();
-    
+
         return $computers;
-    }
-    
-
-    public function title()
-    {
-        return "$this->name ($this->release, $this->autor)";
-    }
-
-    public function imageUrl()
-    {
-        return asset('storage/img/games/' . $this->image);
     }
 }

@@ -13,15 +13,15 @@
                         href="{{ route('sitemap') }}">🟰</a>
                     <a class="fib-p-13 hover font-size-5 font-bold" id="loadButton" href="{{ route('main') }}"><span
                             class="color-accent">TEC</span>RENT</a>
-                    <a class="fib-p-13 hover font-size-5" href="{{ route('about') }}">О компании</a>
-                    <a class="fib-p-13 hover font-size-5" href="{{ route('work') }}">Как работаем</a>
+                    <a class="fib-p-13 hover font-size-5" href="{{ route('about') }}">О проекте и компании</a>
+                    <a class="fib-p-13 hover font-size-5" href="{{ route('work') }}">Условия работы</a>
                     <a class="fib-p-13 hover font-size-5 d-none d-lg-block"
-                        href="{{ route('servers') }}">Сервера</a>
+                        href="{{ route('servers') }}">Аренда сервера</a>
                     <a class="fib-p-13 hover font-size-5 d-none d-lg-block"
-                        href="{{ route('assembly') }}">Сборка</a>
-                    <a class="fib-p-13 hover font-size-5 d-none d-lg-block" href="{{ route('games.index') }}">Игры</a>
+                        href="{{ route('assembly') }}">Сборка компьютера</a>
+                    <a class="fib-p-13 hover font-size-5 d-none d-lg-block" href="{{ route('games.index') }}">Системные требования</a>
                     <a class="fib-p-13 hover font-size-5 d-none d-lg-block"
-                        href="{{ route('computers.index') }}">Компьютеры</a>
+                        href="{{ route('computers.index') }}">Аренда компьютера</a>
                 </div>
             </div>
 

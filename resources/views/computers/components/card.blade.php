@@ -25,7 +25,7 @@
             @endif
 
             @if ($computer->ram)
-                <p>{{ $computer->ram->title() }}</p>
+                <p>{{ $computer->getRamTitle() }}</p>
             @endif
 
             @if ($computer->drive)

@@ -102,9 +102,9 @@
                     <div class="row justify-content-center">
                         <div class="col col-auto">
                             @if (count($game->computers()) > 4)
-                            <a class="fib-button hover-accent" href="{{ route('computers.index') }}">Всего {{ count($game->computers()) }} подходящих »</a>
+                            <a class="fib-button hover-accent" href="{{ route('computers.index', ['game' => $game->id]) }}">Всего {{ count($game->computers()) }} подходящих »</a>
                             @else
-                            <a class="fib-button hover-accent" href="{{ route('computers.index') }}">Все сборки »</a>
+                            <a class="fib-button hover-accent" href="{{ route('computers.index', ['game' => $game->id]) }}">Все сборки »</a>
                             @endif
                         </div>
                     </div>
@@ -143,6 +143,36 @@
                 </div>
         </section>
     @endif
+
+    
+    <section id="computers">
+        <div class="container">
+            <div class="fib-section">
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <div class="fib fib-col fib-gap-8 fib-center font-center">
+                            <h2 class="font-size-1 font-bold">Другие игры</h2>
+                            <p class="font-size-5">Возможно вы хотите поиграть во что-то другое?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center g-4">
+                    @foreach ($game->getRandomRecords(4) as $game)
+                        <div class="col col-6 col-md-6 col-lg-4 col-xl-3">
+                            @component('games.components.card', ['game' => $game])
+                            @endcomponent
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col col-auto">
+                        <a class="fib-button hover-accent" href="{{ route('games.index') }}">Все игры »</a>
+                    </div>
+                </div>
+            </div>
+    </section>
 
     @if ($game->content)
         <section id="content" class="bg-main">

@@ -1,6 +1,6 @@
 <div class="fib fib-col fib-gap-21 fib-p-34 bg-contrast h-100">
     <div class="fib fib-col">
-        <a href="{{ route('requirements.show', $requirement->id )}}" class="font-size-3 font-bold color-accent link">{{ $requirement->name }}</a>
+        <a href="{{ route('requirements.show', $requirement->id )}}" class="font-size-3 font-bold color-accent link">{{ $requirement->getTitle() }}</a>
     </div>
 
     <div class="fib fib-col fib-gap-13 h-100">
@@ -32,8 +32,8 @@
             <p class="font-size-6 w-100">Оперативная память</p>
 
             <div class="fib fib-col font-end w-100">
-                <a href="#" class="font-size-4 color-accent">{{ $requirement->ram_require }} Gb
-                </a>
+                <p class="font-size-4 color-accent">{{ $requirement->ram_require }} Gb
+                </p>
             </div>
         </div>
 
@@ -69,6 +69,6 @@
         @endif
 
         <a class="fib-button hover-second"
-            href="{{ route('computers.index') }}">{{ $requirement->computers()->count() }} Сборки</a>
+            href="{{ route('computers.index', ['requirement' => $requirement->id]) }}">{{ $requirement->computers()->count() }} Сборки</a>
     </div>
 </div>

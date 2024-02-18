@@ -23,9 +23,9 @@ class Ram extends Model
         return asset('storage/img/rams/' . $this->image);
     }
     
-    public function title()
+    public function getTitle()
     {
-        $result = "$this->manufacturer $this->capacity" . "Gb" . ($this->count ? " x$this->count" : null);
+        $result = $this->manufacturer . " " . $this->capacity . "Gb";
 
         if (Auth::user() && Auth::user()->is_admin) {
             $result = "[id:$this->id] " . $result;

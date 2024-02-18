@@ -24,13 +24,12 @@ return new class extends Migration
             $table->string('manufacturer')->nullable()->comment('Производитель');
             $table->integer('capacity')->comment('Объем');
             $table->string('type')->comment('Тип');
-            $table->integer('count')->comment('Количество')->default(1);
             $table->integer('power')->comment('Мощность')->default(100);
 
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unique(['name', 'capacity', 'type', 'count'], 'unique_name_capacity_type_count');
+            $table->unique(['name', 'capacity', 'type'], 'unique_name_capacity_type');
         });
     }
 

@@ -41,13 +41,17 @@
 
                                         <div class="fib fib-center fib-gap-21">
                                             <a class="link"
-                                                href="{{ route('games.index', ['sort' => 'release', 'direction' => 'desc']) }}">по релизу</a>
+                                                href="{{ route('games.index', ['sort' => 'release', 'direction' => 'desc']) }}">по
+                                                релизу</a>
                                             <a class="link"
-                                                href="{{ route('games.index', ['sort' => 'name', 'direction' => 'asc']) }}">по алфавиту</a>
-                                                <a class="link"
-                                                    href="{{ route('games.index', ['sort' => 'autor', 'direction' => 'asc']) }}">по автору</a>
-                                                    <a class="link"
-                                                        href="{{ route('games.index', ['sort' => 'created_at', 'direction' => 'desc']) }}">по публикации</a>
+                                                href="{{ route('games.index', ['sort' => 'name', 'direction' => 'asc']) }}">по
+                                                алфавиту</a>
+                                            <a class="link"
+                                                href="{{ route('games.index', ['sort' => 'autor', 'direction' => 'asc']) }}">по
+                                                автору</a>
+                                            <a class="link"
+                                                href="{{ route('games.index', ['sort' => 'created_at', 'direction' => 'desc']) }}">по
+                                                публикации</a>
                                         </div>
                                     </div>
                                 </div>
@@ -56,14 +60,8 @@
                     </div>
                 </div>
 
-                <div class="row justify-content-center g-4">
-                    @foreach ($games as $game)
-                        <div class="col col-6 col-md-6 col-lg-4 col-xl-3">
-                            @component('games.components.card', ['game' => $game])
-                            @endcomponent
-                        </div>
-                    @endforeach
-                </div>
+                @component('games.components.list', ['games' => $games])
+                @endcomponent
             </div>
     </section>
 

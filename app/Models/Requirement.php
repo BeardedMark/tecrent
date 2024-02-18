@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Requirement extends Model
 {
@@ -16,6 +17,16 @@ class Requirement extends Model
     // {
     //     return $this->belongsToMany(Game::class);
     // }
+
+    public function getTitle()
+    {
+        $result = "$this->name";
+
+        if (Auth::user() && Auth::user()->is_admin) {
+            $result = "[id:$this->id] " . $result;
+        }
+        return $result;
+    }
 
     public function game()
     {
@@ -41,37 +52,30 @@ class Requirement extends Model
         $cpuPower = 0;
 
         if ($this->gpus()->count() > 0) {
-            $gpuPower = $this->gpus()->orderByDesc('power')->first()->power;
+            $gpuPower = $this->gpus()->orderBy('power')->first()->power;
         }
         if ($this->cpus()->count() > 0) {
-            $cpuPower = $this->cpus()->orderByDesc('power')->first()->power;
+            $cpuPower = $this->cpus()->orderBy('power')->first()->power;
         }
 
-        // $query->whereHas('gpu', function ($query) use ($gpuPower) {
-        //     $query->where('power', '>=', $gpuPower);
-        // })->whereHas('cpu', function ($query) use ($cpuPower) {
-        //     $query->where('power', '>=', $cpuPower);
-        // });
-
-        
         $driveRequire = $this->drive_require;
         $ramRequire = $this->ram_require;
 
         $query->where(function ($query) use ($driveRequire, $ramRequire, $gpuPower, $cpuPower) {
             $query->whereHas('gpu', function ($query) use ($gpuPower) {
                 $query->where('power', '>=', $gpuPower);
-            })->orWhereDoesntHave('gpu');
-            
+            });
+
             $query->whereHas('cpu', function ($query) use ($cpuPower) {
                 $query->where('power', '>=', $cpuPower);
-            })->orWhereDoesntHave('gpu');
+            });
 
             $query->whereHas('drive', function ($query) use ($driveRequire) {
                 $query->where('capacity', '>=', $driveRequire);
             });
 
             $query->whereHas('ram', function ($query) use ($ramRequire) {
-                $query->where('capacity', '>=', $ramRequire);
+                $query->whereRaw('capacity * ram_count >= ?', [$ramRequire]);
             });
         });
 

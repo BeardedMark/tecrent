@@ -8,14 +8,14 @@
 @endsection
 
 @section('content')
-<section class="pos-relative overflow-hidden">
+    <section class="pos-relative overflow-hidden">
 
-    <video class="pos-absolute pos-wallpaper" autoplay muted loop>
-        <source src="{{ asset('video/whitegeomerty.mp4') }}" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+        <video class="pos-absolute pos-wallpaper" autoplay muted loop>
+            <source src="{{ asset('video/whitegeomerty.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
 
-    {{-- <div class="pos-absolute pos-overlay bg-white"></div> --}}
+        {{-- <div class="pos-absolute pos-overlay bg-white"></div> --}}
         <div class="container">
             <div class="fib-section">
                 <div class="row justify-content-center align-items-center g-4">
@@ -24,67 +24,95 @@
                             <h1 class="font-size-1 font-bold color-accent">{{ $computer->name }}</h1>
                             <p class="font-size-4">{{ $computer->comment }}</p>
                             <p class="font-size-large font-bold">{{ $computer->price }} р/д</p>
-                            <div class="fib">
-                                @if ($computer->games()->count() > 0)
-                                    <a class="fib-button hover-contrast" href="#games">Игры</a>
-                                @endif
-                                @if ($computer->description)
-                                    <a class="fib-button hover-contrast" href="#description">Описание</a>
-                                @endif
-                                @if ($computer->content)
-                                    <a class="fib-button hover-contrast" href="#content">Подробности</a>
-                                @endif
 
-                                <form method="POST" action="{{ route('basket.store') }}">
-                                    @csrf
-                                    <input type="text" hidden name="id" id="id" value="{{ $computer->id }}">
-                                    <button class="fib-button hover-accent" type="submit">К заказу</button>
-                                </form>
+                            <div class="fib fib-col fib-gap-8 fib-center">
+                                <div class="fib">
+                                    <form method="POST" action="{{ route('basket.store') }}">
+                                        @csrf
+                                        <input type="text" hidden name="id" id="id"
+                                            value="{{ $computer->id }}">
+                                        <button class="fib-button hover-accent" type="submit">К заказу</button>
+                                    </form>
+
+                                    @if ($computer->games()->count() > 0)
+                                        <a class="fib-button hover-contrast" href="#games">Игры</a>
+                                    @endif
+                                    @if ($computer->description)
+                                        <a class="fib-button hover-contrast" href="#description">Описание</a>
+                                    @endif
+                                    @if ($computer->content)
+                                        <a class="fib-button hover-contrast" href="#content">Подробности</a>
+                                    @endif
+                                </div>
+
+                                @if (Auth::user() && Auth::user()->is_admin)
+                                    <div class="fib">
+                                        <a class="fib-button hover-contrast emoji"
+                                            href="{{ route('computers.edit', compact('computer')) }}">🖍️ Редактировать</a>
+
+                                        <form class="d-inline"
+                                            action="{{ route('computers.destroy', compact('computer')) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="fib-button hover-accent emoji">
+                                                @if (isset($computer->deleted_at))
+                                                    ♻️ Восстановить
+                                                @else
+                                                    ❌ Удалить
+                                                @endif
+                                            </button>
+                                        </form>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
 
-                    <div class="col order-2 order-lg-2 col-12 col-lg-4">
-                        @if ($computer->image)
+                    @if ($computer->image)
+                        <div class="col order-2 order-lg-2 col-12 col-lg-4">
+                            {{-- @if ($computer->image) --}}
                             <img src="{{ asset('storage/img/computers/' . $computer->image) }}">
-                        @else
+                            {{-- @else
                             <div class="fib fib-center pos-h-100 pos-w-100">
                                 <p class="font-size-large emoji color-second">🖥️</p>
                             </div>
-                        @endif
-                    </div>
-
-                    <div class="col order-3 order-lg-3 col-12 col-lg">
-                        <div class="fib fib-col fib-gap-8 font-center">
-                            @if ($computer->gpu)
-                                <div class="fib fib-col">
-                                    <p class="font-size-6">Видеокарта</p>
-                                    <p class="font-size-2 font-bold color-accent">{{ $computer->gpu->title() }}</p>
-                                </div>
-                            @endif
-
-                            @if ($computer->cpu)
-                                <div class="fib fib-col">
-                                    <p class="font-size-6">Процессор</p>
-                                    <p class="font-size-2 font-bold color-accent">{{ $computer->cpu->title() }}</p>
-                                </div>
-                            @endif
-
-                            @if ($computer->ram)
-                                <div class="fib fib-col">
-                                    <p class="font-size-6">Память</p>
-                                    <p class="font-size-2 font-bold color-accent">{{ $computer->ram->title() }} </p>
-                                </div>
-                            @endif
-
-                            @if ($computer->drive)
-                                <div class="fib fib-col">
-                                    <p class="font-size-6">Накопитель</p>
-                                    <p class="font-size-2 font-bold color-accent">{{ $computer->drive->title() }}</p>
-                                </div>
-                            @endif
+                            @endif --}}
                         </div>
-                    </div>
+                    @endif
+
+                    @if ($computer->gpu || $computer->cpu || $computer->ram || $computer->drive)
+                        <div class="col order-3 order-lg-3 col-12 col-lg">
+                            <div class="fib fib-col fib-gap-8 font-center">
+                                @if ($computer->gpu)
+                                    <div class="fib fib-col">
+                                        <p class="font-size-6">Видеокарта</p>
+                                        <p class="font-size-2 font-bold color-accent">{{ $computer->gpu->title() }}</p>
+                                    </div>
+                                @endif
+
+                                @if ($computer->cpu)
+                                    <div class="fib fib-col">
+                                        <p class="font-size-6">Процессор</p>
+                                        <p class="font-size-2 font-bold color-accent">{{ $computer->cpu->title() }}</p>
+                                    </div>
+                                @endif
+
+                                @if ($computer->ram)
+                                    <div class="fib fib-col">
+                                        <p class="font-size-6">Память</p>
+                                        <p class="font-size-2 font-bold color-accent">{{ $computer->getRamTitle() }}</p>
+                                    </div>
+                                @endif
+
+                                @if ($computer->drive)
+                                    <div class="fib fib-col">
+                                        <p class="font-size-6">Накопитель</p>
+                                        <p class="font-size-2 font-bold color-accent">{{ $computer->drive->title() }}</p>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -123,7 +151,7 @@
                     </div>
 
                     <div class="row justify-content-center g-4">
-                        @foreach ($computer->games() as $game)
+                        @foreach ($computer->games(4) as $game)
                             <div class="col col-6 col-md-6 col-lg-4 col-xl-3">
                                 @component('games.components.card', ['game' => $game])
                                 @endcomponent
@@ -133,7 +161,7 @@
 
                     <div class="row justify-content-center">
                         <div class="col col-auto">
-                            <a class="fib-button hover-accent" href="{{ route('games.index') }}">Все игры »</a>
+                            <a class="fib-button hover-accent" href="{{ route('games.index', ['computer' => $computer->id]) }}">Все {{ $computer->games()->count() }} подходящие игры »</a>
                         </div>
                     </div>
                 </div>

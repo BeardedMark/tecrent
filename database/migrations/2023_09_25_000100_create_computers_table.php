@@ -21,7 +21,8 @@ return new class extends Migration
             $table->text('content')->nullable()->comment('Контент');
             $table->string('image')->nullable()->comment('Изображение');
 
-            $table->integer('price')->default(0)->comment('Цена');;
+            $table->integer('price')->default(0)->comment('Цена');
+            $table->integer('ram_count')->default(1)->comment('Количество оперативки');
 
             $table->unsignedBigInteger('gpu_id')->nullable()->comment('Видеокарта');
             $table->foreign('gpu_id')->references('id')->on('gpus')->onDelete('SET NULL');

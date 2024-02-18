@@ -12,6 +12,13 @@
                         <div class="fib fib-col fib-gap-8 fib-center font-center">
                             <h2 class="font-size-1 font-bold">{{ $content['title'] }}</h2>
                             <p class="font-size-5">{{ $content['description'] }}</p>
+
+                            @if (Auth::user() && Auth::user()->is_admin)
+                                <div class="fib fib-center">
+                                    <a class="fib-button hover-contrast emoji" href="{{ route('computers.create') }}">➕
+                                        Добавить</a>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -29,6 +36,35 @@
                         <div class="fib fib-col fib-gap-8">
                             <p class="font-size-4">{{ $content['content']}}</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    
+    <section id="computers">
+        <div class="container">
+            <div class="fib-section">
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <div class="fib fib-col fib-gap-8 fib-center font-center">
+                            <h2 class="font-size-1 font-bold">Другие игры</h2>
+                            <p class="font-size-5">Возможно вы хотите поиграть во что-то другое?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center g-4">
+                    @foreach ($games as $game)
+                        <div class="col col-6 col-md-6 col-lg-4 col-xl-3">
+                            @component('games.components.card', ['game' => $game])
+                            @endcomponent
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col col-auto">
+                        <a class="fib-button hover-accent" href="{{ route('games.index') }}">Все игры »</a>
                     </div>
                 </div>
             </div>

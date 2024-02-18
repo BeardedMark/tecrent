@@ -121,6 +121,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="fib fib-end">
+                                <a class="fib-button hover-contrast emoji" href="{{ url()->previous() }}">❎ Отмена</a>
                                 <input class="fib-button hover-second emoji" type="reset" value="⏮️ Сбросить">
                                 <button type="submit" class="fib-button hover-accent emoji">✅ Сохранить</button>
                             </div>

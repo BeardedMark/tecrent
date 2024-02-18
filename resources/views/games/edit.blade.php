@@ -6,13 +6,13 @@
 @section('page-content')
     <section id="form">
         <div class="row justify-content-center">
-            <div class="col col-6">
+            <div class="col">
                 <form class="fib fib-col fib-gap-21" method="POST" action="{{ route('games.update', compact('game')) }}">
                     @csrf
                     @method('PUT')
 
                     <div class="row">
-                        <div class="col">
+                        <div class="col col-12 col-lg-6">
                             <div class="fib fib-col fib-gap-13">
                                 <div class="fib fib-col">
                                     <label for="name">Наименование</label>
@@ -43,24 +43,6 @@
                                 </div>
 
                                 <div class="fib fib-col">
-                                    <label for="autor">Автор</label>
-                                    <input type="text" id="autor" name="autor"
-                                        class="fib fib-p-8 bord-second bg-main pos-w-100"
-                                        value="{{ $game->autor ?: '' }}" />
-
-                                    <p class="font-size-6 color-second">кому принадлежат права</p>
-                                </div>
-
-                                <div class="fib fib-col">
-                                    <label for="release">Дата релиза</label>
-                                    <input type="date" id="release" name="release"
-                                        class="fib fib-p-8 bord-second bg-main pos-w-100"
-                                        value="{{ $game->release ?: '' }}" />
-
-                                    <p class="font-size-6 color-second">дата выхода игры</p>
-                                </div>
-
-                                <div class="fib fib-col">
                                     <label for="content">Контент</label>
                                     <textarea class="fib fib-p-8 bord-second bg-main pos-w-100" id="content" name="content" rows="4">{{ $game->content ?: '' }}</textarea>
                                     <script>
@@ -77,6 +59,28 @@
                                         value="{{ $game->commentary ?: '' }}" />
 
                                     <p class="font-size-6 color-second">заметка об игре</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col col-12 col-lg-6">
+                            <div class="fib fib-col fib-gap-13">
+                                <div class="fib fib-col">
+                                    <label for="autor">Автор</label>
+                                    <input type="text" id="autor" name="autor"
+                                        class="fib fib-p-8 bord-second bg-main pos-w-100"
+                                        value="{{ $game->autor ?: '' }}" />
+
+                                    <p class="font-size-6 color-second">кому принадлежат права</p>
+                                </div>
+
+                                <div class="fib fib-col">
+                                    <label for="release">Дата релиза</label>
+                                    <input type="date" id="release" name="release"
+                                        class="fib fib-p-8 bord-second bg-main pos-w-100"
+                                        value="{{ $game->release ?: '' }}" />
+
+                                    <p class="font-size-6 color-second">дата выхода игры</p>
                                 </div>
                                 
                                 {{-- <div class="fib fib-col fib-gap-5">
@@ -111,11 +115,12 @@
                             </div>
                         </div>
                     </div>
+                    
 
                     <div class="row">
                         <div class="col">
                             <div class="fib fib-end">
-                                <a class="fib-button hover-contrast emoji" href="{{ redirect()->back() }}">❎ Отмена</a>
+                                <a class="fib-button hover-contrast emoji" href="{{ url()->previous() }}">❎ Отмена</a>
 
                                 
                                 <input class="fib-button hover-contrast emoji" type="reset" value="⏮️ Сбросить">

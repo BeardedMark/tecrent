@@ -48,6 +48,12 @@ class GameController extends Controller
                 }
             }
         }
+
+        if ($request->has('computer')) {
+            $computerId = $request->input('computer');
+            $computer = Computer::findOrFail($computerId);
+            $games = $computer->games();
+        }
     
         return view('games.index', compact('games', 'content'));
     }
