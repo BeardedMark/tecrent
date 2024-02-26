@@ -72,8 +72,8 @@
                     <div class="col col-2">
                         <div class="fib fib-col fib-gap-8">
                             <div class="fib fib-col fib-py-13 frame bg-main">
-                                <a class="fib-button hover emoji" href="{{ route('admin', Auth::user()->id) }}">👑
-                                    Adminboard</a>
+                                {{-- <a class="fib-button hover emoji" href="{{ route('admin', Auth::user()->id) }}">👑
+                                    Adminboard</a> --}}
                                 <a class="fib-button hover emoji" href="{{ route('tables.index') }}">🗃️
                                     Database</a>
                                 <a class="fib-button hover emoji" href="{{ route('backups.index') }}">📦

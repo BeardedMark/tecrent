@@ -13,35 +13,9 @@ class GpuController extends Controller
      */
     public function index(Request $request)
     {
-        $gpusQuery = Gpu::query();
+        $gpus = $this->getFiltered($request);
         
-        switch ($request->input('trashed')) {
-            case 'with':
-                $gpusQuery->withTrashed();
-                break;
-
-            case 'only':
-                $gpusQuery->onlyTrashed();
-                break;
-        }
-        
-        if ($request->has('search')) {
-            $searchTerm = '%' . $request->input('search') . '%';
-    
-            $gpusQuery->where(function ($query) use ($searchTerm) {
-                $query->where('name', 'like', $searchTerm)
-                      ->orWhere('commentary', 'like', $searchTerm)
-                      ->orWhere('description', 'like', $searchTerm)
-                      ->orWhere('content', 'like', $searchTerm);
-            });
-        }
-    
-        $gpus = Gpu::all();//$gpusQuery->get();
-        
-        // return view('gpus.table', compact('gpus'));
-        return response()->json([
-            'view' => view('gpus.components.list', compact('gpus'))->render(),
-        ]);
+        return view('gpus.index', compact('gpus'));
     }
 
     /**
@@ -186,5 +160,42 @@ class GpuController extends Controller
             $gpu->delete();
             return redirect()->back()->with('success', 'Видеокарта успешно удалена');
         }
+    }
+
+    public function list(Request $request)
+    {
+        $gpus = $this->getFiltered($request);
+        
+        return response()->json([
+            'view' => view('gpus.components.list', compact('gpus'))->render(),
+        ]);
+    }
+    
+    private function getFiltered(Request $request)
+    {
+        $gpusQuery = Gpu::query();
+        
+        switch ($request->input('trashed')) {
+            case 'with':
+                $gpusQuery->withTrashed();
+                break;
+
+            case 'only':
+                $gpusQuery->onlyTrashed();
+                break;
+        }
+        
+        if ($request->has('search')) {
+            $searchTerm = '%' . $request->input('search') . '%';
+    
+            $gpusQuery->where(function ($query) use ($searchTerm) {
+                $query->where('name', 'like', $searchTerm)
+                      ->orWhere('commentary', 'like', $searchTerm)
+                      ->orWhere('description', 'like', $searchTerm)
+                      ->orWhere('content', 'like', $searchTerm);
+            });
+        }
+
+        return $gpusQuery->get();
     }
 }

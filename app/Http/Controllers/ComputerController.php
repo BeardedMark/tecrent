@@ -8,6 +8,7 @@ use App\Models\Gpu;
 use App\Models\Cpu;
 use App\Models\Ram;
 use App\Models\Drive;
+use App\Models\Requirement;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -27,8 +28,15 @@ class ComputerController extends Controller
         } else {
             $computers = Computer::all();
         }
+
+        if ($request->has('requirement')) {
+            $requirementId = $request->input('requirement');
+            $requirement = Requirement::findOrFail($requirementId);
+            $computers = $requirement->computers();
+        }
     
         $games = Game::inRandomOrder()->limit(4)->get();
+        
         $content = json_decode(file_get_contents(storage_path('content/computers.json')), true);
 
         return view('computers.index', compact('computers', 'content', 'games'));
@@ -142,6 +150,7 @@ class ComputerController extends Controller
             'description' => 'nullable|string|max:1000',
             'content' => 'nullable|string|max:5000',
             // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => 'nullable',
 
             'price' => 'integer|min:0',
             'gpu_id' => 'nullable|exists:gpus,id',

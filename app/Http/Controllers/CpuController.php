@@ -13,6 +13,12 @@ class CpuController extends Controller
      */
     public function index(Request $request)
     {
+        $gpus = $this->getFiltered($request);
+        
+        return view('gpus.index', compact('gpus'));
+
+
+
         $cpusQuery = Cpu::query();
         
         switch ($request->input('trashed')) {
@@ -183,5 +189,42 @@ class CpuController extends Controller
             $cpu->delete();
             return redirect()->back()->with('success', 'Процессор успешно удален');
         }
+    }
+    
+    public function list(Request $request)
+    {
+        $cpus = $this->getFiltered($request);
+        
+        return response()->json([
+            'view' => view('cpus.components.list', compact('cpus'))->render(),
+        ]);
+    }
+    
+    private function getFiltered(Request $request)
+    {
+        $query = Cpu::query();
+        
+        switch ($request->input('trashed')) {
+            case 'with':
+                $query->withTrashed();
+                break;
+
+            case 'only':
+                $query->onlyTrashed();
+                break;
+        }
+        
+        if ($request->has('search')) {
+            $searchTerm = '%' . $request->input('search') . '%';
+    
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('name', 'like', $searchTerm)
+                      ->orWhere('commentary', 'like', $searchTerm)
+                      ->orWhere('description', 'like', $searchTerm)
+                      ->orWhere('content', 'like', $searchTerm);
+            });
+        }
+
+        return $query->get();
     }
 }

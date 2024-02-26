@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\GpuController;
+use App\Http\Controllers\CpuController;
 use App\Http\Controllers\RequirementController;
 
 use App\Http\Controllers\DataBase\AuthController;
@@ -17,6 +18,30 @@ use App\Http\Controllers\DataBase\ItemController;
 use App\Http\Controllers\DataBase\ContentController;
 use App\Http\Controllers\DataBase\BackupController;
 use App\Http\Controllers\DataBase\ConnectorController;
+
+
+// Страницы без контроллеров
+Route::view('/', 'main')->name('main');
+Route::view('/about', 'about')->name('about');
+Route::view('/contacts', 'contacts')->name('contacts');
+Route::view('/work', 'work')->name('work');
+Route::view('/menu', 'sitemap')->name('sitemap');
+Route::view('/assembly', 'assembly')->name('assembly');
+Route::view('/servers', 'servers')->name('servers');
+
+// Редиеркты
+Route::redirect('/chat', 'https://crm.dnlmarket.ru/online/tecrent', 301)->name('chat');
+
+// Ресурсные страницы
+Route::resource('basket', BasketController::class);
+Route::resource('computers', ComputerController::class);
+Route::get('games/list',[GameController::class, 'list'])->name('games.list');
+Route::resource('games', GameController::class);
+Route::get('gpus/list',[GpuController::class, 'list'])->name('gpus.list');
+Route::resource('gpus', GpuController::class);
+Route::get('cpus/list',[CpuController::class, 'list'])->name('cpus.list');
+Route::resource('cpus', CpuController::class);
+
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'loginForm'])->name('auth.login');
@@ -30,9 +55,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/users', UserController::class)->only(['show']);
 });
 
-// Route::get('/backups/restore/{fileName}', [BackupController::class, 'restoreBackup'])->name('backup.restore');
-// Route::resource('/backups', BackupController::class);
-
 Route::middleware(['admin'])->group(function () {
     Route::get('/backups/restore/{fileName}', [BackupController::class, 'restoreBackup'])->name('backup.restore');
     Route::get('/backups/download/{fileName}', [BackupController::class, 'downloadBackup'])->name('backups.download');
@@ -44,10 +66,11 @@ Route::middleware(['admin'])->group(function () {
     Route::resource('/users', UserController::class)->except(['show']);
     Route::resource('/content', ContentController::class);
     
-    Route::resource('games', GameController::class);
     Route::resource('requirements', RequirementController::class);
-    Route::resource('gpus', GpuController::class);
-
+    Route::resource('computers', ComputerController::class)->except(['show', 'index']);
+    Route::resource('games', GameController::class)->except(['show', 'index']);
+    Route::resource('gpus', GpuController::class)->except(['show', 'index']);
+    Route::resource('cpus', CpuController::class)->except(['show', 'index']);
 
     Route::resource('/tables', TableController::class);
     Route::prefix('/tables')->group(function () {
@@ -67,23 +90,6 @@ Route::middleware(['admin'])->group(function () {
         });
     });
 });
-
-// Страницы без контроллеров
-Route::view('/', 'main')->name('main');
-Route::view('/about', 'about')->name('about');
-Route::view('/contacts', 'contacts')->name('contacts');
-Route::view('/work', 'work')->name('work');
-Route::view('/menu', 'sitemap')->name('sitemap');
-Route::view('/assembly', 'assembly')->name('assembly');
-Route::view('/servers', 'servers')->name('servers');
-
-// Редиеркты
-Route::redirect('/chat', 'https://crm.dnlmarket.ru/online/tecrent', 301)->name('chat');
-
-// Ресурсные страницы
-Route::resource('basket', BasketController::class);
-Route::resource('computers', ComputerController::class);
-Route::resource('games', GameController::class)->only(['show', 'index']);
 
 // Почтовые сообщения
 // Route::post('/mail/sendCart', 'CartController@sendCart')->name('cart.send');

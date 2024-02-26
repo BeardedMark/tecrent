@@ -1,4 +1,4 @@
-<div class="fib fib-col fib-center fib-p-34 fib-gap-13 frame bg-main pos-h-100">
+<div class="fib fib-col fib-center fib-p-34 fib-gap-13 frame bg-main pos-h-100 @if ($computer->deleted_at) @endif">
 
     <a class="pos-rectangle pos-w-100 pos-relative" href="{{ route('computers.show', $computer->id) }}">
         @if ($computer->image)

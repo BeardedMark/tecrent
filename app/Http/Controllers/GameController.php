@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Game;
 use App\Models\Computer;
+use App\Models\Gpu;
+use App\Models\Cpu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -16,45 +18,9 @@ class GameController extends Controller
      */
     public function index(Request $request)
     {
-        if (Auth::user() && Auth::user()->is_admin) {
-            $games = Game::withTrashed()->get();
-        } else {
-            $games = Game::all();
-        }
-        
+        $games = $this->getFiltered($request);
         $content = json_decode(file_get_contents(storage_path('content/games.json')), true);
 
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $games = $games->filter(function ($game) use ($search) {
-                $fillable = $game->getFillable();
-                foreach ($fillable as $field) {
-                    if (Str::contains($game->$field, $search)) {
-                        return true;
-                    }
-                }
-                return false;
-            });
-        }
-
-        if ($request->has('sort')) {
-            $sort = $request->input('sort');
-            if ($request->has('direction')) {
-                $direction = $request->input('direction');
-                if ($direction === 'asc') {
-                    $games = $games->sortBy($sort);
-                } else if ($direction === 'desc') {
-                    $games = $games->sortByDesc($sort);
-                }
-            }
-        }
-
-        if ($request->has('computer')) {
-            $computerId = $request->input('computer');
-            $computer = Computer::findOrFail($computerId);
-            $games = $computer->games();
-        }
-    
         return view('games.index', compact('games', 'content'));
     }
 
@@ -212,5 +178,95 @@ class GameController extends Controller
             $game->delete();
             return redirect()->route('games.show', $id)->with('success', 'Игра успешно удалена');
         }
+    }
+
+    public function list(Request $request)
+    {
+        $games = $this->getFiltered($request);
+
+        return response()->json([
+            'view' => view('games.components.list', compact('games'))->render(),
+        ]);
+    }
+
+    private function getFiltered(Request $request)
+    {
+        $games = Game::query();
+
+        if (Auth::user() && Auth::user()->is_admin) {
+            $games->withTrashed();
+        }
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $games = $games->filter(function ($game) use ($search) {
+                $fillable = $game->getFillable();
+                foreach ($fillable as $field) {
+                    if (Str::contains($game->$field, $search)) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
+
+        if ($request->has('sort')) {
+            $sort = $request->input('sort');
+            if ($request->has('direction')) {
+                $direction = $request->input('direction');
+                if ($direction === 'asc') {
+                    $games = $games->sortBy($sort);
+                } else if ($direction === 'desc') {
+                    $games = $games->sortByDesc($sort);
+                }
+            }
+        }
+
+        if ($request->has('computer')) {
+            $computerId = $request->input('computer');
+            $computer = Computer::findOrFail($computerId);
+            $games = $computer->games();
+        }
+
+        if ($request->has('gpu_id')) {
+            $gpuId = $request->input('gpu_id');
+            $gpu = Gpu::find($gpuId);
+            if ($gpu) {
+                $gpuPower = $gpu->power;
+
+                $games = $games->whereHas('requirements', function ($games) use ($gpuPower) {
+                    $games->where(function ($games) use ($gpuPower) {
+                        $games = $games->whereHas('gpus', function ($query) use ($gpuPower) {
+                            $query->where('power', '<=', $gpuPower);
+                        });
+                    });
+                });
+            }
+        }
+
+        if ($request->has('cpu_id')) {
+            $cpuId = $request->input('cpu_id');
+            $cpu = Cpu::find($cpuId);
+            if ($cpu) {
+                $cpuPower = $cpu->power;
+
+                $games = $games->whereHas('requirements', function ($games) use ($cpuPower) {
+                    $games->where(function ($games) use ($cpuPower) {
+                        $games = $games->whereHas('cpus', function ($query) use ($cpuPower) {
+                            $query->where('power', '<=', $cpuPower);
+                        });
+                    });
+                });
+            }
+        }
+
+        if ($request->has('limit')) {
+            $limit = $request->input('limit');
+            $games = $games->limit($limit);
+        }
+
+        
+
+        return $games->get();
     }
 }
