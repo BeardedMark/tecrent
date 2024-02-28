@@ -1,10 +1,6 @@
-@php
-    $content = json_decode(file_get_contents(storage_path('content/contacts.json')), true);
-@endphp
-
 @extends('layouts.app')
-@section('title', $content['title'] . ' : ' . $content['description'])
-@section('desctiption', $content['description'])
+@section('title', $data->title . ' : ' . $data->description)
+@section('desctiption', $data->description)
 
 @section('content')
     <section>
@@ -13,19 +9,19 @@
                 <div class="row">
                     <div class="col">
                         <div class="fib fib-col fib-gap-8 fib-center font-center">
-                            <h2 class="font-size-1 font-bold">{{ $content['title'] }}</h2>
-                            <p class="font-size-5">{{ $content['description'] }}</p>
+                            <h2 class="font-size-1 font-bold">{{ $data->title }}</h2>
+                            <p class="font-size-5">{{ $data->description }}</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="row justify-content-center g-4">
-                    @foreach ($content['link'] as $func)
+                    @foreach ($data->link as $func)
                         <div class="col col-6 col-lg">
-                            <a class="fib fib-col fib-p-21 fib-gap-8 fib-center frame font-center bg-main link" href="{{ $func['href'] }}">
-                                <p class="font-size-1 emoji">{{ $func['icon'] }}</p>
-                                <p class="font-size-2 color-accent">{{ $func['title'] }}</p>
-                                <p class="font-size-5">{{ $func['description'] }}</p>
+                            <a class="fib fib-col fib-p-21 fib-gap-8 fib-center frame font-center bg-main link" href="{{ $func->href }}">
+                                <p class="font-size-1 emoji">{{ $func->icon }}</p>
+                                <p class="font-size-2 color-accent">{{ $func->title }}</p>
+                                <p class="font-size-5">{{ $func->description }}</p>
                             </a>
                         </div>
                     @endforeach
@@ -46,10 +42,10 @@
                     <div class="col">
                         <div class="fib fib-col fib-gap-8 fib-center font-center color-main">
                             <div class="row justify-content-center g-3">
-                                @foreach ($content['citys'] as $city)
-                                    @if ($city['status'])
+                                @foreach ($data->citys as $city)
+                                    @if ($city->status)
                                         <div class="col col-auto">
-                                            <p class="font-size-1 font-bold">{{ $city['name'] }}</p>
+                                            <p class="font-size-1 font-bold">{{ $city->name }}</p>
                                         </div>
                                     @endif
                                 @endforeach
@@ -58,10 +54,10 @@
                             <p class="font-size-5">уже открыли, и планируем</p>
 
                             <div class="row justify-content-center g-3">
-                                @foreach ($content['citys'] as $city)
-                                    @if (!$city['status'])
+                                @foreach ($data->citys as $city)
+                                    @if (!$city->status)
                                         <div class="col col-auto">
-                                            <p class="font-size-2 font-bold">{{ $city['name'] }}</p>
+                                            <p class="font-size-2 font-bold">{{ $city->name }}</p>
                                         </div>
                                     @endif
                                 @endforeach

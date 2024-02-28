@@ -10,15 +10,15 @@
             <div class="col">
                 <div class="fib">
                     <a class="fib-p-13 hover-accent font-size-5 d-none d-lg-block emoji"
-                        href="{{ route('sitemap') }}">🟰</a>
-                    <a class="fib-p-13 hover font-size-5 font-bold" id="loadButton" href="{{ route('main') }}"><span
+                        href="{{ route('pages.menu') }}">🟰</a>
+                    <a class="fib-p-13 hover font-size-5 font-bold" id="loadButton" href="{{ route('pages.main') }}"><span
                             class="color-accent">TEC</span>RENT</a>
-                    <a class="fib-p-13 hover font-size-5" href="{{ route('about') }}">О проекте и компании</a>
-                    <a class="fib-p-13 hover font-size-5" href="{{ route('work') }}">Условия работы</a>
+                    <a class="fib-p-13 hover font-size-5" href="{{ route('pages.about') }}">О проекте и компании</a>
+                    <a class="fib-p-13 hover font-size-5" href="{{ route('pages.work') }}">Условия работы</a>
                     <a class="fib-p-13 hover font-size-5 d-none d-lg-block"
-                        href="{{ route('servers') }}">Аренда сервера</a>
+                        href="{{ route('pages.servers') }}">Аренда сервера</a>
                     <a class="fib-p-13 hover font-size-5 d-none d-lg-block"
-                        href="{{ route('assembly') }}">Сборка компьютера</a>
+                        href="{{ route('pages.assembly') }}">Сборка компьютера</a>
                     <a class="fib-p-13 hover font-size-5 d-none d-lg-block" href="{{ route('games.index') }}">Системные требования</a>
                     <a class="fib-p-13 hover font-size-5 d-none d-lg-block"
                         href="{{ route('computers.index') }}">Аренда компьютера</a>
@@ -29,7 +29,7 @@
                 <div class="fib">
                     <a class="fib-p-13 hover font-size-5 d-none d-lg-block" href="{{ route('chat') }}"
                         target="_blank">Чат</a>
-                    <a class="fib-p-13 hover font-size-5 d-none d-lg-block" href="{{ route('contacts') }}">Контакты</a>
+                    <a class="fib-p-13 hover font-size-5 d-none d-lg-block" href="{{ route('pages.contacts') }}">Контакты</a>
                     <a class="fib-p-13 hover font-size-5" href="tel:89139208405">+7 (913) <span
                             class="color-accent">920-84-05</span></a>
                     @if (Auth::user())
@@ -77,7 +77,7 @@
 <section class="fixed-bottom">
     <div class="bg-main bord-top d-block d-lg-none">
         <div class="fib">
-            <a class=" fib-col fib-p-13 hover font-center" href="{{ route('sitemap') }}">
+            <a class=" fib-col fib-p-13 hover font-center" href="{{ route('pages.menu') }}">
                 <p class="font-size-2 emoji">🧭</p>
                 <p class="font-size-6">Меню</p>
             </a>

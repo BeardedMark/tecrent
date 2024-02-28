@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->route('main')->with('success', 'Вход успешно совершен');
+            return redirect()->route('pages.main')->with('success', 'Вход успешно совершен');
         }
 
         return back()->withErrors(['email' => 'Неверный email или пароль']);

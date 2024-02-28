@@ -8,6 +8,7 @@ use App\Http\Controllers\BasketController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\GpuController;
 use App\Http\Controllers\CpuController;
 use App\Http\Controllers\RequirementController;
@@ -20,14 +21,13 @@ use App\Http\Controllers\DataBase\BackupController;
 use App\Http\Controllers\DataBase\ConnectorController;
 
 
-// Страницы без контроллеров
-Route::view('/', 'main')->name('main');
-Route::view('/about', 'about')->name('about');
-Route::view('/contacts', 'contacts')->name('contacts');
-Route::view('/work', 'work')->name('work');
-Route::view('/menu', 'sitemap')->name('sitemap');
-Route::view('/assembly', 'assembly')->name('assembly');
-Route::view('/servers', 'servers')->name('servers');
+Route::get('/',[PageController::class, 'main'])->name('pages.main');
+Route::get('about',[PageController::class, 'about'])->name('pages.about');
+Route::get('contacts',[PageController::class, 'contacts'])->name('pages.contacts');
+Route::get('work',[PageController::class, 'work'])->name('pages.work');
+Route::get('assembly',[PageController::class, 'assembly'])->name('pages.assembly');
+Route::get('servers',[PageController::class, 'servers'])->name('pages.servers');
+Route::get('menu',[PageController::class, 'menu'])->name('pages.menu');
 
 // Редиеркты
 Route::redirect('/chat', 'https://crm.dnlmarket.ru/online/tecrent', 301)->name('chat');

@@ -21,7 +21,7 @@ class BasketController extends Controller
             $cardSumm += Computer::find($id)->price;
         }
 
-        return view('basket', ['cartItems' => $cartItems, 'cardSumm' => $cardSumm]);
+        return view('pages.basket', ['cartItems' => $cartItems, 'cardSumm' => $cardSumm]);
     }
 
 
@@ -181,7 +181,7 @@ class BasketController extends Controller
         });
 
         return redirect()
-            ->route('main')
+            ->route('pages.main')
             ->with('success', 'Письмо отправлено на ' . $request->input('email'));
     }
 

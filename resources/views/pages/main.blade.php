@@ -1,10 +1,6 @@
-@php
-    $content = json_decode(file_get_contents(storage_path('content/main.json')), true);
-@endphp
-
 @extends('layouts.app')
-@section('title', $content['title'] . ' : ' . $content['description'])
-@section('desctiption', $content['description'])
+@section('title', $data->title . ' : ' . $data->description)
+@section('desctiption', $data->description)
 
 @section('content')
 
@@ -26,7 +22,7 @@
                     <div class="col">
                         <div class="fib fib-col fib-gap-8 fib-center font-center color-main">
                             <p class="font-size-large font-bold"><span class="color-accent">TEC</span>RENT</p>
-                            <h1 class="font-size-4">{{ $content['description'] }}</h1>
+                            <h1 class="font-size-4">{{ $data->description }}</h1>
                         </div>
                     </div>
                 </div>
@@ -48,19 +44,19 @@
                 <div class="row">
                     <div class="col">
                         <div class="fib fib-col fib-gap-8 fib-center font-center">
-                            <h2 class="font-size-1 font-bold">{{ $content['sections']['service']['title'] }}</h2>
-                            <p class="font-size-5">{{ $content['sections']['service']['description'] }}</p>
+                            <h2 class="font-size-1 font-bold">{{ $data->sections->service->title }}</h2>
+                            <p class="font-size-5">{{ $data->sections->service->description }}</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="row justify-content-center g-4">
-                    @foreach ($content['sections']['service']['content'] as $func)
+                    @foreach ($data->sections->service->content as $func)
                         <div class="col col-6 col-lg-3">
                             <div class="fib fib-col fib-p-21 fib-gap-8 fib-center frame font-center bg-main pos-h-100">
-                                <p class="font-size-1 emoji">{{ $func['icon'] }}</p>
-                                <p class="font-size-2 color-accent">{{ $func['title'] }}</p>
-                                <p class="font-size-5">{{ $func['description'] }}</p>
+                                <p class="font-size-1 emoji">{{ $func->icon }}</p>
+                                <p class="font-size-2 color-accent">{{ $func->title }}</p>
+                                <p class="font-size-5">{{ $func->description }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -68,7 +64,7 @@
 
                 <div class="row justify-content-center">
                     <div class="col col-auto">
-                        <a class="fib-button hover-contrast" href="{{ route('work') }}">О компании »</a>
+                        <a class="fib-button hover-contrast" href="{{ route('pages.work') }}">О компании »</a>
                     </div>
                 </div>
             </div>
@@ -88,19 +84,19 @@
                 <div class="row">
                     <div class="col">
                         <div class="fib fib-col fib-gap-8 fib-center font-center color-main">
-                            <h2 class="font-size-1 font-bold">{{ $content['sections']['game']['title'] }}</h2>
-                            <p class="font-size-5">{{ $content['sections']['game']['description'] }}</p>
+                            <h2 class="font-size-1 font-bold">{{ $data->sections->game->title }}</h2>
+                            <p class="font-size-5">{{ $data->sections->game->description }}</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="row justify-content-center g-4">
-                    @foreach ($content['sections']['game']['content'] as $func)
+                    @foreach ($data->sections->game->content as $func)
                         <div class="col col-6 col-lg-3">
                             <div class="fib fib-col fib-p-21 fib-gap-8 fib-center font-center hover-contrast pos-h-10">
-                                <p class="font-size-1 emoji color-accent">{{ $func['icon'] }}</p>
-                                <p class="font-size-2">{{ $func['title'] }}</p>
-                                <p class="font-size-5">{{ $func['description'] }}</p>
+                                <p class="font-size-1 emoji color-accent">{{ $func->icon }}</p>
+                                <p class="font-size-2">{{ $func->title }}</p>
+                                <p class="font-size-5">{{ $func->description }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -127,20 +123,20 @@
                 <div class="row">
                     <div class="col">
                         <div class="fib fib-col fib-gap-8 fib-center font-center">
-                            <h2 class="font-size-1 font-bold">{{ $content['sections']['work']['title'] }}</h2>
-                            <p class="font-size-5">{{ $content['sections']['work']['description'] }}</p>
+                            <h2 class="font-size-1 font-bold">{{ $data->sections->work->title }}</h2>
+                            <p class="font-size-5">{{ $data->sections->work->description }}</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="row justify-content-center g-4">
-                    @foreach ($content['sections']['work']['content'] as $func)
+                    @foreach ($data->sections->work->content as $func)
                         <div class="col col-6 col-lg-3">
                             <div
                                 class="fib fib-col fib-p-21 fib-gap-8 fib-center font-center hover bg-main bord-second pos-h-100">
-                                <p class="font-size-1 emoji color-accent">{{ $func['icon'] }}</p>
-                                <p class="font-size-2">{{ $func['title'] }}</p>
-                                <p class="font-size-5">{{ $func['description'] }}</p>
+                                <p class="font-size-1 emoji color-accent">{{ $func->icon }}</p>
+                                <p class="font-size-2">{{ $func->title }}</p>
+                                <p class="font-size-5">{{ $func->description }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -163,18 +159,18 @@
                 <div class="row">
                     <div class="col">
                         <div class="fib fib-col fib-gap-8 fib-center font-center">
-                            <h2 class="font-size-1 font-bold">{{ $content['sections']['statistic']['title'] }}</h2>
-                            <p class="font-size-5">{{ $content['sections']['statistic']['description'] }}</p>
+                            <h2 class="font-size-1 font-bold">{{ $data->sections->statistic->title }}</h2>
+                            <p class="font-size-5">{{ $data->sections->statistic->description }}</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="row justify-content-center g-4">
-                    @foreach ($content['sections']['statistic']['content'] as $func)
+                    @foreach ($data->sections->statistic->content as $func)
                         <div class="col col-6 col-lg-3">
                             <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
-                                <p class="font-size-large color-accent">{{ $func['count'] }}</p>
-                                <p class="font-size-5">{{ $func['description'] }}</p>
+                                <p class="font-size-large color-accent">{{ $func->count }}</p>
+                                <p class="font-size-5">{{ $func->description }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -197,18 +193,18 @@
                 <div class="row">
                     <div class="col">
                         <div class="fib fib-col fib-gap-8 fib-center font-center">
-                            <h2 class="font-size-1 font-bold">{{ $content['sections']['promo']['title'] }}</h2>
-                            <p class="font-size-5">{{ $content['sections']['promo']['description'] }}</p>
+                            <h2 class="font-size-1 font-bold">{{ $data->sections->promo->title }}</h2>
+                            <p class="font-size-5">{{ $data->sections->promo->description }}</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="row justify-content-center g-4">
-                    @foreach ($content['sections']['promo']['content'] as $func)
+                    @foreach ($data->sections->promo->content as $func)
                         <div class="col col-6 col-lg-4">
                             <div class="fib fib-col fib-p-21 fib-gap-8 fib-center frame font-center bg-main pos-h-100">
-                                <p class="font-size-1 font-bold color-accent">{{ $func['title'] }}</p>
-                                <p class="font-size-5">{{ $func['description'] }}</p>
+                                <p class="font-size-1 font-bold color-accent">{{ $func->title }}</p>
+                                <p class="font-size-5">{{ $func->description }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -216,7 +212,7 @@
 
                 {{-- <div class="row justify-content-center">
                     <div class="col col-auto">
-                        <a class="fib-button hover-contrast" href="{{ route('contacts') }}">Все акции »</a>
+                        <a class="fib-button hover-contrast" href="{{ route('pages.contacts') }}">Все акции »</a>
                     </div>
                 </div> --}}
             </div>
@@ -231,19 +227,19 @@
                 <div class="row">
                     <div class="col">
                         <div class="fib fib-col fib-gap-8 fib-center font-center">
-                            <h2 class="font-size-1 font-bold">{{ $content['sections']['feedback']['title'] }}</h2>
-                            <p class="font-size-5">{{ $content['sections']['feedback']['description'] }}</p>
+                            <h2 class="font-size-1 font-bold">{{ $data->sections->feedback->title }}</h2>
+                            <p class="font-size-5">{{ $data->sections->feedback->description }}</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="row justify-content-center gy-4">
-                    @foreach ($content['sections']['feedback']['content'] as $func)
+                    @foreach ($data->sections->feedback->content as $func)
                         <div class="col col-6 col-lg-3">
                             <div class="fib fib-col fib-p-21 fib-gap-8 fib-center frame font-center pos-h-100">
-                                <p class="font-size-large emoji">{{ $func['icon'] }}</p>
-                                <p class="font-size-3 color-accent">{{ $func['name'] }}</p>
-                                <p class="font-size-5">{{ $func['commentary'] }}</p>
+                                <p class="font-size-large emoji">{{ $func->icon }}</p>
+                                <p class="font-size-3 color-accent">{{ $func->name }}</p>
+                                <p class="font-size-5">{{ $func->commentary }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -251,7 +247,7 @@
 
                 {{-- <div class="row justify-content-center">
                     <div class="col col-auto">
-                        <a class="fib-button hover-contrast" href="{{ route('work') }}">Все отзывы »</a>
+                        <a class="fib-button hover-contrast" href="{{ route('pages.work') }}">Все отзывы »</a>
                     </div>
                 </div> --}}
             </div>
@@ -266,19 +262,19 @@
                 <div class="row">
                     <div class="col">
                         <div class="fib fib-col fib-gap-8 fib-center font-center">
-                            <h2 class="font-size-1 font-bold">{{ $content['sections']['feature']['title'] }}</h2>
-                            <p class="font-size-5">{{ $content['sections']['feature']['description'] }}</p>
+                            <h2 class="font-size-1 font-bold">{{ $data->sections->feature->title }}</h2>
+                            <p class="font-size-5">{{ $data->sections->feature->description }}</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="row justify-content-center g-4">
-                    @foreach ($content['sections']['feature']['content'] as $func)
+                    @foreach ($data->sections->feature->content as $func)
                         <div class="col col-6 col-lg-3">
                             <div class="fib fib-col fib-p-21 fib-gap-8 fib-center frame font-center bord-second pos-h-100">
-                                <p class="font-size-1 emoji">{{ $func['icon'] }}</p>
-                                <p class="font-size-2 color-accent">{{ $func['title'] }}</p>
-                                <p class="font-size-5">{{ $func['description'] }}</p>
+                                <p class="font-size-1 emoji">{{ $func->icon }}</p>
+                                <p class="font-size-2 color-accent">{{ $func->title }}</p>
+                                <p class="font-size-5">{{ $func->description }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -286,7 +282,7 @@
 
                 <div class="row justify-content-center">
                     <div class="col col-auto">
-                        <a class="fib-button hover-contrast" href="{{ route('work') }}">Как мы работаем »</a>
+                        <a class="fib-button hover-contrast" href="{{ route('pages.work') }}">Как мы работаем »</a>
                     </div>
                 </div>
             </div>
@@ -307,17 +303,17 @@
                     <div class="col">
                         <div class="fib fib-col fib-gap-8 fib-center font-center color-main">
                             <div class="row justify-content-center g-3">
-                                @foreach ($content['sections']['citys']['open'] as $city)
+                                @foreach ($data->sections->citys->open as $city)
                                     <div class="col col-auto">
                                         <p class="font-size-1 font-bold">{{ $city }}</p>
                                     </div>
                                 @endforeach
                             </div>
 
-                            <p class="font-size-5">{{ $content['sections']['citys']['description'] }}</p>
+                            <p class="font-size-5">{{ $data->sections->citys->description }}</p>
 
                             <div class="row justify-content-center g-3">
-                                @foreach ($content['sections']['citys']['close'] as $city)
+                                @foreach ($data->sections->citys->close as $city)
                                     <div class="col col-auto">
                                         <p class="font-size-2 font-bold">{{ $city }}</p>
                                     </div>
@@ -329,7 +325,7 @@
 
                 <div class="row justify-content-center">
                     <div class="col col-auto">
-                        <a class="fib-button hover-second" href="{{ route('contacts') }}">Наши контакты »</a>
+                        <a class="fib-button hover-second" href="{{ route('pages.contacts') }}">Наши контакты »</a>
                     </div>
                 </div>
             </div>
@@ -344,19 +340,19 @@
                 <div class="row">
                     <div class="col">
                         <div class="fib fib-col fib-gap-8 fib-center font-center">
-                            <h2 class="font-size-1 font-bold">{{ $content['sections']['faq']['title'] }}</h2>
-                            <p class="font-size-5">{{ $content['sections']['faq']['description'] }}</p>
+                            <h2 class="font-size-1 font-bold">{{ $data->sections->faq->title }}</h2>
+                            <p class="font-size-5">{{ $data->sections->faq->description }}</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="row justify-content-center g-4">
-                    @foreach ($content['sections']['faq']['content'] as $question)
+                    @foreach ($data->sections->faq->content as $question)
                         <div class="col col-12 col-lg-4">
                             <div
                                 class="fib fib-col fib-p-21 fib-gap-8 fib-center pos-h-100 hover-second bord-second font-center">
-                                <p class="font-size-3">{{ $question['question'] }}</p>
-                                <p class="font-size-4">{{ $question['answer'] }}</p>
+                                <p class="font-size-3">{{ $question->question }}</p>
+                                <p class="font-size-4">{{ $question->answer }}</p>
                             </div>
                         </div>
                     @endforeach
