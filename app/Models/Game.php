@@ -21,9 +21,15 @@ class Game extends Model
         'autor',
         'release',
     ];
-    public function title()
+    public function getTitle()
     {
-        return "$this->name ($this->release, $this->autor)";
+        $result = "$this->name";
+
+        if (Auth::user() && Auth::user()->is_admin) {
+            $result = "[id:$this->id] " . $result . " ($this->release, $this->autor)";
+        }
+        
+        return $result;
     }
 
     public function imageUrl()

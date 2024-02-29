@@ -23,7 +23,7 @@ class Drive extends Model
         return asset('storage/img/drives/' . $this->image);
     }
 
-    public function title()
+    public function getTitle()
     {
         $result = ($this->type ? "$this->type " : null) . $this->capacity . "Gb";
 

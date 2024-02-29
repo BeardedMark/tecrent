@@ -83,7 +83,7 @@
                                         @foreach ($gpus as $gpu)
                                             <option value="{{ $gpu->id }}"
                                                 @if ($gpu == $computer->gpu) selected @endif>
-                                                {{ $gpu->title() }}</option>
+                                                {{ $gpu->getTitle() }}</option>
                                         @endforeach
                                     </select>
 
@@ -98,7 +98,7 @@
                                         @foreach ($cpus as $cpu)
                                             <option value="{{ $cpu->id }}"
                                                 @if ($cpu == $computer->cpu) selected @endif>
-                                                {{ $cpu->title() }}</option>
+                                                {{ $cpu->getTitle() }}</option>
                                         @endforeach
                                     </select>
 
@@ -139,7 +139,7 @@
                                         @foreach ($drives as $drive)
                                             <option value="{{ $drive->id }}"
                                                 @if ($drive == $computer->drive) selected @endif>
-                                                {{ $drive->title() }}</option>
+                                                {{ $drive->getTitle() }}</option>
                                         @endforeach
                                     </select>
 

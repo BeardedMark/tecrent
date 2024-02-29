@@ -47,7 +47,7 @@ class AuthController extends Controller
             Auth::attempt(['name' => $user->name, 'password' => $validatedData['password']]) ||
             Auth::attempt(['email' => $user->email, 'password' => $validatedData['password']])
         ) {
-            return redirect()->route('main', $user)->with('success', 'Добро пожаловать в свой аккаунт, ' . $user->name . '!');
+            return redirect()->route('pages.main', $user)->with('success', 'Добро пожаловать в свой аккаунт, ' . $user->name . '!');
         }
 
         return back()->withErrors('Неверный пароль');

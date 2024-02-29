@@ -21,7 +21,7 @@
                                         @foreach ($games as $game)
                                             <option value="{{ $game->id }}"
                                                 @if ($game->id == $requirement->game_id) selected @endif>
-                                                {{ $game->title() }}
+                                                {{ $game->getTitle() }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -95,7 +95,7 @@
                                     <select  id="gpus" class="fib fib-p-8 bord-second bg-main w-100" name="gpus[]" multiple style="height: 200px">
                                         @foreach ($gpus as $gpu)
                                             <option value="{{ $gpu->id }}" @if (in_array($gpu->id, $requirement->gpus->pluck('id')->toArray())) selected @endif>
-                                                {{ $gpu->title() }}</option>
+                                                {{ $gpu->getTitle() }}</option>
                                         @endforeach
                                     </select>
 
@@ -108,7 +108,7 @@
                                     <select  id="cpus" class="fib fib-p-8 bord-second bg-main w-100" name="cpus[]" multiple style="height: 200px">
                                         @foreach ($cpus as $cpu)
                                             <option value="{{ $cpu->id }}" @if (in_array($cpu->id, $requirement->cpus->pluck('id')->toArray())) selected @endif>
-                                                {{ $cpu->title() }}</option>
+                                                {{ $cpu->getTitle() }}</option>
                                         @endforeach
                                     </select>
 

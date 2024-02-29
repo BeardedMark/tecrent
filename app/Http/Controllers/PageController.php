@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Gpu;
+use App\Models\Cpu;
+use App\Models\Game;
+use App\Models\Computer;
 
 class PageController extends Controller
 {
@@ -15,7 +19,8 @@ class PageController extends Controller
     public function about()
     {
         $data = $this->getData('about');
-        return view('pages.about', compact('data'));
+        $employees = $this->getData('collections/employees');
+        return view('pages.about', compact('data', 'employees'));
     }
 
     public function contacts()
@@ -33,13 +38,19 @@ class PageController extends Controller
     public function assembly()
     {
         $data = $this->getData('assembly');
-        return view('pages.assembly', compact('data'));
+        $gpus = Gpu::all();
+        $cpus = Cpu::all();
+        $computers = Computer::query()->limit(4)->get();
+
+        return view('pages.assembly', compact('data', 'gpus', 'cpus', 'computers'));
     }
 
     public function servers()
     {
         $data = $this->getData('servers');
-        return view('pages.servers', compact('data'));
+        $games = Game::query()->limit(4)->get();
+        
+        return view('pages.servers', compact('data', 'games'));
     }
 
     public function menu()

@@ -17,11 +17,11 @@
 
         <div class="fib fib-col font-size-6 font-center pos-h-100">
             @if ($computer->gpu)
-                <p>{{ $computer->gpu->title() }}</p>
+                <p>{{ $computer->gpu->getTitle() }}</p>
             @endif
 
             @if ($computer->cpu)
-                <p>{{ $computer->cpu->title() }}</p>
+                <p>{{ $computer->cpu->getTitle() }}</p>
             @endif
 
             @if ($computer->ram)
@@ -29,7 +29,7 @@
             @endif
 
             @if ($computer->drive)
-                <p>{{ $computer->drive->title() }}</p>
+                <p>{{ $computer->drive->getTitle() }}</p>
             @endif
         </div>
 

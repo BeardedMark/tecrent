@@ -28,13 +28,13 @@ class Cpu extends Model
         return asset('storage/img/cpus/' . $this->image);
     }
     
-    public function title()
+    public function getTitle()
     {
         $result = "$this->manufacturer $this->name";
 
         if (Auth::user() && Auth::user()->is_admin) {
             $result = "[id:$this->id] " . $result . " [🗲$this->power]";
         }
-        return $result;
+        return $result . " [🗲$this->power]";
     }
 }

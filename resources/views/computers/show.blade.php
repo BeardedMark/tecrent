@@ -86,14 +86,14 @@
                                 @if ($computer->gpu)
                                     <div class="fib fib-col">
                                         <p class="font-size-6">Видеокарта</p>
-                                        <p class="font-size-2 font-bold color-accent">{{ $computer->gpu->title() }}</p>
+                                        <p class="font-size-2 font-bold color-accent">{{ $computer->gpu->getTitle() }}</p>
                                     </div>
                                 @endif
 
                                 @if ($computer->cpu)
                                     <div class="fib fib-col">
                                         <p class="font-size-6">Процессор</p>
-                                        <p class="font-size-2 font-bold color-accent">{{ $computer->cpu->title() }}</p>
+                                        <p class="font-size-2 font-bold color-accent">{{ $computer->cpu->getTitle() }}</p>
                                     </div>
                                 @endif
 
@@ -107,7 +107,7 @@
                                 @if ($computer->drive)
                                     <div class="fib fib-col">
                                         <p class="font-size-6">Накопитель</p>
-                                        <p class="font-size-2 font-bold color-accent">{{ $computer->drive->title() }}</p>
+                                        <p class="font-size-2 font-bold color-accent">{{ $computer->drive->getTitle() }}</p>
                                     </div>
                                 @endif
                             </div>

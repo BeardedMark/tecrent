@@ -14,6 +14,11 @@ class Computer extends Model
 
     protected $guarded = [];
 
+    public function getTitle()
+    {
+        return $this->name;
+    }
+
     public function gpu()
     {
         return $this->belongsTo(Gpu::class);

@@ -47,7 +47,7 @@
                 <div class="row justify-content-center">
                     <div class="col">
                         <div class="fib fib-col fib-gap-8 fib-center font-center">
-                            <h2 class="font-size-1 font-bold">Другие игры</h2>
+                            <h2 class="font-size-1 font-bold">Подобрать по системным требованиям</h2>
                             <p class="font-size-5">Возможно вы хотите поиграть во что-то другое?</p>
                         </div>
                     </div>
@@ -58,6 +58,8 @@
                         <div class="col col-6 col-md-6 col-lg-4 col-xl-3">
                             @component('games.components.card', ['game' => $game])
                             @endcomponent
+
+                            <p class="font-size-6 font-center fib-p-21">Аренда компьютера для {{ $game->getTitle() }}</p>
                         </div>
                     @endforeach
                 </div>

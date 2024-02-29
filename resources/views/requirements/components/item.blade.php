@@ -10,7 +10,7 @@
 
                 <div class="fib fib-col font-end w-100">
                     @foreach ($requirement->gpus as $gpu)
-                        <p class="font-size-4 color-accent">{{ $gpu->title() }}</p>
+                        <p class="font-size-4 color-accent">{{ $gpu->getTitle() }}</p>
                     @endforeach
                 </div>
             </div>
@@ -22,7 +22,7 @@
 
                 <div class="fib fib-col font-end w-100">
                     @foreach ($requirement->cpus as $cpu)
-                        <p class="font-size-4 color-accent">{{ $cpu->title() }}</p>
+                        <p class="font-size-4 color-accent">{{ $cpu->getTitle() }}</p>
                     @endforeach
                 </div>
             </div>

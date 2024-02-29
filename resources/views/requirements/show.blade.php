@@ -11,7 +11,7 @@
                     <select class="fib fib-p-8 bord-second bg-main w-100" name="gpus[]" multiple>
                         @foreach ($gpus as $gpu)
                             <option value="{{ $gpu->id }}" @if (in_array($gpu->id, $requirement->gpus->pluck('id')->toArray())) selected @endif>
-                                {{ $gpu->title() }}</option>
+                                {{ $gpu->getTitle() }}</option>
                         @endforeach
                     </select>
                 </div>

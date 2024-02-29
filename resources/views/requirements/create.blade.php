@@ -20,7 +20,7 @@
                                         @foreach ($games as $game)
                                             <option value="{{ $game->id }}"
                                                 @if ($game->id == $gameId) selected @endif>
-                                                {{ $game->title() }}
+                                                {{ $game->getTitle() }}
                                             </option>
                                         @endforeach
                                     </select>

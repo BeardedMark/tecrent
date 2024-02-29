@@ -13,23 +13,25 @@
                         href="{{ route('pages.menu') }}">🟰</a>
                     <a class="fib-p-13 hover font-size-5 font-bold" id="loadButton" href="{{ route('pages.main') }}"><span
                             class="color-accent">TEC</span>RENT</a>
-                    <a class="fib-p-13 hover font-size-5" href="{{ route('pages.about') }}">О проекте и компании</a>
-                    <a class="fib-p-13 hover font-size-5" href="{{ route('pages.work') }}">Условия работы</a>
-                    <a class="fib-p-13 hover font-size-5 d-none d-lg-block"
-                        href="{{ route('pages.servers') }}">Аренда сервера</a>
-                    <a class="fib-p-13 hover font-size-5 d-none d-lg-block"
-                        href="{{ route('pages.assembly') }}">Сборка компьютера</a>
-                    <a class="fib-p-13 hover font-size-5 d-none d-lg-block" href="{{ route('games.index') }}">Системные требования</a>
-                    <a class="fib-p-13 hover font-size-5 d-none d-lg-block"
-                        href="{{ route('computers.index') }}">Аренда компьютера</a>
+                    <a class="fib-p-13 hover font-size-5" href="{{ route('pages.about') }}">О нас и проекте</a>
+                    <a class="fib-p-13 hover font-size-5" href="{{ route('pages.work') }}">Как мы работаем</a>
+                    <a class="fib-p-13 hover font-size-5 d-none d-lg-block" href="{{ route('pages.servers') }}">Аренда
+                        сервера</a>
+                    <a class="fib-p-13 hover font-size-5 d-none d-lg-block" href="{{ route('pages.assembly') }}">Сборка
+                        компьютера</a>
+                    <a class="fib-p-13 hover font-size-5 d-none d-lg-block" href="{{ route('games.index') }}">Системные
+                        требования</a>
+                    <a class="fib-p-13 hover font-size-5 d-none d-lg-block" href="{{ route('computers.index') }}">Аренда
+                        компьютера</a>
                 </div>
             </div>
 
             <div class="col-auto">
                 <div class="fib">
-                    <a class="fib-p-13 hover font-size-5 d-none d-lg-block" href="{{ route('chat') }}"
-                        target="_blank">Чат</a>
-                    <a class="fib-p-13 hover font-size-5 d-none d-lg-block" href="{{ route('pages.contacts') }}">Контакты</a>
+                    {{-- <a class="fib-p-13 hover font-size-5 d-none d-lg-block" href="{{ route('chat') }}"
+                        target="_blank">Чат</a> --}}
+                    <a class="fib-p-13 hover font-size-5 d-none d-lg-block"
+                        href="{{ route('pages.contacts') }}">Контакты</a>
                     <a class="fib-p-13 hover font-size-5" href="tel:89139208405">+7 (913) <span
                             class="color-accent">920-84-05</span></a>
                     @if (Auth::user())
@@ -49,15 +51,18 @@
 
     <div class="fib fib-col pos-w-100 pos-absolute color-main font-size-6">
         @if (Auth::user() && Auth::user()->is_admin && session('log'))
-            <p class="fib-px-13 fib-py-8 bg-contrast font-center"><span class="emoji">⏺️</span> {{ session('log') }}</p>
+            <p class="fib-px-13 fib-py-8 bg-contrast font-center"><span class="emoji">⏺️</span> {{ session('log') }}
+            </p>
         @endif
 
         @if (session('success'))
-            <p class="fib-px-13 fib-py-8 bg-success font-center"><span class="emoji">✅</span> {{ session('success') }}</p>
+            <p class="fib-px-13 fib-py-8 bg-success font-center"><span class="emoji">✅</span> {{ session('success') }}
+            </p>
         @endif
 
         @if (session('warning'))
-            <p class="fib-px-13 fib-py-8 bg-warning font-center"><span class="emoji">ℹ️</span> {{ session('warning') }}</p>
+            <p class="fib-px-13 fib-py-8 bg-warning font-center"><span class="emoji">ℹ️</span>
+                {{ session('warning') }}</p>
         @endif
 
         @if (isset($errors) && $errors->any())

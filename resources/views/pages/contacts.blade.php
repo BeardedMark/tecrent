@@ -3,22 +3,49 @@
 @section('desctiption', $data->description)
 
 @section('content')
-    <section>
+    {{-- Вступление --}}
+    {{-- 3 --}}
+
+    <section class="pos-relative">
+        <img class="pos-absolute pos-wallpaper"
+            src="https://png.pngtree.com/background/20230618/original/pngtree-virtual-meeting-global-business-contacts-conferencing-in-3d-picture-image_3757436.jpg"
+            alt="">
+        <div class="pos-absolute pos-overlay bg-black"></div>
+
         <div class="container">
             <div class="fib-section">
-                <div class="row">
-                    <div class="col">
-                        <div class="fib fib-col fib-gap-8 fib-center font-center">
+                <div class="row justify-content-center">
+                    <div class="col col-12 col-lg-6">
+                        <div class="fib fib-col fib-gap-8 fib-center font-center color-main">
                             <h2 class="font-size-1 font-bold">{{ $data->title }}</h2>
                             <p class="font-size-5">{{ $data->description }}</p>
                         </div>
                     </div>
                 </div>
 
+                <div class="row justify-content-center">
+                    <div class="col col-auto">
+                        <div class="fib">
+                            <a class="fib-button hover-contrast" href="#citys">Города</a>
+                            <a class="fib-button hover-contrast" href="#form">Обратная связь</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- Подробности --}}
+    {{-- 2 --}}
+
+    <section>
+        <div class="container">
+            <div class="fib-section">
                 <div class="row justify-content-center g-4">
                     @foreach ($data->link as $func)
                         <div class="col col-6 col-lg">
-                            <a class="fib fib-col fib-p-21 fib-gap-8 fib-center frame font-center bg-main link" href="{{ $func->href }}">
+                            <a class="fib fib-col fib-p-21 fib-gap-8 fib-center frame font-center bg-main link"
+                                href="{{ $func->href }}">
                                 <p class="font-size-1 emoji">{{ $func->icon }}</p>
                                 <p class="font-size-2 color-accent">{{ $func->title }}</p>
                                 <p class="font-size-5">{{ $func->description }}</p>
@@ -30,7 +57,10 @@
         </div>
     </section>
 
-    <section id="map" class="pos-relative">
+    {{-- Города --}}
+    {{-- 1 --}}
+
+    <section id="citys" class="pos-relative">
         <img class="pos-absolute pos-wallpaper"
             src="https://www.custom-wallpaper-printing.co.uk/custom/catalog/map/world-map-shutterstock_665429155.jpg"
             alt="">
@@ -68,6 +98,9 @@
             </div>
         </div>
     </section>
+
+    {{-- Форма --}}
+    {{-- 2 --}}
 
     <section id="form">
         <div class="container">
@@ -107,5 +140,5 @@
 
             </form>
     </section>
-    
+
 @endsection

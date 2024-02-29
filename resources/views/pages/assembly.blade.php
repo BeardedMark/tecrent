@@ -3,18 +3,45 @@
 @section('description', $data->description)
 
 @section('content')
-    <section>
+    {{-- Вступление --}}
+    {{-- 3 --}}
+
+    <section class="pos-relative">
+        <img class="pos-absolute pos-wallpaper"
+            src="https://www.scientific-computing.com/sites/default/files/content/product-focus/lead-image/Kreabobek%20shutterstock_1089987059.jpg"
+            alt="">
+        <div class="pos-absolute pos-overlay bg-black"></div>
+
         <div class="container">
             <div class="fib-section">
-                <div class="row">
-                    <div class="col">
-                        <div class="fib fib-col fib-gap-8 fib-center font-center">
+                <div class="row justify-content-center">
+                    <div class="col col-12 col-lg-6">
+                        <div class="fib fib-col fib-gap-8 fib-center font-center color-main">
                             <h1 class="font-size-1 font-bold">{{ $data->title }}</h1>
                             <p class="font-size-5">{{ $data->description }}</p>
                         </div>
                     </div>
                 </div>
 
+                <div class="row justify-content-center">
+                    <div class="col col-auto">
+                        <div class="fib">
+                            <a class="fib-button hover-contrast" href="#constructor">Подбор игр</a>
+                            <a class="fib-button hover-contrast" href="#computers">Готовые сборки</a>
+                            <a class="fib-button hover-contrast" href="#form">Заказать сборку</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- Подробности --}}
+    {{-- 2 --}}
+
+    <section>
+        <div class="container">
+            <div class="fib-section">
                 <div class="row g-4">
                     @foreach ($data->functions as $func)
                         <div class="col col-12 col-lg-3">
@@ -30,7 +57,10 @@
         </div>
     </section>
 
-    <section id="form">
+    {{-- Конфигуратор --}}
+    {{-- 1 --}}
+
+    <section id="constructor">
         <div class="container">
             <div class="fib-section">
                 <div class="row">
@@ -44,7 +74,7 @@
 
                 <div class="row justify-content-center">
                     <div class="col">
-                        <form id="constructor" class="fib fib-col fib-gap-21">
+                        <form class="fib fib-col fib-gap-21">
                             <div class="row justify-content-center">
                                 <div class="col col-12 col-lg-6">
                                     <div class="fib fib-gap-13">
@@ -53,6 +83,10 @@
                                             <select id="gpu_id" name="gpu_id"
                                                 class="fib fib-p-8 bord-second bg-main pos-w-100">
                                                 <option class="font-center" value="">нет</option>
+                                                @foreach ($gpus as $gpu)
+                                                    <option class="font-center" value="{{ $gpu->id }}">
+                                                        {{ $gpu->getTitle() }}</option>
+                                                @endforeach
                                             </select>
 
                                             <p class="font-size-6 color-second">выберите видеокарту для подбора</p>
@@ -63,6 +97,10 @@
                                             <select id="cpu_id" name="cpu_id"
                                                 class="fib fib-p-8 bord-second bg-main pos-w-100">
                                                 <option class="font-center" value="">нет</option>
+                                                @foreach ($cpus as $cpu)
+                                                    <option class="font-center" value="{{ $cpu->id }}">
+                                                        {{ $cpu->getTitle() }}</option>
+                                                @endforeach
                                             </select>
 
                                             <p class="font-size-6 color-second">выберите процессор для подбора</p>
@@ -71,30 +109,6 @@
                                 </div>
 
                                 <script>
-                                    $(document).ready(function() {
-                                        $.ajax({
-                                            url: "{{ route('gpus.list') }}",
-                                            method: "GET",
-                                            success: function(data) {
-                                                $("#gpu_id").append(data.view);
-                                            },
-                                            error: function() {
-                                                alert("Ошибка загрузки видекарт");
-                                            }
-                                        });
-
-                                        $.ajax({
-                                            url: "{{ route('cpus.list') }}",
-                                            method: "GET",
-                                            success: function(data) {
-                                                $("#cpu_id").append(data.view);
-                                            },
-                                            error: function() {
-                                                alert("Ошибка загрузки видекарт");
-                                            }
-                                        });
-                                    });
-
                                     $('#gpu_id, #cpu_id').change(function() {
                                         var gpuId = $('#gpu_id').val();
                                         var cpuId = $('#cpu_id').val();
@@ -169,11 +183,46 @@
         </div>
     </section>
 
-    <section class="bg-main">
+    {{-- Портфолио --}}
+    {{-- 2 --}}
+
+    <section id="computers">
         <div class="container">
             <div class="fib-section">
                 <div class="row justify-content-center">
                     <div class="col">
+                        <div class="fib fib-col fib-gap-8 fib-center font-center">
+                            <h2 class="font-size-1 font-bold">Портфолио наших сборок</h2>
+                            <p class="font-size-5">Все сборки в нашем каталоге аренды собраны нами</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center g-4">
+                    @foreach ($computers as $computer)
+                        <div class="col col-6 col-md-6 col-lg-4 col-xl-3">
+                            @component('computers.components.card', ['computer' => $computer])
+                            @endcomponent
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col col-auto">
+                        <a class="fib-button hover-accent" href="{{ route('computers.index') }}">Все сборки »</a>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    {{-- Контент --}}
+    {{-- 3 --}}
+
+    <section class="bg-main">
+        <div class="container">
+            <div class="fib-section">
+                <div class="row justify-content-center">
+                    <div class="col col-12 col-lg-6">
                         <div class="fib fib-col fib-gap-8 fib-center font-center">
                             <p class="font-size-4">{{ $data->content }}</p>
                         </div>
@@ -181,6 +230,9 @@
                 </div>
             </div>
     </section>
+
+    {{-- Форма --}}
+    {{-- 2 --}}
 
     <section id="form">
         <div class="container">

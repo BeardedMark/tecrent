@@ -18,5 +18,35 @@
       "description": "Поддержка и Настройка",
       "content": "Мы предоставляем не только виртуальные серверы, но и полноценную поддержку. Поможем с настройкой, переносом данных и ответим на все ваши вопросы"
     }
+  ],
+  "servers": [
+    {
+      "name": "Спектрон",
+      "cpu": "Intel Xeon E-2288G",
+      "ram": "DDR4 ECC 64 Gb",
+      "drive": "2 ТБ NVMe SSD",
+      "price": "15 000"
+    },
+    {
+      "name": "Аурентис",
+      "cpu": "AMD Ryzen 9 5950X",
+      "ram": "DDR4 ECC 128 Gb",
+      "drive": "4 ТБ NVMe SSD",
+      "price": "25 000"
+    },
+    {
+      "name": "Галатрон",
+      "cpu": "Intel Xeon Gold 6254",
+      "ram": "DDR4 ECC 256 Gb",
+      "drive": "8 ТБ NVMe SSD",
+      "price": "40 000"
+    },
+    {
+      "name": "Экселор",
+      "cpu": "AMD EPYC 7763",
+      "ram": "DDR4 ECC 512 Gb",
+      "drive": "16 ТБ NVMe SSD",
+      "price": "60 000"
+    }
   ]
 }
