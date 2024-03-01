@@ -42,6 +42,22 @@
                         </li>
 
                         <li class="fib fib-gap-8">
+                            <span class="emoji font-size-2">🎮</span><a href="{{ route('pages.contacts') }}"
+                                class="link fib fib-col">
+                                <span>Для геймеров</span>
+                                <span class="font-size-6 fib-px-8">обеспечим хорошим железом для качественной игры</span>
+                            </a>
+                        </li>
+
+                        <li class="fib fib-gap-8">
+                            <span class="emoji font-size-2">🖨️</span><a href="{{ route('pages.contacts') }}"
+                                class="link fib fib-col">
+                                <span>Для бизнеса</span>
+                                <span class="font-size-6 fib-px-8">снабдим необходимой техникой для начала работы</span>
+                            </a>
+                        </li>
+
+                        <li class="fib fib-gap-8">
                             <span class="emoji font-size-2">📞</span><a href="{{ route('pages.contacts') }}"
                                 class="link fib fib-col">
                                 <span>Контакты</span>

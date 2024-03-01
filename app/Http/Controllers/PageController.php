@@ -7,6 +7,7 @@ use App\Models\Gpu;
 use App\Models\Cpu;
 use App\Models\Game;
 use App\Models\Computer;
+use App\Models\Requirement;
 
 class PageController extends Controller
 {
@@ -20,7 +21,15 @@ class PageController extends Controller
     {
         $data = $this->getData('about');
         $employees = $this->getData('collections/employees');
-        return view('pages.about', compact('data', 'employees'));
+        $examples = $this->getData('collections/examples');
+
+        $games = Game::all();
+        $requirements = Requirement::all();
+        $gpus = Gpu::all();
+        $cpus = Cpu::all();
+        $computers = Computer::all();
+
+        return view('pages.about', compact('data', 'employees', 'games', 'requirements', 'gpus', 'cpus', 'computers', 'examples'));
     }
 
     public function contacts()
@@ -32,7 +41,11 @@ class PageController extends Controller
     public function work()
     {
         $data = $this->getData('work');
-        return view('pages.work', compact('data'));
+        $questions = $this->getData('collections/questions');
+        $steps = $this->getData('collections/steps');
+        $features = $this->getData('collections/features');
+
+        return view('pages.work', compact('data', 'questions', 'steps', 'features'));
     }
 
     public function assembly()

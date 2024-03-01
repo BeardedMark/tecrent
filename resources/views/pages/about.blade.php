@@ -25,9 +25,10 @@
                 <div class="row justify-content-center">
                     <div class="col col-auto">
                         <div class="fib">
-                            <a class="fib-button hover-contrast" href="#target">Наша цель</a>
-                            <a class="fib-button hover-contrast" href="#team">Наша команда</a>
-                            <a class="fib-button hover-contrast" href="#form">Стать партнером</a>
+                            <a class="fib-button hover-contrast" href="#examples">Примеры</a>
+                            <a class="fib-button hover-contrast" href="#target">Миссия</a>
+                            <a class="fib-button hover-contrast" href="#statistics">Статистика</a>
+                            <a class="fib-button hover-contrast" href="#team">Команда</a>
                         </div>
                     </div>
                 </div>
@@ -56,13 +57,41 @@
         </div>
     </section>
 
+    {{-- Польза --}}
+    {{-- 2 --}}
+
+    <section id="examples" class="bg-main">
+        <div class="container">
+            <div class="fib-section">
+                <div class="row">
+                    <div class="col">
+                        <div class="fib fib-col fib-gap-8 fib-center font-center">
+                            <h2 class="font-size-1 font-bold">Примеры нашей пользы</h2>
+                            <p class="font-size-5">Примеры того, в каких ситуациях мы поможем</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center gy-4">
+                    @foreach ($examples as $example)
+                        <div class="col col-6 col-lg-3">
+                            <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
+                                <p class="font-size-large emoji">{{ $example->icon }}</p>
+                                <p class="font-size-5">{{ $example->description }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
     {{-- Цель --}}
     {{-- 1 --}}
 
     <section id="target" class="pos-relative">
-        <img class="pos-absolute pos-wallpaper"
-            src="https://bernardmarr.com/wp-content/uploads/2021/07/How-Do-You-Set-The-Right-Targets-For-Your-Business-Here-Are-Some-Top-Tips.png"
-            alt="">
+        <img class="pos-absolute pos-wallpaper" {{-- src="https://bernardmarr.com/wp-content/uploads/2021/07/How-Do-You-Set-The-Right-Targets-For-Your-Business-Here-Are-Some-Top-Tips.png" --}}
+            src="https://i.playground.ru/p/duPO7KxliH15GdlFyHbumg.jpeg" alt="">
         <div class="pos-absolute pos-overlay bg-accent"></div>
 
         <div class="container">
@@ -70,7 +99,55 @@
                 <div class="row justify-content-center">
                     <div class="col col-12 col-lg-6">
                         <div class="fib fib-col fib-gap-8 fib-center font-center color-main">
-                            <h2 class="font-size-1 font-bold">Цель проекта<br>сделать игры доступными и удобными</h2>
+                            <h2 class="font-size-1 font-bold">Делаем технологии доступнее</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- Мы в цифрах --}}
+    {{-- 1 --}}
+
+    <section id="statistics" class="bg-main">
+        <div class="container">
+            <div class="fib-section">
+                <div class="row">
+                    <div class="col">
+                        <div class="fib fib-col fib-gap-8 fib-center font-center">
+                            <h2 class="font-size-1 font-bold">Мы в цифрах</h2>
+                            <p class="font-size-5">Интересная статистика и факты о нашем проекте</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center g-4">
+                    <div class="col col-6 col-lg-3">
+                        <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
+                            <p class="font-size-large color-accent">{{ count($games) }}</p>
+                            <p class="font-size-5">Игр с требованиями</p>
+                        </div>
+                    </div>
+
+                    <div class="col col-6 col-lg-3">
+                        <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
+                            <p class="font-size-large color-accent">{{ count($computers) }}</p>
+                            <p class="font-size-5">Компьютеров в аренду</p>
+                        </div>
+                    </div>
+
+                    <div class="col col-6 col-lg-3">
+                        <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
+                            <p class="font-size-large color-accent">{{ count($gpus) }}</p>
+                            <p class="font-size-5">Видеокарт</p>
+                        </div>
+                    </div>
+
+                    <div class="col col-6 col-lg-3">
+                        <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
+                            <p class="font-size-large color-accent">{{ count($cpus) }}</p>
+                            <p class="font-size-5">Процессоров</p>
                         </div>
                     </div>
                 </div>
