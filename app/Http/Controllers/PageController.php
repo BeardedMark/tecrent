@@ -44,8 +44,9 @@ class PageController extends Controller
         $questions = $this->getData('collections/questions');
         $steps = $this->getData('collections/steps');
         $features = $this->getData('collections/features');
+        $securitys = $this->getData('collections/securitys');
 
-        return view('pages.work', compact('data', 'questions', 'steps', 'features'));
+        return view('pages.work', compact('data', 'questions', 'steps', 'features', 'securitys'));
     }
 
     public function assembly()
@@ -53,9 +54,10 @@ class PageController extends Controller
         $data = $this->getData('assembly');
         $gpus = Gpu::all();
         $cpus = Cpu::all();
-        $computers = Computer::query()->limit(4)->get();
+        $computers = Computer::query()->orderBy('price', 'desc')->limit(4)->get();
+        $games = Game::query()->orderBy('release', 'asc')->limit(4)->get();
 
-        return view('pages.assembly', compact('data', 'gpus', 'cpus', 'computers'));
+        return view('pages.assembly', compact('data', 'gpus', 'cpus', 'computers', 'games'));
     }
 
     public function servers()
@@ -71,7 +73,7 @@ class PageController extends Controller
         $data = $this->getData('menu');
         return view('pages.menu', compact('data'));
     }
-
+    
     // private section
 
     private function getData($jsonFileName)

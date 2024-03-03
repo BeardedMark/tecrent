@@ -47,8 +47,8 @@
                         <div class="col col-12 col-lg-4">
                             <div class="fib fib-col fib-p-21 fib-gap-8 fib-x-center pos-h-100 font-center frame bg-main">
                                 <h3 class="font-size-3 color-accent">{{ $func->title }}</h3>
-                                <p class="font-size-4">{{ $func->description }}</p>
-                                <p class="font-size-5">{{ $func->content }}</p>
+                                <p class="font-size-5">{{ $func->description }}</p>
+                                <p class="font-size-6">{{ $func->content }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -76,7 +76,7 @@
                     @foreach ($examples as $example)
                         <div class="col col-6 col-lg-3">
                             <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
-                                <p class="font-size-large emoji">{{ $example->icon }}</p>
+                                <p class="font-size-1 emoji color-accent">{{ $example->icon }}</p>
                                 <p class="font-size-5">{{ $example->description }}</p>
                             </div>
                         </div>
@@ -176,8 +176,8 @@
                         <div class="col col-12 col-lg-3">
                             <div class="fib fib-col fib-p-21 fib-gap-8 fib-x-center pos-h-100 font-center">
                                 <img width="128px" src="{{ $employee->image }}" alt="">
-                                <h3 class="font-size-2 color-accent">{{ $employee->name }}</h3>
-                                <p class="font-size-4">{{ $employee->description }}</p>
+                                <h3 class="font-size-3 color-accent">{{ $employee->name }}</h3>
+                                <p class="font-size-5">{{ $employee->description }}</p>
                             </div>
                         </div>
                     @endforeach

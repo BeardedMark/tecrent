@@ -33,7 +33,7 @@ class Cpu extends Model
         $result = "$this->manufacturer $this->name";
 
         if (Auth::user() && Auth::user()->is_admin) {
-            $result = "[id:$this->id] " . $result . " [🗲$this->power]";
+            $result = "[id:$this->id] " . $result;
         }
         return $result . " [🗲$this->power]";
     }

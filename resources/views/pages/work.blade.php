@@ -25,9 +25,9 @@
                 <div class="row justify-content-center">
                     <div class="col col-auto">
                         <div class="fib">
-                            <a class="fib-button hover-contrast" href="#steps">Этапы</a>
                             <a class="fib-button hover-contrast" href="#features">Преимущества</a>
-                            <a class="fib-button hover-contrast" href="#gifts">Акции</a>
+                            <a class="fib-button hover-contrast" href="#period">Сроки</a>
+                            <a class="fib-button hover-contrast" href="#securitys">Безопасность</a>
                             <a class="fib-button hover-contrast" href="#questions">Ответы</a>
                         </div>
                     </div>
@@ -47,8 +47,8 @@
                         <div class="col col-12 col-lg-4">
                             <div class="fib fib-col fib-p-21 fib-gap-8 fib-center pos-h-100 font-center frame bg-main">
                                 <p class="font-size-1 color-accent font-bold">{{ $step->number }}</p>
-                                <h3 class="font-size-2">{{ $step->title }}</h3>
-                                <p class="font-size-6">{{ $step->description }}</p>
+                                <h3 class="font-size-3">{{ $step->title }}</h3>
+                                <p class="font-size-5">{{ $step->description }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -56,7 +56,7 @@
             </div>
         </div>
     </section>
-    
+
     {{-- Наши преимущества --}}
     {{-- 2 --}}
 
@@ -66,8 +66,8 @@
                 <div class="row">
                     <div class="col">
                         <div class="fib fib-col fib-gap-8 fib-center font-center">
-                            <h2 class="font-size-1 font-bold">Наши особенности</h2>
-                            <p class="font-size-5">Что мы хотим выставить в свете своих приемуществ</p>
+                            <h2 class="font-size-1 font-bold">Наши преимущества</h2>
+                            <p class="font-size-5">Что мы хотим выставить в свете своих особенностей</p>
                         </div>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                         <div class="col col-6 col-lg-3">
                             <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
                                 <p class="font-size-1 emoji">{{ $feature->icon }}</p>
-                                <p class="font-size-2 color-accent">{{ $feature->title }}</p>
+                                <p class="font-size-3 color-accent">{{ $feature->title }}</p>
                                 <p class="font-size-5">{{ $feature->description }}</p>
                             </div>
                         </div>
@@ -87,13 +87,12 @@
         </div>
     </section>
 
-    {{-- Акции --}}
+    {{-- Срок --}}
     {{-- 1 --}}
 
-    <section class="pos-relative">
+    <section id="period" class="pos-relative">
         <img class="pos-absolute pos-wallpaper"
-            src="https://www.groovypost.com/wp-content/uploads/2022/09/calendar-example.png"
-            alt="">
+            src="https://www.groovypost.com/wp-content/uploads/2022/09/calendar-example.png" alt="">
         <div class="pos-absolute pos-overlay bg-dark"></div>
 
         <div class="container">
@@ -102,7 +101,7 @@
                     <div class="col col-12 col-lg-6">
                         <div class="fib fib-col fib-gap-8 fib-center font-center color-main">
                             <p class="font-size-1 font-bold">7 дней</p>
-                            <h2 class="font-size-2">Минимальный срок аренды</h2>
+                            <h2 class="font-size-3">Минимальный срок аренды</h2>
                             <p class="font-size-6">Можно арендовать на меньший срок,<br>но оплата будет как за 7 дней</p>
                         </div>
                     </div>
@@ -110,11 +109,38 @@
             </div>
         </div>
     </section>
-    
-    {{-- Наши преимущества --}}
+
+    {{-- Безопасность --}}
     {{-- 2 --}}
 
-    <section id="gifts" class="bg-main">
+    <section id="securitys" class="bg-main">
+        <div class="container">
+            <div class="fib-section">
+                <div class="row">
+                    <div class="col">
+                        <div class="fib fib-col fib-gap-8 fib-center font-center">
+                            <h2 class="font-size-1 font-bold">Безопасность</h2>
+                            <p class="font-size-5">Мы заботимся о наших клиентах и их данных</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center gy-4">
+                    @foreach ($securitys as $security)
+                        <div class="col col-6 col-lg-3">
+                            <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
+                                <p class="font-size-1 emoji">{{ $security->icon }}</p>
+                                <p class="font-size-3 color-accent">{{ $security->title }}</p>
+                                <p class="font-size-5">{{ $security->description }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- <section id="gifts" class="bg-main">
         <div class="container">
             <div class="fib-section">
                 <div class="row">
@@ -130,38 +156,38 @@
                     <div class="col col-6 col-lg-3">
                         <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
                             <p class="font-size-1 emoji">✌️</p>
-                            <p class="font-size-2 color-accent">За второй заказ</p>
-                            <p class="font-size-6">1 день бесплатно</p>
+                            <p class="font-size-3 color-accent">За второй заказ</p>
+                            <p class="font-size-5">1 день бесплатно</p>
                         </div>
                     </div>
 
                     <div class="col col-6 col-lg-3">
                         <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
                             <p class="font-size-1 emoji">📅</p>
-                            <p class="font-size-2 color-accent">По праздникам</p>
-                            <p class="font-size-6">1 день бесплатно</p>
+                            <p class="font-size-3 color-accent">По праздникам</p>
+                            <p class="font-size-5">1 день бесплатно</p>
                         </div>
                     </div>
-                    
+
                     <div class="col col-6 col-lg-3">
                         <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
                             <p class="font-size-1 emoji">🎂</p>
-                            <p class="font-size-2 color-accent">В день рождения</p>
-                            <p class="font-size-6">1 день бесплатно</p>
+                            <p class="font-size-3 color-accent">В день рождения</p>
+                            <p class="font-size-5">1 день бесплатно</p>
                         </div>
                     </div>
-                    
+
                     <div class="col col-6 col-lg-3">
                         <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
                             <p class="font-size-1 emoji">👍</p>
-                            <p class="font-size-2 color-accent">За отзыв</p>
-                            <p class="font-size-6">1 день бесплатно</p>
+                            <p class="font-size-3 color-accent">За отзыв</p>
+                            <p class="font-size-5">1 день бесплатно</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     {{-- Вопросы --}}
     {{-- 2 --}}
@@ -183,7 +209,7 @@
                         <div class="col col-12 col-lg-4">
                             <div class="fib fib-col fib-p-21 fib-gap-8 fib-center frame font-center bg-main pos-h-100">
                                 <p class="font-size-3 color-accent">{{ $question->question }}</p>
-                                <p class="font-size-4">{{ $question->answer }}</p>
+                                <p class="font-size-5">{{ $question->answer }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -213,7 +239,8 @@
 
     <section id="form">
         <div class="container">
-            <form method="POST" action="{{ route('send.discord', ['subject' => 'Обратная связь']) }}" class="fib-section">
+            <form method="POST" action="{{ route('send.discord', ['subject' => 'Обратная связь']) }}"
+                class="fib-section">
                 @csrf
                 <div class="row">
                     <div class="col">

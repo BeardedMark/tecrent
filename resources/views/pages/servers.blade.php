@@ -8,7 +8,7 @@
 
     <section class="pos-relative">
         <img class="pos-absolute pos-wallpaper"
-            src="https://habrastorage.org/getpro/habr/upload_files/452/e2c/f3b/452e2cf3b4dfcbb98707908816f18658.png"
+            src="https://www.upsite.com/wp-content/uploads/data-center-servers-e1456255797441.jpg"
             alt="">
         <div class="pos-absolute pos-overlay bg-black"></div>
 
@@ -27,8 +27,9 @@
                     <div class="col col-auto">
                         <div class="fib">
                             <a class="fib-button hover-contrast" href="#games">Игровые сервера</a>
+                            <a class="fib-button hover-contrast" href="#features">Приемущества</a>
                             <a class="fib-button hover-contrast" href="#servers">Готовые сервера</a>
-                            <a class="fib-button hover-contrast" href="#form">Заказать сервер</a>
+                            <a class="fib-button hover-accent" href="#form">Заказать сервер</a>
                         </div>
                     </div>
                 </div>
@@ -46,8 +47,8 @@
                     @foreach ($data->functions as $func)
                         <div class="col col-12 col-lg-4">
                             <div class="fib fib-col fib-p-21 fib-gap-8 fib-x-center pos-h-100 font-center frame bg-main">
-                                <h3 class="font-size-1 color-accent emoji">{{ $func->title }}</h3>
-                                <p class="font-size-4">{{ $func->description }}</p>
+                                <p class="font-size-1 color-accent emoji">{{ $func->title }}</p>
+                                <h3 class="font-size-3">{{ $func->description }}</h3>
                                 <p class="font-size-5">{{ $func->content }}</p>
                             </div>
                         </div>
@@ -81,6 +82,80 @@
                             <p class="font-size-6 font-center fib-p-21">Аренда сервера для {{ $game->getTitle() }}</p>
                         </div>
                     @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- Срок --}}
+    {{-- 1 --}}
+
+    <section id="period" class="pos-relative">
+        <img class="pos-absolute pos-wallpaper"
+            src="https://w.forfun.com/fetch/ae/ae2cbe4c74a79df332455ab8fe742e7c.jpeg" alt="">
+        <div class="pos-absolute pos-overlay bg-dark"></div>
+
+        <div class="container">
+            <div class="fib-section">
+                <div class="row justify-content-center">
+                    <div class="col col-12 col-lg-6">
+                        <div class="fib fib-col fib-gap-8 fib-center font-center color-main">
+                            <p class="font-size-1 font-bold">12 лет</p>
+                            <h2 class="font-size-3">Опыта в аренде серверов</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- Преимущества --}}
+    {{-- 2 --}}
+
+    <section id="features" class="bg-main">
+        <div class="container">
+            <div class="fib-section">
+                <div class="row">
+                    <div class="col">
+                        <div class="fib fib-col fib-gap-8 fib-center font-center">
+                            <h2 class="font-size-1 font-bold">Преимущества серверов</h2>
+                            <p class="font-size-5">Мы заботимся о наших клиентах и их данных</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center gy-4">
+                    <div class="col col-6 col-lg-3">
+                        <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
+                            <p class="font-size-1 emoji">🗓️</p>
+                            <p class="font-size-3 color-accent">Круглосуточная работа</p>
+                            <p class="font-size-5">Сервера всегда работают, чтобы обеспечить стабильную работу ваших серверов</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col col-6 col-lg-3">
+                        <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
+                            <p class="font-size-1 emoji">📈</p>
+                            <p class="font-size-3 color-accent">Масштабируемость</p>
+                            <p class="font-size-5">Помере роста ваших потребностей мы можем увеличивать мощность оборудования</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col col-6 col-lg-3">
+                        <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
+                            <p class="font-size-1 emoji">🗃️</p>
+                            <p class="font-size-3 color-accent">Резервные копии</p>
+                            <p class="font-size-5">Ваша информация на сервере всегда в безопасности благодаря ежедневным копиям</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col col-6 col-lg-3">
+                        <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
+                            <p class="font-size-1 emoji">🛡️</p>
+                            <p class="font-size-3 color-accent">Безопасность</p>
+                            <p class="font-size-5">Все наши серверы защищены современными средствами безопасности</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

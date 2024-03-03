@@ -28,6 +28,7 @@ Route::get('work',[PageController::class, 'work'])->name('pages.work');
 Route::get('assembly',[PageController::class, 'assembly'])->name('pages.assembly');
 Route::get('servers',[PageController::class, 'servers'])->name('pages.servers');
 Route::get('menu',[PageController::class, 'menu'])->name('pages.menu');
+Route::get('services',[PageController::class, 'services'])->name('pages.services');
 
 // Редиеркты
 Route::redirect('/chat', 'https://crm.dnlmarket.ru/online/tecrent', 301)->name('chat');

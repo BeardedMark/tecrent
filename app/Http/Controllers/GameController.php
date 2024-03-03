@@ -40,8 +40,8 @@ class GameController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|unique:games,name',
             'commentary' => 'nullable|string|max:255',
-            'description' => 'nullable|string|max:1000',
-            'content' => 'nullable|string|max:5000',
+            'description' => 'nullable|string',
+            'content' => 'nullable|string',
             // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
 
             'autor' => 'nullable|string|max:255',
@@ -114,8 +114,8 @@ class GameController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|unique:games,name,' . $id,
             'commentary' => 'nullable|string|max:255',
-            'description' => 'nullable|string|max:1000',
-            'content' => 'nullable|string|max:5000',
+            'description' => 'nullable|string',
+            'content' => 'nullable|string',
             'image' => 'nullable|string|max:255',
             // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
 
