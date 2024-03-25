@@ -20,9 +20,14 @@ return new class extends Migration
             $table->text('description')->nullable()->comment('Описание');
             $table->text('content')->nullable()->comment('Контент');
             $table->string('image')->nullable()->comment('Изображение');
+            $table->string('video')->nullable()->comment('Видео');
+            $table->string('link')->nullable()->comment('Ссылка');
             
             $table->string('autor')->nullable()->comment('Автор');
+            $table->string('developer')->nullable()->comment('Разработчик');
+            $table->string('publisher')->nullable()->comment('Издатель');
             $table->date('release')->nullable()->comment('Релиз');
+            $table->boolean('is_server')->default(false)->comment('Можно открыть сервер');
             
             $table->timestamps();
             $table->softDeletes();

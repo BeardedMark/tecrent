@@ -12,6 +12,8 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\GpuController;
 use App\Http\Controllers\CpuController;
 use App\Http\Controllers\RequirementController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostController;
 
 use App\Http\Controllers\DataBase\AuthController;
 use App\Http\Controllers\DataBase\TableController;
@@ -33,17 +35,21 @@ Route::get('services',[PageController::class, 'services'])->name('pages.services
 // Редиеркты
 Route::redirect('/chat', 'https://crm.dnlmarket.ru/online/tecrent', 301)->name('chat');
 
+// Компоненты по API
+Route::get('games/list',[GameController::class, 'list'])->name('games.list');
+Route::get('gpus/list',[GpuController::class, 'list'])->name('gpus.list');
+Route::get('cpus/list',[CpuController::class, 'list'])->name('cpus.list');
+
 // Ресурсные страницы
 Route::resource('basket', BasketController::class);
 Route::resource('computers', ComputerController::class);
-Route::get('games/list',[GameController::class, 'list'])->name('games.list');
 Route::resource('games', GameController::class);
-Route::get('gpus/list',[GpuController::class, 'list'])->name('gpus.list');
 Route::resource('gpus', GpuController::class);
-Route::get('cpus/list',[CpuController::class, 'list'])->name('cpus.list');
 Route::resource('cpus', CpuController::class);
+Route::resource('comments', CommentController::class);
+Route::resource('posts', PostController::class);
 
-
+// Гостевые страницы
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'loginForm'])->name('auth.login');
     Route::post('/login', [AuthController::class, 'login']);
@@ -51,15 +57,16 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/register',  [AuthController::class, 'register']);
 });
 
+// Для авторизованных
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::resource('/users', UserController::class)->only(['show']);
 });
 
+Route::get('/backups/restore/{fileName}', [BackupController::class, 'restoreBackup'])->name('backup.restore');
+Route::get('/backups/download/{fileName}', [BackupController::class, 'downloadBackup'])->name('backups.download');
+Route::resource('/backups', BackupController::class);
 Route::middleware(['admin'])->group(function () {
-    Route::get('/backups/restore/{fileName}', [BackupController::class, 'restoreBackup'])->name('backup.restore');
-    Route::get('/backups/download/{fileName}', [BackupController::class, 'downloadBackup'])->name('backups.download');
-    Route::resource('/backups', BackupController::class);
 });
 
 Route::middleware(['admin'])->group(function () {
@@ -72,6 +79,7 @@ Route::middleware(['admin'])->group(function () {
     Route::resource('games', GameController::class)->except(['show', 'index']);
     Route::resource('gpus', GpuController::class)->except(['show', 'index']);
     Route::resource('cpus', CpuController::class)->except(['show', 'index']);
+    Route::resource('posts', PostController::class)->except(['show', 'index']);
 
     Route::resource('/tables', TableController::class);
     Route::prefix('/tables')->group(function () {

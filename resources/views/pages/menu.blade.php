@@ -42,6 +42,14 @@
                         </li>
 
                         <li class="fib fib-gap-8">
+                            <span class="emoji font-size-2">📞</span><a href="{{ route('pages.contacts') }}"
+                                class="link fib fib-col">
+                                <span>Контакты</span>
+                                <span class="font-size-6 fib-px-8">контактные данные для удобной связи с нами</span>
+                            </a>
+                        </li>
+
+                        <li class="fib fib-gap-8 lock">
                             <span class="emoji font-size-2">🎮</span><a href="{{ route('pages.contacts') }}"
                                 class="link fib fib-col">
                                 <span>Для геймеров</span>
@@ -49,19 +57,11 @@
                             </a>
                         </li>
 
-                        <li class="fib fib-gap-8">
+                        <li class="fib fib-gap-8 lock">
                             <span class="emoji font-size-2">🖨️</span><a href="{{ route('pages.contacts') }}"
                                 class="link fib fib-col">
                                 <span>Для бизнеса</span>
                                 <span class="font-size-6 fib-px-8">снабдим необходимой техникой для начала работы</span>
-                            </a>
-                        </li>
-
-                        <li class="fib fib-gap-8">
-                            <span class="emoji font-size-2">📞</span><a href="{{ route('pages.contacts') }}"
-                                class="link fib fib-col">
-                                <span>Контакты</span>
-                                <span class="font-size-6 fib-px-8">контактные данные для удобной связи с нами</span>
                             </a>
                         </li>
                     </ul>
@@ -119,12 +119,28 @@
                             </a>
                         </li>
 
-                        <li class="fib fib-gap-8 lock">
+                        <li class="fib fib-gap-8">
                             <span class="emoji font-size-2">📰</span>
-                            <a href="#" class="link fib fib-col">
-                                <span>Статьи нашего блога<span class="font-size-6 fib-px-8">(скоро)</span></span>
+                            <a href="{{ route('posts.index') }}" class="link fib fib-col">
+                                <span>Посты нашего блога</span>
                                 <span class="font-size-6 fib-px-8">полезная и интересная информация для
                                     посетителей</span>
+                            </a>
+                        </li>
+
+                        <li class="fib fib-gap-8">
+                            <span class="emoji font-size-2">📋</span>
+                            <a href="{{ route('gpus.index') }}" class="link fib fib-col">
+                                <span>Видеокарты на сайте</span>
+                                <span class="font-size-6 fib-px-8">список видеокарт, которые мы указываем</span>
+                            </a>
+                        </li>
+
+                        <li class="fib fib-gap-8">
+                            <span class="emoji font-size-2">📋</span>
+                            <a href="{{ route('cpus.index') }}" class="link fib fib-col">
+                                <span>Процессоры на сайте</span>
+                                <span class="font-size-6 fib-px-8">список процессоров, которые мы указываем</span>
                             </a>
                         </li>
                     </ul>
@@ -167,35 +183,6 @@
                                 <p class="fib-p-13 bg-accent pos-w-min">sda</p>
                                 <p class="fib-p-13 bg-accent">sda</p>
                             </div> --}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </section>
-
-    <section class="">
-        <div class="container">
-            <div class="fib-section font-center">
-                <div class="row justify-content-center">
-                    <div class="col col-lg-6">
-                        <div class="fib fib-col fib-gap-8 fib-center">
-                            <img width="256px"
-                                src="https://sun4-22.userapi.com/j6ZJzdzWX0H4pKiqqEhefBAxy8Af0RkgZSYc1w/YOapcHrfOxY.png"
-                                alt="">
-                            <p class="font-size-large">О, Привет!</p>
-                            <p class="font-size-2">Я очень рад что ты посетил мой сайт!<br>Надеюсь что он тебе понравится, а
-                                информация на нем тебя заинтересует)<br>Удачи в исследовании!</p>
-
-                            {{-- <button onclick="playSound()">Поздороваться</button>
-                            <audio id="audio" src="{{ asset('o-privet.mp3') }}" muted></audio>
-
-                            <script>
-                                function playSound() {
-                                    var audio = document.getElementById('audio');
-                                    audio.muted = false; // Убираем блокировку звука
-                                    audio.play();
-                                }
-                            </script> --}}
                         </div>
                     </div>
                 </div>

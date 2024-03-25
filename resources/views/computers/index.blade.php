@@ -25,6 +25,15 @@
 
                 @component('computers.components.list', compact('computers'))
                 @endcomponent
+
+                {{-- <div class="row justify-content-center g-4">
+                    @foreach ($computers as $computer)
+                        <div class="col col-6 col-md-4 col-lg-3 col-xl-2">
+                            @component('computers.components.card', ['computer' => $computer])
+                            @endcomponent
+                        </div>
+                    @endforeach
+                </div> --}}
             </div>
     </section>
 

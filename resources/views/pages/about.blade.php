@@ -43,15 +43,18 @@
         <div class="container">
             <div class="fib-section">
                 <div class="row g-4">
-                    @foreach ($data->functions as $func)
+                    @foreach ($services as $service)
                         <div class="col col-12 col-lg-4">
-                            <div class="fib fib-col fib-p-21 fib-gap-8 fib-x-center pos-h-100 font-center frame bg-main">
-                                <h3 class="font-size-3 color-accent">{{ $func->title }}</h3>
-                                <p class="font-size-5">{{ $func->description }}</p>
-                                <p class="font-size-6">{{ $func->content }}</p>
+                            <div class="fib fib-col fib-px-21 fib-py-34 fib-gap-13 fib-x-center pos-h-100 font-center frame bg-main">
+                                <h3 class="font-size-3 color-accent">{{ $service->title }}</h3>
+                                <p class="font-size-4 color-contrast">{{ $service->description }}</p>
+                                <p class="font-size-5">{{ $service->content }}</p>
                             </div>
                         </div>
                     @endforeach
+
+                    {{-- @component('posts.components.list', ['posts' => $functions])
+                    @endcomponent --}}
                 </div>
             </div>
         </div>
@@ -75,9 +78,10 @@
                 <div class="row justify-content-center gy-4">
                     @foreach ($examples as $example)
                         <div class="col col-6 col-lg-3">
-                            <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
-                                <p class="font-size-1 emoji color-accent">{{ $example->icon }}</p>
-                                <p class="font-size-5">{{ $example->description }}</p>
+                            <div class="fib fib-col fib-px-21 fib-py-34 fib-gap-13 fib-center hover font-center pos-h-100">
+                                <p class="font-size-1 emoji color-contrast">{{ $example->icon }}</p>
+                                {{-- <p class="font-size-5">{{ $example->name }}</p> --}}
+                                <p class="font-size-5 color-contrast">{{ $example->description }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -124,31 +128,51 @@
 
                 <div class="row justify-content-center g-4">
                     <div class="col col-6 col-lg-3">
-                        <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
+                        <a href="{{ route('games.index') }}"
+                            class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
                             <p class="font-size-large color-accent">{{ count($games) }}</p>
-                            <p class="font-size-5">Игр с требованиями</p>
-                        </div>
+                            <p class="font-size-5 color-contrast">Игр с требованиями</p>
+                        </a>
                     </div>
 
                     <div class="col col-6 col-lg-3">
-                        <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
+                        <a href="{{ route('requirements.index') }}"
+                            class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
+                            <p class="font-size-large color-accent">{{ count($requirements) }}</p>
+                            <p class="font-size-5 color-contrast">Системных требований</p>
+                        </a>
+                    </div>
+
+                    <div class="col col-6 col-lg-3">
+                        <a href="{{ route('computers.index') }}"
+                            class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
                             <p class="font-size-large color-accent">{{ count($computers) }}</p>
-                            <p class="font-size-5">Компьютеров в аренду</p>
-                        </div>
+                            <p class="font-size-5 color-contrast">Компьютеров в аренду</p>
+                        </a>
                     </div>
 
                     <div class="col col-6 col-lg-3">
-                        <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
+                        <a href="{{ route('gpus.index') }}"
+                            class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
                             <p class="font-size-large color-accent">{{ count($gpus) }}</p>
-                            <p class="font-size-5">Видеокарт</p>
-                        </div>
+                            <p class="font-size-5 color-contrast">Видеокарт</p>
+                        </a>
                     </div>
 
                     <div class="col col-6 col-lg-3">
-                        <div class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
+                        <a href="{{ route('cpus.index') }}"
+                            class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
                             <p class="font-size-large color-accent">{{ count($cpus) }}</p>
-                            <p class="font-size-5">Процессоров</p>
-                        </div>
+                            <p class="font-size-5 color-contrast">Процессоров</p>
+                        </a>
+                    </div>
+
+                    <div class="col col-6 col-lg-3">
+                        <a href="{{ route('posts.index') }}"
+                            class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
+                            <p class="font-size-large color-accent">{{ count($posts) }}</p>
+                            <p class="font-size-5 color-contrast">Постов</p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -222,6 +246,8 @@
                 <div class="row justify-content-center">
                     <div class="col col-12 col-md-10 col-lg-8 col-xl-6">
                         <div class="fib fib-col fib-gap-8 font-center">
+                            <textarea class="fib fib-p-13 bord-second bg-main font-center" type="text" name="message" id="message"
+                                placeholder="опишите свое предложение" rows="4"></textarea>
                             <input class="fib fib-p-13 bord-second bg-main font-center" type="text" name="name"
                                 id="name" placeholder="ваше имя" value="{{ old('name') }}" required>
                             <input class="fib fib-p-13 bord-second bg-main font-center" type="text" name="phone"
@@ -230,8 +256,6 @@
                                 id="email" placeholder="электронная почта" value="{{ old('email') }}" required>
                             <input class="fib fib-p-13 bord-second bg-main font-center" type="number" name="money"
                                 id="money" placeholder="ваш бюджет" value="{{ old('email') }}" required>
-                            <textarea class="fib fib-p-13 bord-second bg-main font-center" type="text" name="message" id="message"
-                                placeholder="опишите свое предложение" rows="4"></textarea>
                         </div>
                     </div>
                 </div>

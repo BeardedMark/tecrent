@@ -8,13 +8,17 @@ use App\Models\Cpu;
 use App\Models\Game;
 use App\Models\Computer;
 use App\Models\Requirement;
+use App\Models\Post;
 
 class PageController extends Controller
 {
     public function main()
     {
         $data = $this->getData('main');
-        return view('pages.main', compact('data'));
+        $posts = Post::inRandomOrder()->take(3)->get();
+        $games = Game::inRandomOrder()->take(4)->get();
+        $computers = Computer::inRandomOrder()->take(4)->get();
+        return view('pages.main', compact('data', 'posts', 'games', 'computers'));
     }
 
     public function about()
@@ -22,14 +26,19 @@ class PageController extends Controller
         $data = $this->getData('about');
         $employees = $this->getData('collections/employees');
         $examples = $this->getData('collections/examples');
+        $services = $this->getData('collections/services');
 
         $games = Game::all();
         $requirements = Requirement::all();
         $gpus = Gpu::all();
         $cpus = Cpu::all();
         $computers = Computer::all();
+        $posts = Post::all();
 
-        return view('pages.about', compact('data', 'employees', 'games', 'requirements', 'gpus', 'cpus', 'computers', 'examples'));
+        // $functions = Post::whereIn('id', [7, 8, 9])->get();
+        // $examples = Post::whereIn('id', [1, 2, 3, 4, 5, 6])->get();
+
+        return view('pages.about', compact('data', 'employees', 'games', 'requirements', 'gpus', 'cpus', 'computers', 'posts', 'examples', 'services'));
     }
 
     public function contacts()
@@ -45,6 +54,7 @@ class PageController extends Controller
         $steps = $this->getData('collections/steps');
         $features = $this->getData('collections/features');
         $securitys = $this->getData('collections/securitys');
+        // $steps = Post::whereIn('id', [10, 11, 12, 15, 13, 14])->get();
 
         return view('pages.work', compact('data', 'questions', 'steps', 'features', 'securitys'));
     }
@@ -63,7 +73,7 @@ class PageController extends Controller
     public function servers()
     {
         $data = $this->getData('servers');
-        $games = Game::query()->limit(4)->get();
+        $games = Game::query()->where('is_server', true)->limit(4)->get();
         
         return view('pages.servers', compact('data', 'games'));
     }

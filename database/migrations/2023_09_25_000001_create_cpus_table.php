@@ -21,8 +21,15 @@ return new class extends Migration
             $table->text('content')->nullable()->comment('Контент');
             $table->string('image')->nullable()->comment('Изображение');
 
-            $table->string('manufacturer')->nullable()->comment('Производитель');
             $table->integer('power')->comment('Мощность')->default(100);
+
+            $table->string('model')->nullable()->comment('Модель');
+            $table->float('frequency')->nullable()->comment('Частота');
+            $table->integer('cores_count')->nullable()->comment('Количество ядер');
+            $table->integer('threads_count')->nullable()->comment('Количество потоков');
+            $table->string('cache')->nullable()->comment('Кэш-память');
+            $table->string('socket')->nullable()->comment('Сокет');
+            $table->string('manufacturer')->nullable()->comment('Производитель');
 
             $table->timestamps();
             $table->softDeletes();

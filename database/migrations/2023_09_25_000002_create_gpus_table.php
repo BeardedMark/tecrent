@@ -21,14 +21,19 @@ return new class extends Migration
             $table->text('content')->nullable()->comment('Контент');
             $table->string('image')->nullable()->comment('Изображение');
 
-            $table->string('technology')->nullable()->comment('Технология');
             $table->string('manufacturer')->nullable()->comment('Производитель');
             $table->integer('power')->comment('Мощность')->default(100);
+
+            $table->string('model')->nullable()->comment('Модель');
+            $table->integer('memory_size')->nullable()->comment('Объем видеопамяти');
+            $table->string('memory_type')->nullable()->comment('Тип памяти');
+            $table->float('gpu_frequency')->nullable()->comment('Частота GPU');
+            $table->string('interface')->nullable()->comment('Интерфейс подключения');
             
             $table->timestamps();
             $table->softDeletes();
             
-            $table->unique(['name', 'technology', 'manufacturer'], 'unique_name_technology_manufacturer');
+            $table->unique(['name', 'manufacturer'], 'unique_name_manufacturer');
         });
     }
 

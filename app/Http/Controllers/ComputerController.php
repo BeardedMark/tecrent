@@ -13,6 +13,7 @@ use App\Models\Requirement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ComputerController extends Controller
 {
@@ -21,27 +22,29 @@ class ComputerController extends Controller
      */
     public function index(Request $request)
     {
-        $computersQuery = Computer::query();
-        
-        if (Auth::user() && Auth::user()->is_admin) {
-            $computers = Computer::withTrashed()->get();
-        } else {
-            $computers = Computer::all();
-        }
+        // $computersQuery = Computer::query();
 
-        if ($request->has('requirement')) {
-            $requirementId = $request->input('requirement');
-            $requirement = Requirement::findOrFail($requirementId);
-            $computers = $requirement->computers();
-        }
-    
+        // if (Auth::user() && Auth::user()->is_admin) {
+        //     $computers = Computer::withTrashed()->get();
+        // } else {
+        //     $computers = Computer::all();
+        // }
+
+        // if ($request->has('requirement')) {
+        //     $requirementId = $request->input('requirement');
+        //     $requirement = Requirement::findOrFail($requirementId);
+        //     $computers = $requirement->computers();
+        // }
+
+        $computers = $this->getFiltered($request);
+
         $games = Game::inRandomOrder()->limit(4)->get();
-        
+
         $content = json_decode(file_get_contents(storage_path('content/computers.json')), true);
 
         return view('computers.index', compact('computers', 'content', 'games'));
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -91,7 +94,7 @@ class ComputerController extends Controller
             'ram_id.exists' => 'Выбранная оперативка не существует.',
             'drive_id.exists' => 'Выбранный накопитель не существует.',
         ]);
-        
+
 
         $computer = Computer::create($validatedData);
 
@@ -168,7 +171,7 @@ class ComputerController extends Controller
             // 'image.image' => 'Загруженный файл должен быть изображением.',
             // 'image.mimes' => 'Поддерживаются только следующие форматы изображений: :values.',
             // 'image.max' => 'Максимальный размер файла изображения не должен превышать :max КБ.',
-            
+
             'price.integer' => 'Поле "Цена" должно быть целым числом.',
             'price.min' => 'Поле "Цена" должно быть не меньше :min.',
             'gpu_id.exists' => 'Выбранная видеокарта не существует.',
@@ -177,7 +180,7 @@ class ComputerController extends Controller
             'ram_count.integer' => 'Поле "Количество оперативной памяти" должно быть целым числом.',
             'drive_id.exists' => 'Выбранный накопитель не существует.',
         ]);
-        
+
 
         $computer->fill($validatedData);
 
@@ -216,5 +219,42 @@ class ComputerController extends Controller
             $computer->delete();
             return redirect()->route('computers.show', compact('computer'))->with('success', "Компьютер №$id успешно удален");
         }
+    }
+
+    private function getFiltered(Request $request)
+    {
+        $query = Computer::query();
+
+        if (Auth::user() && Auth::user()->is_admin) {
+            $query->withTrashed();
+        }
+
+        $fillable = $query->getModel()->getFillable();
+
+        // Отбор по параметрам
+        foreach ($request->query() as $key => $value) {
+            if (in_array($key, $fillable)) {
+                $query->where($key, $value);
+            }
+        }
+
+        // Сортировка
+        if ($request->has('sort')) {
+            $sort = $request->input('sort');
+            if ($request->has('direction')) {
+                $direction = $request->input('direction');
+                $query->orderBy($sort, $direction);
+            } else {
+                $query->orderBy($sort);
+            }
+        }
+
+        // Ограничение количества записей
+        if ($request->has('limit')) {
+            $limit = $request->input('limit');
+            $query->limit($limit);
+        }
+
+        return $query->get();
     }
 }

@@ -12,7 +12,21 @@ class Computer extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $guarded = [];
+    // protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'commentary',
+        'description',
+        'content',
+        'image',
+
+        'price',
+        'ram_count',
+        'gpu_id',
+        'cpu_id',
+        'ram_id',
+        'drive_id',
+    ];
 
     public function getTitle()
     {

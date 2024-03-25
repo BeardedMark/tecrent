@@ -22,9 +22,12 @@ return new class extends Migration
             $table->string('image')->nullable()->comment('Изображение');
             
             $table->string('manufacturer')->nullable()->comment('Производитель');
-            $table->integer('capacity')->comment('Объем');
-            $table->string('type')->comment('Тип');
+            $table->integer('capacity')->comment('Объем накопителя');
+            $table->string('type')->comment('Тип накопителя');
             $table->integer('power')->comment('Мощность')->default(100);
+
+            $table->string('interface')->nullable()->comment('Интерфейс');
+            $table->string('speed')->nullable()->comment('Скорость чтения/записи');
 
             $table->timestamps();
             $table->softDeletes();

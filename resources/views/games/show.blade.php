@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-    <section class="pos-relative">
+    <section class="pos-relative" style="overflow: hidden">
         <img class="pos-absolute pos-wallpaper" src="{{ $game->imageUrl() }}">
         <div class="pos-absolute pos-overlay over-dark"></div>
 
@@ -73,6 +73,25 @@
             <div class="container">
                 <div class="fib-section">
                     <div class="row justify-content-center">
+                        <div class="col">
+                            <h2 class="fib fib-col fib-gap-8 fib-center font-center">
+                                <span class="font-size-1 font-bold">Описание игры</span>
+                                <span class="font-size-5">{{ $game->name }}</span>
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center align-items-center">
+                        @if ($game->video)
+                            <div class="col col-12 col-md-10 col-lg-8 col-xl-6">
+                                <div class="fib fib-col fib-gap-8 font-center" style="aspect-ratio: 1920/1080;">
+                                    <iframe width="100%" height="100%"
+                                        src="https://www.youtube.com/embed/{{ $game->video }}?rel=0" frameborder="0"
+                                        allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        @endif
+
                         <div class="col col-12 col-md-10 col-lg-8 col-xl-6">
                             <div class="fib fib-col fib-gap-8 fib-center font-center">
                                 {!! $game->description !!}
@@ -89,10 +108,10 @@
                 <div class="fib-section">
                     <div class="row justify-content-center">
                         <div class="col">
-                            <div class="fib fib-col fib-gap-8 fib-center font-center">
-                                <h2 class="font-size-1 font-bold">Подходящие сборки</h2>
-                                <p class="font-size-5">Наши сборки, которые подходят для запуска этой игры</p>
-                            </div>
+                            <h2 class="fib fib-col fib-gap-8 fib-center font-center">
+                                <span class="font-size-1 font-bold">Подходящие сборки</span>
+                                <span class="font-size-5">для {{ $game->name }}</span>
+                            </h2>
                         </div>
                     </div>
 
@@ -102,9 +121,12 @@
                     <div class="row justify-content-center">
                         <div class="col col-auto">
                             @if (count($game->computers()) > 4)
-                            <a class="fib-button hover-accent" href="{{ route('computers.index', ['game' => $game->id]) }}">Всего {{ count($game->computers()) }} подходящих »</a>
+                                <a class="fib-button hover-accent"
+                                    href="{{ route('computers.index', ['game' => $game->id]) }}">Всего
+                                    {{ count($game->computers()) }} подходящих »</a>
                             @else
-                            <a class="fib-button hover-accent" href="{{ route('computers.index', ['game' => $game->id]) }}">Все сборки »</a>
+                                <a class="fib-button hover-accent"
+                                    href="{{ route('computers.index', ['game' => $game->id]) }}">Все сборки »</a>
                             @endif
                         </div>
                     </div>
@@ -122,10 +144,10 @@
                 <div class="fib-section">
                     <div class="row justify-content-center">
                         <div class="col order-2 order-lg-1">
-                            <div class="fib fib-col fib-gap-8 font-center">
-                                <h2 class="font-size-1 font-bold">Системные требования</h2>
+                            <h2 class="fib fib-col fib-gap-8 font-center">
+                                <span class="font-size-1 font-bold">Системные требования</span>
                                 <span class="font-size-5">для {{ $game->name }}</span>
-                            </div>
+                            </h2>
                         </div>
                     </div>
 
@@ -144,24 +166,26 @@
         </section>
     @endif
 
-    
-    <section id="computers">
+
+    <section id="computers" class="bg-main">
         <div class="container">
             <div class="fib-section">
                 <div class="row justify-content-center">
                     <div class="col">
-                        <div class="fib fib-col fib-gap-8 fib-center font-center">
-                            <h2 class="font-size-1 font-bold">Другие игры</h2>
-                            <p class="font-size-5">Возможно вы хотите поиграть во что-то другое?</p>
-                        </div>
+                        <h2 class="fib fib-col fib-gap-8 fib-center font-center">
+                            <span class="font-size-1 font-bold">Во что можно поиграть</span>
+                            <span class="font-size-5">кроме {{ $game->name }}</span>
+                        </h2>
                     </div>
                 </div>
 
                 <div class="row justify-content-center g-4">
-                    @foreach ($game->getRandomRecords(4) as $game)
+                    @foreach ($game->getRandomRecords(4) as $curGame)
                         <div class="col col-6 col-md-6 col-lg-4 col-xl-3">
-                            @component('games.components.card', ['game' => $game])
+                            @component('games.components.card', ['game' => $curGame])
                             @endcomponent
+
+                            <p class="font-size-6 font-center fib-p-21">Системные требования {{ $curGame->getTitle() }}</p>
                         </div>
                     @endforeach
                 </div>

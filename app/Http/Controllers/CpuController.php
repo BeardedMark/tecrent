@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cpu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class CpuController extends Controller
 {
@@ -13,38 +14,16 @@ class CpuController extends Controller
      */
     public function index(Request $request)
     {
-        $gpus = $this->getFiltered($request);
+        $cpus = $this->getFiltered($request);
+        $title = 'Процессоры';
+        $description = 'Наша личная абра-кадабра';
         
-        return view('gpus.index', compact('gpus'));
-
-
-
-        $cpusQuery = Cpu::query();
-        
-        switch ($request->input('trashed')) {
-            case 'with':
-                $cpusQuery->withTrashed();
-                break;
-
-            case 'only':
-                $cpusQuery->onlyTrashed();
-                break;
+        if ($request->query()) {
+            $title = 'Результаты поиска процессоров';
+            $description = 'Результаты поиска процессоров на основе введенных параметров';
         }
         
-        if ($request->has('search')) {
-            $searchTerm = '%' . $request->input('search') . '%';
-    
-            $cpusQuery->where(function ($query) use ($searchTerm) {
-                $query->where('name', 'like', $searchTerm)
-                      ->orWhere('commentary', 'like', $searchTerm)
-                      ->orWhere('description', 'like', $searchTerm)
-                      ->orWhere('content', 'like', $searchTerm);
-            });
-        }
-    
-        $cpus = $cpusQuery->get();
-        
-        return view('cpus.table', compact('cpus'));
+        return view('cpus.index', compact('cpus', 'title', 'description'));
     }
 
     /**
@@ -52,7 +31,7 @@ class CpuController extends Controller
      */
     public function create()
     {
-        return view('cpus.form');
+        return view('cpus.create');
     }
 
     /**
@@ -62,40 +41,14 @@ class CpuController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|unique:cpus,name',
-            'commentary' => 'nullable|string|max:255',
-            'description' => 'nullable|string|max:1000',
-            'content' => 'nullable|string|max:5000',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-
             'manufacturer' => 'nullable|string|max:255',
-            'power' => 'required|integer|min:0',
         ], [
             'name.required' => 'Поле "Наименование" обязательно для заполнения.',
             'name.unique' => 'Такое "Наименование" уже существует.',
-            'commentary.required' => 'Поле "Комментарий" обязательно для заполнения.',
-            'commentary.max' => 'Длина комментария не должна превышать :max символов.',
-            'description.max' => 'Длина описания не должна превышать :max символов.',
-            'content.max' => 'Длина контента не должна превышать :max символов.',
-            'image.image' => 'Загруженный файл должен быть изображением.',
-            'image.mimes' => 'Поддерживаются только следующие форматы изображений: :values.',
-            'image.max' => 'Максимальный размер файла изображения не должен превышать :max КБ.',
-
             'manufacturer.max' => 'Длина производителя не должна превышать :max символов.',
-            'power.required' => 'Поле "Мощность" обязательно для заполнения.',
-            'power.integer' => 'Поле "Мощность" должно быть целым числом.',
-            'power.min' => 'Поле "Мощность" должно быть не меньше :min.',
         ]);
 
-        $cpu = Cpu::create($validatedData);
-
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/img/cpus', $imageName);
-
-            $cpu->image = $imageName;
-        }
-        
+        $cpu = Cpu::create($validatedData);        
         $cpu->save();
 
         return redirect()->route('cpus.show', compact('cpu'))->with('success', 'Процессор успешно создан');
@@ -107,7 +60,11 @@ class CpuController extends Controller
     public function show($id)
     {
         $cpu = Cpu::withTrashed()->find($id);
-        return view('cpus.item', compact('cpu'));
+        $cpus = Cpu::inRandomOrder()->take(4)->get();
+        $computers = $cpu->computers->take(4);
+        $games = $cpu->games();
+
+        return view('cpus.show', compact('cpu', 'cpus', 'computers', 'games'));
     }
 
     /**
@@ -116,7 +73,7 @@ class CpuController extends Controller
     public function edit($id)
     {
         $cpu = Cpu::withTrashed()->find($id);
-        return view('cpus.form', compact('cpu'));
+        return view('cpus.edit', compact('cpu'));
     }
 
     /**
@@ -131,10 +88,17 @@ class CpuController extends Controller
             'commentary' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:1000',
             'content' => 'nullable|string|max:5000',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => 'nullable|string|max:255',
             
             'manufacturer' => 'nullable|string|max:255',
-            'power' => 'required|integer|min:0',
+            'model' => 'nullable|string|max:255',
+            'cache' => 'nullable|string|max:255',
+            'socket' => 'nullable|string|max:255',
+            'frequency' => 'nullable|integer',
+            'cores_count' => 'nullable|integer',
+            'threads_count' => 'nullable|integer',
+            'power' => 'nullable|integer|min:0',
         ], [
             'name.required' => 'Поле "Наименование" обязательно для заполнения.',
             'name.unique' => 'Такое "Наименование" уже существует.',
@@ -142,30 +106,21 @@ class CpuController extends Controller
             'commentary.max' => 'Длина комментария не должна превышать :max символов.',
             'description.max' => 'Длина описания не должна превышать :max символов.',
             'content.max' => 'Длина контента не должна превышать :max символов.',
-            'image.image' => 'Загруженный файл должен быть изображением.',
-            'image.mimes' => 'Поддерживаются только следующие форматы изображений: :values.',
-            'image.max' => 'Максимальный размер файла изображения не должен превышать :max КБ.',
+            // 'image.image' => 'Загруженный файл должен быть изображением.',
+            // 'image.mimes' => 'Поддерживаются только следующие форматы изображений: :values.',
+            // 'image.max' => 'Максимальный размер файла изображения не должен превышать :max КБ.',
 
             'manufacturer.max' => 'Длина производителя не должна превышать :max символов.',
-            'power.required' => 'Поле "Мощность" обязательно для заполнения.',
-            'power.integer' => 'Поле "Мощность" должно быть целым числом.',
+            'model.max' => '"Модель" не должна превышать :max символов.',
+            'cache.max' => '"Кэш-память" не должна превышать :max символов.',
+            'socket.max' => '"Сокет" не должна превышать :max символов.',
+            'frequency.integer' => 'Поле "Частота" должно быть целым числом.',
+            'cores_count.integer' => 'Поле "Количество ядер" должно быть целым числом.',
+            'threads_count.integer' => 'Поле "Количество потоков" должно быть целым числом.',
             'power.min' => 'Поле "Мощность" должно быть не меньше :min.',
         ]);
         
-        $cpu->fill($validatedData);
-
-        if ($request->hasFile('image')) {
-            if ($cpu->image) {
-                Storage::delete('public/img/cpus/' . $cpu->image);
-            }
-
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/img/cpus', $imageName);
-
-            $cpu->image = $imageName;
-        }
-          
+        $cpu->fill($validatedData);          
         $cpu->save();
 
         return redirect()->route('cpus.show', compact('cpu'))->with('success', 'Информация о процессоре успешно обновлена');
@@ -184,10 +139,10 @@ class CpuController extends Controller
 
         if ($cpu->trashed()) {
             $cpu->restore();
-            return redirect()->back()->with('success', 'Процессор успешно восстановлен');
+            return redirect()->route('cpus.show', compact('cpu'))->with('success', 'Процессор успешно восстановлен');
         } else {
             $cpu->delete();
-            return redirect()->back()->with('success', 'Процессор успешно удален');
+            return redirect()->route('cpus.index')->with('success', 'Процессор успешно удален');
         }
     }
     
@@ -203,26 +158,35 @@ class CpuController extends Controller
     private function getFiltered(Request $request)
     {
         $query = Cpu::query();
-        
-        switch ($request->input('trashed')) {
-            case 'with':
-                $query->withTrashed();
-                break;
 
-            case 'only':
-                $query->onlyTrashed();
-                break;
+        if (Auth::user() && Auth::user()->is_admin) {
+            $query->withTrashed();
         }
-        
-        if ($request->has('search')) {
-            $searchTerm = '%' . $request->input('search') . '%';
-    
-            $query->where(function ($query) use ($searchTerm) {
-                $query->where('name', 'like', $searchTerm)
-                      ->orWhere('commentary', 'like', $searchTerm)
-                      ->orWhere('description', 'like', $searchTerm)
-                      ->orWhere('content', 'like', $searchTerm);
-            });
+
+        $fillable = $query->getModel()->getFillable();
+
+        // Отбор по параметрам
+        foreach ($request->query() as $key => $value) {
+            if (in_array($key, $fillable)) {
+                $query->where($key, $value);
+            }
+        }
+
+        // Сортировка
+        if ($request->has('sort')) {
+            $sort = $request->input('sort');
+            if ($request->has('direction')) {
+                $direction = $request->input('direction');
+                $query->orderBy($sort, $direction);
+            } else {
+                $query->orderBy($sort);
+            }
+        }
+
+        // Ограничение количества записей
+        if ($request->has('limit')) {
+            $limit = $request->input('limit');
+            $query->limit($limit);
         }
 
         return $query->get();

@@ -107,7 +107,8 @@
                                 @if ($computer->drive)
                                     <div class="fib fib-col">
                                         <p class="font-size-6">Накопитель</p>
-                                        <p class="font-size-2 font-bold color-accent">{{ $computer->drive->getTitle() }}</p>
+                                        <p class="font-size-2 font-bold color-accent">{{ $computer->drive->getTitle() }}
+                                        </p>
                                     </div>
                                 @endif
                             </div>
@@ -161,7 +162,9 @@
 
                     <div class="row justify-content-center">
                         <div class="col col-auto">
-                            <a class="fib-button hover-accent" href="{{ route('games.index', ['computer' => $computer->id]) }}">Все {{ $computer->games()->count() }} подходящие игры »</a>
+                            <a class="fib-button hover-accent"
+                                href="{{ route('games.index', ['computer' => $computer->id]) }}">Все
+                                {{ $computer->games()->count() }} подходящие игры »</a>
                         </div>
                     </div>
                 </div>

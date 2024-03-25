@@ -20,7 +20,7 @@
                                         class="fib fib-p-8 bord-second bg-main pos-w-100" value="{{ $game->name ?: '' }}"
                                         required />
 
-                                    <p class="font-size-6 color-second">уникальное значение</p>
+                                    <p class="font-size-6 color-second">required|string|unique</p>
                                 </div>
 
                                 <div class="fib fib-col">
@@ -29,7 +29,18 @@
                                         class="fib fib-p-8 bord-second bg-main pos-w-100"
                                         value="{{ $game->image ?: '' }}" />
 
-                                    <p class="font-size-6 color-second">прямая ссылка на изображение</p>
+                                    <p class="font-size-6 color-second">nullable|string|max:255</p>
+                                </div>
+
+                                <div class="fib fib-col">
+                                    <label for="video">Видео</label>
+                                    <input type="text" id="video" name="video"
+                                        class="fib fib-p-8 bord-second bg-main pos-w-100"
+                                        value="{{ $game->video ?: '' }}" />
+
+                                    <p class="font-size-6 color-second">nullable|string|max:255 (идентификатор видео на
+                                        yputube, например mHDEDDrGYvo)
+                                    </p>
                                 </div>
 
                                 <div class="fib fib-col">
@@ -39,7 +50,7 @@
                                         CKEDITOR.replace('description');
                                     </script>
 
-                                    <p class="font-size-6 color-second">краткое описание страницы</p>
+                                    <p class="font-size-6 color-second">nullable|string</p>
                                 </div>
 
                                 <div class="fib fib-col">
@@ -49,7 +60,7 @@
                                         CKEDITOR.replace('content');
                                     </script>
 
-                                    <p class="font-size-6 color-second">подробное описание</p>
+                                    <p class="font-size-6 color-second">nullable|string</p>
                                 </div>
 
                                 <div class="fib fib-col">
@@ -58,7 +69,7 @@
                                         class="fib fib-p-8 bord-second bg-main pos-w-100"
                                         value="{{ $game->commentary ?: '' }}" />
 
-                                    <p class="font-size-6 color-second">заметка об игре</p>
+                                    <p class="font-size-6 color-second">nullable|string|max:255</p>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +82,25 @@
                                         class="fib fib-p-8 bord-second bg-main pos-w-100"
                                         value="{{ $game->autor ?: '' }}" />
 
-                                    <p class="font-size-6 color-second">кому принадлежат права</p>
+                                    <p class="font-size-6 color-second">nullable|string|max:255</p>
+                                </div>
+
+                                <div class="fib fib-col">
+                                    <label for="developer">Разработчик</label>
+                                    <input type="text" id="developer" name="developer"
+                                        class="fib fib-p-8 bord-second bg-main pos-w-100"
+                                        value="{{ $game->developer ?: '' }}" />
+
+                                    <p class="font-size-6 color-second">nullable|string|max:255</p>
+                                </div>
+
+                                <div class="fib fib-col">
+                                    <label for="publisher">Издатель</label>
+                                    <input type="text" id="publisher" name="publisher"
+                                        class="fib fib-p-8 bord-second bg-main pos-w-100"
+                                        value="{{ $game->publisher ?: '' }}" />
+
+                                    <p class="font-size-6 color-second">nullable|string|max:255</p>
                                 </div>
 
                                 <div class="fib fib-col">
@@ -80,51 +109,30 @@
                                         class="fib fib-p-8 bord-second bg-main pos-w-100"
                                         value="{{ $game->release ?: '' }}" />
 
-                                    <p class="font-size-6 color-second">дата выхода игры</p>
+                                    <p class="font-size-6 color-second">nullable|date</p>
                                 </div>
-                                
-                                {{-- <div class="fib fib-col fib-gap-5">
-                                    <label for="gpus_id">Видеокарта</label>
-                                    <select id="gpus_id" name="gpus_id" class="fib fib-p-8 bord-second bg-main pos-w-100">
-                                        <option value="">нет</option>
-                                    </select>
 
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        @if ($item->{$column->COLUMN_NAME}) checked @endif>
+                                <div class="fib fib-col">
+                                    <label for="is_server">Можно открыть сервер</label>
+                                    <input class="fib-p-8 bord-second bg-main" type="checkbox" id="is_server"
+                                        name="is_server" {{ $game->is_server ? 'checked' : '' }} value="1">
+                                    <p class="font-size-6 color-second">boolean</p>
+                                </div>
 
-                                    <script>
-                                        $('#gpus_id').click(function() {
-                                            // Функция для загрузки чатов через Ajax
-                                            function loadChats() {
-                                                $.ajax({
-                                                    url: "{{ route('gpus.index') }}",
-                                                    method: "GET",
-                                                    success: function(data) {
-                                                        $("#gpus_id").append(data.view);
-                                                    },
-                                                    error: function() {
-                                                        alert("Ошибка загрузки чатов");
-                                                    }
-                                                });
-                                            }
 
-                                            loadChats();
-                                        });
-                                    </script>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
-                    
+
 
                     <div class="row">
                         <div class="col">
                             <div class="fib fib-end">
                                 <a class="fib-button hover-contrast emoji" href="{{ url()->previous() }}">❎ Отмена</a>
 
-                                
+
                                 <input class="fib-button hover-contrast emoji" type="reset" value="⏮️ Сбросить">
-                                
+
                                 <button type="submit" class="fib-button hover-accent emoji">✅ Сохранить</button>
                             </div>
                         </div>

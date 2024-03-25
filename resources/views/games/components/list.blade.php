@@ -1,8 +1,8 @@
 
-<div class="row justify-content-center g-4">
+<div class="row g-4">
     @foreach ($games as $game)
-        <div class="col col-6 col-md-6 col-lg-4 col-xl-3">
-            @component('games.components.card', ['game' => $game])
+    <div class="col col-12">
+            @component('games.components.line', ['game' => $game])
             @endcomponent
         </div>
     @endforeach

@@ -18,10 +18,22 @@ class GameController extends Controller
      */
     public function index(Request $request)
     {
-        $games = $this->getFiltered($request);
-        $content = json_decode(file_get_contents(storage_path('content/games.json')), true);
+        $query = Game::query();
+        $query = $this->getFiltered($query, $request);
+        $games = $query->get();
 
-        return view('games.index', compact('games', 'content'));
+        $title = 'Игровые системные требования';
+        $description = 'Найдите подходящуюя для себя конфигурацию';
+        $content = 'На нашей платформе вы можете воспользоваться широким выбором высокопроизводительных компьютеров для аренды. Независимо от ваших потребностей — будь то ресурсоемкие задачи в области программирования, креативные проекты или игровые мероприятия — мы предоставляем надежные и мощные системы. Гибкие условия аренды и передовое оборудование обеспечат вас необходимыми ресурсами для успешного выполнения задач. Перейдите к выбору и оптимизируйте свой опыт работы с нашими выдающимися компьютерами на прокат';
+
+        if ($request->query()) {
+            $title = 'Результаты поиска ' . $title;
+            $description = 'Результаты поиска процессоров на основе введенных параметров';
+        }
+
+        // $content = json_decode(file_get_contents(storage_path('content/games.json')), true);
+
+        return view('games.index', compact('games', 'title', 'description', 'content'));
     }
 
     /**
@@ -39,38 +51,13 @@ class GameController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|unique:games,name',
-            'commentary' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'content' => 'nullable|string',
-            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-
-            'autor' => 'nullable|string|max:255',
-            'release' => 'nullable|date',
         ], [
-            'name.required' => 'Поле "Наименование" обязательно для заполнения.',
-            'name.unique' => 'Такое "Наименование" уже существует.',
-            'commentary.required' => 'Поле "Комментарий" обязательно для заполнения.',
-            'commentary.max' => 'Длина комментария не должна превышать :max символов.',
-            'description.max' => 'Длина описания не должна превышать :max символов.',
-            'content.max' => 'Длина контента не должна превышать :max символов.',
-            // 'image.image' => 'Загруженный файл должен быть изображением.',
-            // 'image.mimes' => 'Поддерживаются только следующие форматы изображений: :values.',
-            // 'image.max' => 'Максимальный размер файла изображения не должен превышать :max КБ.',
-
-            'autor.max' => 'Длина автора не должна превышать :max символов.',
-            'release.date' => 'Поле "Релиз" должно быть датой в формате ГГГГ-ММ-ДД.',
+            'name.required' => 'Поле "Название" обязательно для заполнения.',
+            'name.string' => 'Поле "Название" должно быть строкой.',
+            'name.unique' => 'Такое название уже используется.',
         ]);
 
         $game = Game::create($validatedData);
-
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/img/games', $imageName);
-
-            $game->image = $imageName;
-        }
-
         $game->save();
 
         return redirect()->route('games.edit', compact('game'))->with('success', 'Игра успешно создана');
@@ -117,39 +104,47 @@ class GameController extends Controller
             'description' => 'nullable|string',
             'content' => 'nullable|string',
             'image' => 'nullable|string|max:255',
-            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'video' => 'nullable|string|max:255',
 
             'autor' => 'nullable|string|max:255',
+            'developer' => 'nullable|string|max:255',
+            'publisher' => 'nullable|string|max:255',
+            'is_server' => 'nullable',
             'release' => 'nullable|date',
         ], [
-            'name.required' => 'Поле "Наименование" обязательно для заполнения.',
-            'name.unique' => 'Такое "Наименование" уже существует.',
-            'commentary.required' => 'Поле "Комментарий" обязательно для заполнения.',
-            'commentary.max' => 'Длина комментария не должна превышать :max символов.',
-            'description.max' => 'Длина описания не должна превышать :max символов.',
-            'content.max' => 'Длина контента не должна превышать :max символов.',
-            // 'image.image' => 'Загруженный файл должен быть изображением.',
-            // 'image.mimes' => 'Поддерживаются только следующие форматы изображений: :values.',
-            // 'image.max' => 'Максимальный размер файла изображения не должен превышать :max КБ.',
+            'name.required' => 'Поле "Название" обязательно для заполнения.',
+            'name.string' => 'Поле "Название" должно быть строкой.',
+            'name.unique' => 'Такое название уже используется.',
 
-            'autor.max' => 'Длина автора не должна превышать :max символов.',
-            'release.date' => 'Поле "Релиз" должно быть датой в формате ГГГГ-ММ-ДД.',
+            'commentary.string' => 'Поле "Комментарий" должно быть строкой.',
+            'commentary.max' => 'Поле "Комментарий" не должно превышать :max символов.',
+
+            'description.string' => 'Поле "Описание" должно быть строкой.',
+
+            'content.string' => 'Поле "Содержание" должно быть строкой.',
+
+            'image.string' => 'Поле "Изображение" должно быть строкой.',
+            'image.max' => 'Поле "Изображение" не должно превышать :max символов.',
+
+            'video.string' => 'Поле "Видео" должно быть строкой.',
+            'video.max' => 'Поле "Видео" не должно превышать :max символов.',
+
+            'autor.string' => 'Поле "Автор" должно быть строкой.',
+            'autor.max' => 'Поле "Автор" не должно превышать :max символов.',
+
+            'developer.string' => 'Поле "Разработчик" должно быть строкой.',
+            'developer.max' => 'Поле "Разработчик" не должно превышать :max символов.',
+
+            'publisher.string' => 'Поле "Издатель" должно быть строкой.',
+            'publisher.max' => 'Поле "Издатель" не должно превышать :max символов.',
+
+            'is_server.boolean' => 'Поле "Серверная игра" должно быть логическим значением.',
+
+            'release.date' => 'Поле "Дата выпуска" должно быть датой.',
         ]);
 
+
         $game->fill($validatedData);
-
-        // if ($request->hasFile('image')) {
-        //     if ($game->image) {
-        //         Storage::delete('public/img/games/' . $game->image);
-        //     }
-
-        //     $image = $request->file('image');
-        //     $imageName = time() . '.' . $image->getClientOriginalExtension();
-        //     $image->storeAs('public/img/games', $imageName);
-
-        //     $game->image = $imageName;
-        // }
-
         $game->save();
 
         return redirect()->route('games.show', compact('game'))->with('success', 'Информация об игре успешно обновлена');
@@ -176,49 +171,58 @@ class GameController extends Controller
             return redirect()->route('games.show', $id)->with('success', 'Игра успешно восстановлена');
         } else {
             $game->delete();
-            return redirect()->route('games.show', $id)->with('success', 'Игра успешно удалена');
+            return redirect()->route('games.index')->with('success', 'Игра успешно удалена');
         }
     }
 
     public function list(Request $request)
     {
-        $games = $this->getFiltered($request);
+        $query = Game::query();
+        $query = $this->getFiltered($query, $request);
+
+        $games = $query->get();
 
         return response()->json([
-            'view' => view('games.components.list', compact('games'))->render(),
+            'view' => view('games.components.grid', compact('games'))->render(),
         ]);
     }
-
-    private function getFiltered(Request $request)
+    
+    private function getFiltered($query, Request $request)
     {
-        $games = Game::query();
+        $games = $query;
 
         if (Auth::user() && Auth::user()->is_admin) {
             $games->withTrashed();
+        }   
+
+        
+        $fillable = $query->getModel()->getFillable();
+
+        // Отбор по параметрам
+        foreach ($request->query() as $key => $value) {
+            if (in_array($key, $fillable)) {
+                $query->where($key, $value);
+            }
         }
 
         if ($request->has('search')) {
             $search = $request->input('search');
-            $games = $games->filter(function ($game) use ($search) {
-                $fillable = $game->getFillable();
+            $query = $query->where(function ($query) use ($search) {
+                $fillable = $query->getModel()->getFillable();
                 foreach ($fillable as $field) {
-                    if (Str::contains($game->$field, $search)) {
-                        return true;
-                    }
+                    $query->orWhere($field, 'like', '%' . $search . '%');
                 }
-                return false;
             });
         }
 
+        // Сортировка
         if ($request->has('sort')) {
             $sort = $request->input('sort');
             if ($request->has('direction')) {
                 $direction = $request->input('direction');
-                if ($direction === 'asc') {
-                    $games = $games->sortBy($sort);
-                } else if ($direction === 'desc') {
-                    $games = $games->sortByDesc($sort);
-                }
+                $query->orderBy($sort, $direction);
+            } else {
+                $query->orderBy($sort);
             }
         }
 
@@ -262,11 +266,9 @@ class GameController extends Controller
 
         if ($request->has('limit')) {
             $limit = $request->input('limit');
-            $games = $games->limit($limit);
+            $query = $query->limit($limit);
         }
 
-        
-
-        return $games->get();
+        return $games;
     }
 }

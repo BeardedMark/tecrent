@@ -22,9 +22,11 @@ return new class extends Migration
             $table->string('image')->nullable()->comment('Изображение');
 
             $table->string('manufacturer')->nullable()->comment('Производитель');
-            $table->integer('capacity')->comment('Объем');
-            $table->string('type')->comment('Тип');
+            $table->integer('capacity')->comment('Объем памяти');
+            $table->string('type')->comment('Тип памяти');
             $table->integer('power')->comment('Мощность')->default(100);
+
+            $table->float('frequency')->comment('Частота работы');
 
             $table->timestamps();
             $table->softDeletes();

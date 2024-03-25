@@ -18,7 +18,11 @@ class Game extends Model
         'description',
         'content',
         'image',
+        'video',
         'autor',
+        'developer',
+        'publisher',
+        'is_server',
         'release',
     ];
     public function getTitle()

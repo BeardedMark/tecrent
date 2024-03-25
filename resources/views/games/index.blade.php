@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
-@section('title', $content['title'])
-@section('description', $content['description'])
+@section('title', $title)
+@section('description', $description)
 
 @section('content')
     <section>
-        <div class="container">
+        <div class="container-fluid">
             <div class="fib-section">
                 <div class="row justify-content-center">
                     <div class="col col-12 col-md-10 col-lg-8 col-xl-6">
                         <div class="fib fib-col fib-gap-8 font-center">
-                            <h2 class="font-size-1 font-bold">{{ $content['title'] }}</h2>
-                            <p class="font-size-5">{{ $content['description'] }}</p>
+                            <h2 class="font-size-1 font-bold">{{ $title }}</h2>
+                            <p class="font-size-5">{{ $description }}</p>
                             @if (Auth::user() && Auth::user()->is_admin)
                                 <div class="fib fib-center">
                                     <a class="fib-button hover-contrast emoji" href="{{ route('games.create') }}">➕
@@ -60,8 +60,17 @@
                     </div>
                 </div>
 
-                @component('games.components.list', ['games' => $games])
-                @endcomponent
+                {{-- @component('games.components.grid', ['games' => $games])
+                @endcomponent --}}
+
+                <div class="row justify-content-center g-1">
+                    @foreach ($games as $game)
+                        <div class="col col-6 col-md-4 col-lg-3 col-xl-2">
+                            @component('games.components.card', ['game' => $game])
+                            @endcomponent
+                        </div>
+                    @endforeach
+                </div>
             </div>
     </section>
 
@@ -71,7 +80,7 @@
                 <div class="row justify-content-center">
                     <div class="col col-12 col-md-10 col-lg-8 col-xl-6">
                         <div class="fib fib-col fib-gap-8">
-                            <p class="font-size-4">{{ $content['content'] }}</p>
+                            <p class="font-size-4">{{ $content }}</p>
                         </div>
                     </div>
                 </div>
