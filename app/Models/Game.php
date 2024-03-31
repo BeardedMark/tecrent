@@ -17,17 +17,23 @@ class Game extends Model
         'commentary',
         'description',
         'content',
+        
         'image',
         'video',
+        'link',
+
         'autor',
+        'trailer',
+        'gameplay',
         'developer',
         'publisher',
         'is_server',
         'release',
     ];
+
     public function getTitle()
     {
-        $result = "$this->name";
+        $result = $this->name;
 
         if (Auth::user() && Auth::user()->is_admin) {
             $result = "[id:$this->id] " . $result . " ($this->release, $this->autor)";

@@ -11,7 +11,7 @@ class Cpu extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    
+
     // protected $guarded = [];
     protected $fillable = [
         'name',
@@ -35,18 +35,39 @@ class Cpu extends Model
         return $this->hasMany(Computer::class);
     }
 
+
     public function requirements()
     {
         return $this->belongsToMany(Requirement::class, 'requirement_cpu');
     }
 
+    // $query = Computer::query();
+    // $cpuPower = $this->power;
+
+    // $query->where(function ($query) use ($cpuPower) {
+    //     $query->whereHas('cpu', function ($query) use ($cpuPower) {
+    //         $query->where('power', '<=', $cpuPower);
+    //     });
+    // });
+
+    // if ($limit)
+    //     $query->limit($limit);
+
+    // return $query->get();
+
     public function games($limit = null)
     {
+        $cpuPower = $this->power;
+
         $gamesId = [];
-        $requirements = $this->requirements()->get();
+        $requirements = Requirement::whereHas('cpus', function ($query) use ($cpuPower) {
+            $query->where('power', '<=', $cpuPower);
+        })->get();
 
         foreach ($requirements as $requirement) {
-            $gamesId[] = $requirement->game->id;
+            if ($requirement->game) {
+                $gamesId[] = $requirement->game->id;
+            }
         }
         $gamesId = array_unique($gamesId);
 
@@ -65,7 +86,7 @@ class Cpu extends Model
     {
         return asset('storage/img/cpus/' . $this->image);
     }
-    
+
     public function getTitle()
     {
         $result = "$this->manufacturer $this->name";

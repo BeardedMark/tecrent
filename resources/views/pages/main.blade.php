@@ -1,28 +1,27 @@
 @extends('layouts.app')
-@section('title', $data->title . ' : ' . $data->description)
-@section('desctiption', $data->description)
+@section('title', $title . ' : ' . $description)
+@section('desctiption', $description)
 
 @section('content')
 
     {{-- Вступление --}}
 
     <section class="pos-relative overflow-hidden">
-
         <video class="pos-absolute pos-wallpaper" autoplay muted loop>
             <source src="{{ asset('video/cinematic.mp4') }}" type="video/mp4">
-            Your browser does not support the video tag.
         </video>
-
         <div class="pos-absolute pos-overlay bg-black"></div>
-
 
         <div class="container">
             <div class="fib-section">
                 <div class="row">
                     <div class="col">
-                        <div class="fib fib-col fib-gap-8 fib-center font-center color-main">
-                            <p class="font-size-large font-bold"><span class="color-accent">TEC</span>RENT</p>
-                            <h1 class="font-size-4">{{ $data->description }}</h1>
+                        <div class="fib fib-col fib-center font-center color-main">
+                            <p class="font-size-large font-bold">
+                                <span class="color-accent">TEC</span>RENT
+                            </p>
+
+                            <h1 class="font-size-4">{{ $description }}</h1>
                         </div>
                     </div>
                 </div>
@@ -346,9 +345,9 @@
         </div>
     </section> --}}
 
-    
+{{-- Посты блога --}}
 
-    <section>
+    {{-- <section>
         <div class="container">
             <div class="fib-section">
                 <div class="row">
@@ -370,7 +369,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     {{-- Отзывы --}}
 

@@ -190,6 +190,20 @@ class GpuController extends Controller
         if (Auth::user() && Auth::user()->is_admin) {
             $query->withTrashed();
         }
+
+        switch ($request->input('trashed')) {
+            case 'with':
+                $query->withTrashed();
+                break;
+
+            case 'only':
+                $query->onlyTrashed();
+                break;
+
+            case 'not':
+                $query->whereNull('deleted_at');
+                break;
+        }
         
         if ($request->has('search')) {
             $search = $request->input('search');

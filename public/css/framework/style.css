@@ -1,0 +1,107 @@
+:root {
+    --accent: #f12352;
+
+    --contrast: #333333;
+    --second: #dadada;
+
+    --main: #ffffff;
+    --background: #f5f5f5;
+
+    --success: #40C057;
+    --warning: #ffbf00;
+    --danger: #FA5252;
+
+    --size-1: 1px;
+    --size-2: 2px;
+    --size-3: 3px;
+    --size-4: 5px;
+    --size-5: 8px;
+    --size-6: 13px;
+    --size-7: 21px;
+    --size-8: 34px;
+    --size-9: 55px;
+    --size-10: 89px;
+    --size-11: 144px;
+
+}
+
+/* font size */
+
+.font-size-xxl {
+    font-size: var(--size-11);
+}
+
+.font-size-xl {
+    font-size: var(--size-10);
+}
+
+.font-size-lg {
+    font-size: var(--size-9);
+}
+
+.font-size-md {
+    font-size: var(--size-8);
+}
+
+.font-size-sm {
+    font-size: var(--size-7);
+}
+
+
+.font-size-1 {
+    font-size: var(--size-6);
+}
+
+.font-size-2 {
+    font-size: var(--size-5);
+}
+
+.font-size-3 {
+    font-size: var(--size-4);
+}
+
+.font-size-4 {
+    font-size: var(--size-3);
+}
+
+.font-size-5 {
+    font-size: var(--size-2);
+}
+
+.font-size-6 {
+    font-size: var(--size-1);
+}
+
+/* color */
+
+.color-accent {
+    color: var(--accent);
+}
+
+.color-contrast {
+    color: var(--contrast);
+}
+
+.color-second {
+    color: var(--second);
+}
+
+.color-main {
+    color: var(--main);
+}
+
+.color-background {
+    color: var(--background);
+}
+
+.color-success {
+    color: var(--success);
+}
+
+.color-warning {
+    color: var(--warning);
+}
+
+.color-danger {
+    color: var(--danger);
+}

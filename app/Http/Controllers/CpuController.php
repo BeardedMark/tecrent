@@ -62,7 +62,7 @@ class CpuController extends Controller
         $cpu = Cpu::withTrashed()->find($id);
         $cpus = Cpu::inRandomOrder()->take(4)->get();
         $computers = $cpu->computers->take(4);
-        $games = $cpu->games();
+        $games = $cpu->games(4);
 
         return view('cpus.show', compact('cpu', 'cpus', 'computers', 'games'));
     }
@@ -161,6 +161,20 @@ class CpuController extends Controller
 
         if (Auth::user() && Auth::user()->is_admin) {
             $query->withTrashed();
+        }
+        
+        switch ($request->input('trashed')) {
+            case 'with':
+                $query->withTrashed();
+                break;
+
+            case 'only':
+                $query->onlyTrashed();
+                break;
+
+            case 'not':
+                $query->whereNull('deleted_at');
+                break;
         }
 
         $fillable = $query->getModel()->getFillable();

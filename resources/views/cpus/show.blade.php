@@ -4,6 +4,28 @@
     {{ $cpu->name }}
 @endsection
 
+@section('admin')
+    <div class="fib">
+        <a class="fib-button hover-contrast emoji" href="{{ route('cpus.index', ['trashed' => 'with']) }}">📑
+            Все</a>
+            
+        <a class="fib-button hover-contrast emoji" href="{{ route('cpus.edit', compact('cpu')) }}">🖍️
+            Редактировать</a>
+
+        <form class="d-inline" action="{{ route('cpus.destroy', compact('cpu')) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="fib-button hover-accent emoji">
+                @if (isset($cpu->deleted_at))
+                    ♻️ Восстановить
+                @else
+                    🗑️ Удалить
+                @endif
+            </button>
+        </form>
+    </div>
+@endsection
+
 @section('content')
     <section class="pos-relative">
 
@@ -16,26 +38,6 @@
                             <h1 class="font-size-1 font-bold color-accent">{{ $cpu->name }}</h1>
                             <p class="font-size-5">{{ $cpu->commentary }}</p>
                             <p class="font-size-large emoji">{{ $cpu->emoji }}</p>
-
-                            @if (Auth::user() && Auth::user()->is_admin)
-                                <div class="fib">
-                                    <a class="fib-button hover-contrast emoji"
-                                        href="{{ route('cpus.edit', compact('cpu')) }}">🖍️ Редактировать</a>
-
-                                    <form class="d-inline" action="{{ route('cpus.destroy', compact('cpu')) }}"
-                                        method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="fib-button hover-accent emoji">
-                                            @if (isset($cpu->deleted_at))
-                                                ♻️ Восстановить
-                                            @else
-                                                ❌ Удалить
-                                            @endif
-                                        </button>
-                                    </form>
-                                </div>
-                            @endif
                         </div>
                     </div>
                 </div>

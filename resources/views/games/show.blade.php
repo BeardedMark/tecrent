@@ -7,6 +7,31 @@
     {{ $game->commentary }} системные требования для игры {{ $game->name }}
 @endsection
 
+@section('admin')
+    <div class="fib">
+        <a class="fib-button hover-contrast emoji" href="{{ route('games.index', ['trashed' => 'with']) }}">📑
+            Все</a>
+
+        <a class="fib-button hover-contrast emoji" href="{{ route('games.edit', compact('game')) }}">🖍️
+            Редактировать</a>
+
+        <a class="fib-button hover-contrast emoji" href="{{ route('requirements.create', ['game' => $game->id]) }}">➕ Добавить
+            системное требование</a>
+
+        <form class="d-inline" action="{{ route('games.destroy', compact('game')) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="fib-button hover-accent emoji">
+                @if (isset($game->deleted_at))
+                    ♻️ Восстановить
+                @else
+                    🗑️ Удалить
+                @endif
+            </button>
+        </form>
+    </div>
+@endsection
+
 @section('content')
     <section class="pos-relative" style="overflow: hidden">
         <img class="pos-absolute pos-wallpaper" src="{{ $game->imageUrl() }}">
@@ -35,26 +60,6 @@
                                     <a class="fib-button hover-contrast" href="#content">Подробности</a>
                                 @endif
                             </div>
-
-                            @if (Auth::user() && Auth::user()->is_admin)
-                                <div class="fib">
-                                    <a class="fib-button hover-contrast emoji"
-                                        href="{{ route('games.edit', compact('game')) }}">🖍️ Редактировать</a>
-
-                                    <form class="d-inline" action="{{ route('games.destroy', compact('game')) }}"
-                                        method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="fib-button hover-accent emoji">
-                                            @if (isset($game->deleted_at))
-                                                ♻️ Восстановить
-                                            @else
-                                                ❌ Удалить
-                                            @endif
-                                        </button>
-                                    </form>
-                                </div>
-                            @endif
                         </div>
                     </div>
 
@@ -67,6 +72,70 @@
             </div>
         </div>
     </section>
+
+    {{-- <section id="tags" class="bg-accent pos-relative">
+        <div class="container">
+            <div class="fib-p-13">
+                <div class="row">
+                    <div class="col">
+                        <div class="fib fib-gap-13 fib-center font-center color-main">
+                            <a href="#" class="font-size-4">#шутер</a>
+                            <a href="#" class="font-size-4">#экшон</a>
+                            <a href="#" class="font-size-4">#shooter</a>
+                            <a href="#" class="font-size-4">#action</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> --}}
+
+    @if ($game->trailer || $game->gameplay)
+        <section id="media">
+            <div class="container">
+                <div class="fib-section">
+                    <div class="row justify-content-center">
+                        @if ($game->trailer)
+                            <div class="col col-12 col-md-10 col-lg-8 col-xl-6">
+                                <div class="fib fib-col fib-gap-21 fib-center">
+                                    <h2 class="fib fib-col fib-gap-8 fib-center font-center">
+                                        <span class="font-size-1 font-bold">Трейлер игры</span>
+                                        <span class="font-size-5">{{ $game->name }}</span>
+                                    </h2>
+
+                                    <div class="col col-12">
+                                        <div style="aspect-ratio: 1920/1080;">
+                                            <iframe width="100%" height="100%"
+                                                src="https://www.youtube.com/embed/{{ $game->trailer }}?rel=0"
+                                                frameborder="0" allowfullscreen></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if ($game->gameplay)
+                            <div class="col col-12 col-md-10 col-lg-8 col-xl-6">
+                                <div class="fib fib-col fib-gap-21 fib-center">
+                                    <h2 class="fib fib-col fib-gap-8 fib-center font-center">
+                                        <span class="font-size-1 font-bold">Геймплей игры</span>
+                                        <span class="font-size-5">{{ $game->name }}</span>
+                                    </h2>
+
+                                    <div class="col col-12">
+                                        <div style="aspect-ratio: 1920/1080;">
+                                            <iframe width="100%" height="100%"
+                                                src="https://www.youtube.com/embed/{{ $game->gameplay }}?rel=0"
+                                                frameborder="0" allowfullscreen></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+        </section>
+    @endif
 
     @if ($game->description)
         <section id="description" class="bg-main">
@@ -82,16 +151,6 @@
                     </div>
 
                     <div class="row justify-content-center align-items-center">
-                        @if ($game->video)
-                            <div class="col col-12 col-md-10 col-lg-8 col-xl-6">
-                                <div class="fib fib-col fib-gap-8 font-center" style="aspect-ratio: 1920/1080;">
-                                    <iframe width="100%" height="100%"
-                                        src="https://www.youtube.com/embed/{{ $game->video }}?rel=0" frameborder="0"
-                                        allowfullscreen></iframe>
-                                </div>
-                            </div>
-                        @endif
-
                         <div class="col col-12 col-md-10 col-lg-8 col-xl-6">
                             <div class="fib fib-col fib-gap-8 fib-center font-center">
                                 {!! $game->description !!}
@@ -154,20 +213,19 @@
                     @component('requirements.components.list', ['requirements' => $game->requirements])
                     @endcomponent
 
-                    @if (Auth::check() && Auth::user()->is_admin)
+                    {{-- @if (Auth::check() && Auth::user()->is_admin)
                         <div class="row justify-content-center">
                             <div class="col col-auto">
                                 <a class="fib-button hover-accent emoji"
                                     href="{{ route('requirements.create', ['game' => $game->id]) }}">➕ Добавить</a>
                             </div>
                         </div>
-                    @endif
+                    @endif --}}
                 </div>
         </section>
     @endif
 
-
-    <section id="computers" class="bg-main">
+    <section id="computers">
         <div class="container">
             <div class="fib-section">
                 <div class="row justify-content-center">
@@ -185,7 +243,8 @@
                             @component('games.components.card', ['game' => $curGame])
                             @endcomponent
 
-                            <p class="font-size-6 font-center fib-p-21">Системные требования {{ $curGame->getTitle() }}</p>
+                            <p class="font-size-6 font-center fib-p-21">Системные требования {{ $curGame->getTitle() }}
+                            </p>
                         </div>
                     @endforeach
                 </div>
@@ -204,7 +263,7 @@
                 <div class="fib-section">
                     <div class="row">
                         <div class="col">
-                            <div class="fib fib-col fib-gap-8 fib-center font-center">
+                            <div class="fib fib-col fib-gap-8">
                                 {!! $game->content !!}
                             </div>
                         </div>
@@ -251,5 +310,25 @@
                 </div>
 
             </form>
+    </section>
+@endsection
+
+
+@section('anchors')
+    <section id="tags" class="bg-accent pos-relative">
+        <div class="container">
+            <div class="fib-p-13">
+                <div class="row">
+                    <div class="col">
+                        <div class="fib fib-gap-13 fib-center font-center color-main">
+                            <a href="#" class="font-size-4">#шутер</a>
+                            <a href="#" class="font-size-4">#экшон</a>
+                            <a href="#" class="font-size-4">#shooter</a>
+                            <a href="#" class="font-size-4">#action</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 @endsection

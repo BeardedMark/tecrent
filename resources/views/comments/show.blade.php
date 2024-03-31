@@ -4,28 +4,6 @@
     {{ $gpu->name }}
 @endsection
 
-@section('admin')
-    <div class="fib">
-        <a class="fib-button hover-contrast emoji" href="{{ route('gpus.index', ['trashed' => 'with']) }}">📑
-            Все</a>
-
-        <a class="fib-button hover-contrast emoji" href="{{ route('gpus.edit', compact('gpu')) }}">🖍️
-            Редактировать</a>
-
-        <form class="d-inline" action="{{ route('gpus.destroy', compact('gpu')) }}" method="POST">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="fib-button hover-accent emoji">
-                @if (isset($gpu->deleted_at))
-                    ♻️ Восстановить
-                @else
-                    🗑️ Удалить
-                @endif
-            </button>
-        </form>
-    </div>
-@endsection
-
 @section('content')
     <section class="pos-relative">
 
@@ -38,6 +16,26 @@
                             <p class="font-size-large">{{ $gpu->manufacturer }}</p>
                             <h1 class="font-size-1 font-bold color-accent">{{ $gpu->name }}</h1>
                             <p class="font-size-5">{{ $gpu->commentary }}</p>
+
+                            @if (Auth::user() && Auth::user()->is_admin)
+                                <div class="fib">
+                                    <a class="fib-button hover-contrast emoji"
+                                        href="{{ route('gpus.edit', compact('gpu')) }}">🖍️ Редактировать</a>
+
+                                    <form class="d-inline" action="{{ route('gpus.destroy', compact('gpu')) }}"
+                                        method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="fib-button hover-accent emoji">
+                                            @if (isset($gpu->deleted_at))
+                                                ♻️ Восстановить
+                                            @else
+                                                ❌ Удалить
+                                            @endif
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
                         </div>
                     </div>
 

@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('video')->nullable()->comment('Видео');
             $table->string('link')->nullable()->comment('Ссылка');
             
+            $table->string('trailer')->nullable()->comment('Трейлер');
+            $table->string('gameplay')->nullable()->comment('Геймплей');
             $table->string('autor')->nullable()->comment('Автор');
             $table->string('developer')->nullable()->comment('Разработчик');
             $table->string('publisher')->nullable()->comment('Издатель');
@@ -32,7 +34,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             
-            $table->unique(['name', 'autor', 'release'], 'unique_name_autor_release');
+            $table->unique(['name', 'release'], 'unique_name_release');
         });
     }
 

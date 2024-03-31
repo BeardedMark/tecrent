@@ -216,7 +216,7 @@
                             <div>
                                 <p class="font-size-4">Руководитель проекта</p>
                                 <p class="font-size-3 emoji color-accent">Синельщиков Марк Романович</p>
-                                <p class="font-size-6">Для обратной связи и работе компании</p>
+                                <p class="font-size-6">Для обратной связи и рабочим вопросам</p>
                             </div>
 
                             <a href="https://wa.me/79139208405" class="fib-button hover-accent">Связаться WhatsApp</a>

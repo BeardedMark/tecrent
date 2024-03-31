@@ -167,13 +167,13 @@
                         </a>
                     </div>
 
-                    <div class="col col-6 col-lg-3">
+                    {{-- <div class="col col-6 col-lg-3">
                         <a href="{{ route('posts.index') }}"
                             class="fib fib-col fib-p-21 fib-gap-8 fib-center hover font-center pos-h-100">
                             <p class="font-size-large color-accent">{{ count($posts) }}</p>
                             <p class="font-size-5 color-contrast">Постов</p>
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

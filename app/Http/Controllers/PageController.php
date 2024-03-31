@@ -14,11 +14,16 @@ class PageController extends Controller
 {
     public function main()
     {
+        $title = env('APP_NAME');
+        $description = 'Аренда игровых и офисных компьютеров';
+
         $data = $this->getData('main');
         $posts = Post::inRandomOrder()->take(3)->get();
         $games = Game::inRandomOrder()->take(4)->get();
         $computers = Computer::inRandomOrder()->take(4)->get();
-        return view('pages.main', compact('data', 'posts', 'games', 'computers'));
+
+        
+        return view('pages.main', compact('data', 'posts', 'games', 'computers', 'title', 'description'));
     }
 
     public function about()

@@ -49,7 +49,7 @@
                             </a>
                         </li>
 
-                        <li class="fib fib-gap-8 lock">
+                        {{-- <li class="fib fib-gap-8 lock">
                             <span class="emoji font-size-2">🎮</span><a href="{{ route('pages.contacts') }}"
                                 class="link fib fib-col">
                                 <span>Для геймеров</span>
@@ -63,7 +63,7 @@
                                 <span>Для бизнеса</span>
                                 <span class="font-size-6 fib-px-8">снабдим необходимой техникой для начала работы</span>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
 
@@ -120,15 +120,6 @@
                         </li>
 
                         <li class="fib fib-gap-8">
-                            <span class="emoji font-size-2">📰</span>
-                            <a href="{{ route('posts.index') }}" class="link fib fib-col">
-                                <span>Посты нашего блога</span>
-                                <span class="font-size-6 fib-px-8">полезная и интересная информация для
-                                    посетителей</span>
-                            </a>
-                        </li>
-
-                        <li class="fib fib-gap-8">
                             <span class="emoji font-size-2">📋</span>
                             <a href="{{ route('gpus.index') }}" class="link fib fib-col">
                                 <span>Видеокарты на сайте</span>
@@ -141,6 +132,15 @@
                             <a href="{{ route('cpus.index') }}" class="link fib fib-col">
                                 <span>Процессоры на сайте</span>
                                 <span class="font-size-6 fib-px-8">список процессоров, которые мы указываем</span>
+                            </a>
+                        </li>
+
+                        <li class="fib fib-gap-8 lock">
+                            <span class="emoji font-size-2">📰</span>
+                            <a href="#" class="link fib fib-col">
+                                <span>Посты нашего блога <span class="font-size-6 fib-px-8">(скоро)</span></span>
+                                <span class="font-size-6 fib-px-8">полезная и интересная информация для
+                                    посетителей</span>
                             </a>
                         </li>
                     </ul>

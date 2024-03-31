@@ -131,7 +131,9 @@ class Computer extends Model
     {
         $gamesId = [];
         foreach ($this->requirements() as $requirement) {
+            if ($requirement->game) {
             $gamesId[] = $requirement->game->id;
+            }
         }
         $gamesId = array_unique($gamesId);
         $games =  Game::whereIn('id', $gamesId);

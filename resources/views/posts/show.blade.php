@@ -59,6 +59,55 @@
         </section>
     @endif
     
+    <section id="comments">
+        <div class="container">
+            <div class="fib-section">
+                <div class="row">
+                    <div class="col">
+                        <div class="fib fib-col fib-gap-8 fib-center font-center">
+                            <h2 class="font-size-1 font-bold">Комментарии</h2>
+                            <p class="font-size-5">Возможно вам помогут другие статьи?</p>
+                        </div>
+                    </div>
+                </div>
+
+                @component('comments.components.list', ['comments' => $post->comments])
+                @endcomponent
+                
+                <div class="col col-6">
+                    <form class="fib fib-col fib-gap-21" method="POST" action="{{ route('comments.store') }}">
+                        @csrf
+                        <input name="commentable_type" value="App\Models\Post" hidden>
+                        <input name="commentable_id" value="{{ $post->id }}" hidden>
+    
+                        <div class="row">
+                            <div class="col">
+                                <div class="fib fib-col fib-gap-13">    
+                                    <div class="fib fib-col">
+                                        <label for="content">Сообщение</label>
+                                        <input type="text" id="content" name="content"
+                                            class="fib fib-p-8 bord-second bg-main pos-w-100"
+                                            required />
+    
+                                        <p class="font-size-6 color-second">название видеокарты бех производителя</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="row">
+                            <div class="col">
+                                <div class="fib fib-end">    
+                                    <input class="fib-button hover-contrast emoji" type="reset" value="⏮️ Сбросить">
+                                    <button type="submit" class="fib-button hover-accent emoji">✅ Создать</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </section>
+    
     <section id="content" class="">
         <div class="container">
             <div class="fib-section">

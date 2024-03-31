@@ -6,10 +6,9 @@ use App\Models\Game;
 use App\Models\Computer;
 use App\Models\Gpu;
 use App\Models\Cpu;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class GameController extends Controller
 {
@@ -30,8 +29,6 @@ class GameController extends Controller
             $title = 'Результаты поиска ' . $title;
             $description = 'Результаты поиска процессоров на основе введенных параметров';
         }
-
-        // $content = json_decode(file_get_contents(storage_path('content/games.json')), true);
 
         return view('games.index', compact('games', 'title', 'description', 'content'));
     }
@@ -107,6 +104,8 @@ class GameController extends Controller
             'video' => 'nullable|string|max:255',
 
             'autor' => 'nullable|string|max:255',
+            'trailer' => 'nullable|string|max:255',
+            'gameplay' => 'nullable|string|max:255',
             'developer' => 'nullable|string|max:255',
             'publisher' => 'nullable|string|max:255',
             'is_server' => 'nullable',
@@ -129,6 +128,12 @@ class GameController extends Controller
             'video.string' => 'Поле "Видео" должно быть строкой.',
             'video.max' => 'Поле "Видео" не должно превышать :max символов.',
 
+            'trailer.string' => 'Поле "Трейлер" должно быть строкой.',
+            'trailer.max' => 'Поле "Трейлер" не должно превышать :max символов.',
+
+            'gameplay.string' => 'Поле "Геймплей" должно быть строкой.',
+            'gameplay.max' => 'Поле "Геймплей" не должно превышать :max символов.',
+            
             'autor.string' => 'Поле "Автор" должно быть строкой.',
             'autor.max' => 'Поле "Автор" не должно превышать :max символов.',
 
@@ -191,10 +196,23 @@ class GameController extends Controller
     {
         $games = $query;
 
-        if (Auth::user() && Auth::user()->is_admin) {
-            $games->withTrashed();
-        }   
+        // if (Auth::user() && Auth::user()->is_admin) {
+        //     $games->withTrashed();
+        // }  
 
+        switch ($request->input('trashed')) {
+            case 'with':
+                $query->withTrashed();
+                break;
+
+            case 'only':
+                $query->onlyTrashed();
+                break;
+
+            case 'not':
+                $query->whereNull('deleted_at');
+                break;
+        }
         
         $fillable = $query->getModel()->getFillable();
 

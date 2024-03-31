@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -20,23 +22,29 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::all();
+
+        return view('comments.create', compact('users'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $commentableType, $commentableId)
+    public function store(Request $request)
     {
-        $commentable = $commentableType::findOrFail($commentableId);
+        $validatedData = $request->validate([
+            'content' => 'required|string',
+            'commentable_type' => 'required|string',
+            'commentable_id' => 'required|integer',
+        ]);
 
-        $this->authorize('create', Comment::class);
-
+        // Создание комментария
         $comment = new Comment();
-        $comment->user_id = auth()->user()->id;
-        $comment->content = $request->input('content');
-
-        $commentable->comments()->save($comment);
+        $comment->content = $validatedData['content'];
+        $comment->commentable_type = $validatedData['commentable_type'];
+        $comment->commentable_id = $validatedData['commentable_id'];
+        $comment->user_id = Auth::id();
+        $comment->save();
 
         return redirect()->back()->with('success', 'Comment added successfully.');
     }

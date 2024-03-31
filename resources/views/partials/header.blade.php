@@ -1,6 +1,5 @@
 @php
     $cartItems = session('cart', []);
-    // dd ($cartItems);
     $cartCount = count($cartItems) ? count($cartItems) : 0;
 @endphp
 
@@ -50,9 +49,11 @@
     </div>
 
     <div class="fib fib-col pos-w-100 pos-absolute color-main font-size-6">
-        
-        <div id="anchors" class="fib fib-center bg-contrast">
-        </div>
+        @if (Auth::user() && Auth::user()->is_admin)
+            <div class="fib fib-center bg-contrast">
+                @yield('admin')
+            </div>
+        @endif
 
         @if (Auth::user() && Auth::user()->is_admin && session('log'))
             <p class="fib-px-13 fib-py-8 bg-contrast font-center"><span class="emoji">⏺️</span> {{ session('log') }}

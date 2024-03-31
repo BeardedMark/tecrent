@@ -39,6 +39,8 @@ Route::redirect('/chat', 'https://crm.dnlmarket.ru/online/tecrent', 301)->name('
 Route::get('games/list',[GameController::class, 'list'])->name('games.list');
 Route::get('gpus/list',[GpuController::class, 'list'])->name('gpus.list');
 Route::get('cpus/list',[CpuController::class, 'list'])->name('cpus.list');
+// Route::post('/comments/{commentable}', [CommentController::class, 'store'])->name('comments.store');
+
 
 // Ресурсные страницы
 Route::resource('basket', BasketController::class);
@@ -46,8 +48,8 @@ Route::resource('computers', ComputerController::class);
 Route::resource('games', GameController::class);
 Route::resource('gpus', GpuController::class);
 Route::resource('cpus', CpuController::class);
-Route::resource('comments', CommentController::class);
-Route::resource('posts', PostController::class);
+// Route::resource('comments', CommentController::class);
+// Route::resource('posts', PostController::class);
 
 // Гостевые страницы
 Route::middleware(['guest'])->group(function () {
@@ -71,6 +73,8 @@ Route::middleware(['admin'])->group(function () {
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin',  [AdminController::class, 'dashboard'])->name('admin');
+    Route::get('/palette',  [AdminController::class, 'dashboard'])->name('palette');
+    Route::view('/palette', 'palette')->name('pages.palette');
     Route::resource('/users', UserController::class)->except(['show']);
     Route::resource('/content', ContentController::class);
     
@@ -79,7 +83,8 @@ Route::middleware(['admin'])->group(function () {
     Route::resource('games', GameController::class)->except(['show', 'index']);
     Route::resource('gpus', GpuController::class)->except(['show', 'index']);
     Route::resource('cpus', CpuController::class)->except(['show', 'index']);
-    Route::resource('posts', PostController::class)->except(['show', 'index']);
+    // Route::resource('posts', PostController::class)->except(['show', 'index']);
+    // Route::resource('comments', CommentController::class)->except(['show', 'index']);
 
     Route::resource('/tables', TableController::class);
     Route::prefix('/tables')->group(function () {
@@ -109,6 +114,7 @@ Route::post('/basket/send', [BasketController::class, 'send'])->name('basket.sen
 Route::post('/connector/discord/{subject}', [ConnectorController::class, 'sendDiscord'])->name('send.discord');
 
 Route::view('/any', 'main')->name('mail.feedback');
+// Route::view('/rosbank', 'rosbank');
 Route::get('/404', function () {
     abort(404);
 });

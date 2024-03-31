@@ -10,7 +10,7 @@
 
                 <div class="fib fib-col font-end w-100">
                     @foreach ($requirement->gpus as $gpu)
-                        <p class="font-size-4 color-accent">{{ $gpu->getTitle() }}</p>
+                        <a href="{{ route('gpus.show', $gpu) }}" class="link font-size-4">{{ $gpu->getTitle() }}</a>
                     @endforeach
                 </div>
             </div>
@@ -22,7 +22,7 @@
 
                 <div class="fib fib-col font-end w-100">
                     @foreach ($requirement->cpus as $cpu)
-                        <p class="font-size-4 color-accent">{{ $cpu->getTitle() }}</p>
+                        <a href="{{ route('cpus.show', $cpu) }}" class="link font-size-4">{{ $cpu->getTitle() }}</a>
                     @endforeach
                 </div>
             </div>
@@ -32,7 +32,7 @@
             <p class="font-size-6 w-100">Оперативная память</p>
 
             <div class="fib fib-col font-end w-100">
-                <p class="font-size-4 color-accent">{{ $requirement->ram_require }} Gb
+                <p class="font-size-4">{{ $requirement->ram_require }} Gb
                 </p>
             </div>
         </div>
@@ -41,7 +41,7 @@
             <p class="font-size-6 w-100">Место на диске</p>
 
             <div class="fib fib-col font-end w-100">
-                <p class="font-size-4 color-accent">{{ $requirement->drive_require }}
+                <p class="font-size-4">{{ $requirement->drive_require }}
                     Gb</p>
             </div>
         </div>

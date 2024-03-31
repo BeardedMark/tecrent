@@ -113,6 +113,28 @@
                                 </div>
 
                                 <div class="fib fib-col">
+                                    <label for="trailer">Трейлер</label>
+                                    <input type="text" id="trailer" name="trailer"
+                                        class="fib fib-p-8 bord-second bg-main pos-w-100"
+                                        value="{{ $game->trailer ?: '' }}" />
+
+                                    <p class="font-size-6 color-second">nullable|string|max:255 (идентификатор видео на
+                                        yputube, например mHDEDDrGYvo)
+                                    </p>
+                                </div>
+
+                                <div class="fib fib-col">
+                                    <label for="gameplay">Геймплей</label>
+                                    <input type="text" id="gameplay" name="gameplay"
+                                        class="fib fib-p-8 bord-second bg-main pos-w-100"
+                                        value="{{ $game->gameplay ?: '' }}" />
+
+                                    <p class="font-size-6 color-second">nullable|string|max:255 (идентификатор видео на
+                                        yputube, например mHDEDDrGYvo)
+                                    </p>
+                                </div>
+
+                                <div class="fib fib-col">
                                     <label for="is_server">Можно открыть сервер</label>
                                     <input class="fib-p-8 bord-second bg-main" type="checkbox" id="is_server"
                                         name="is_server" {{ $game->is_server ? 'checked' : '' }} value="1">
