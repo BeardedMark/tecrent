@@ -38,7 +38,7 @@
                             <div class="fib fib-col fib-gap-8">
                                 <div class="fib fib-col fib-gap-5">
                                     <input id="login" class="fib fib-p-13 bord-second bg-main font-center"
-                                        type="email" name="login" placeholder="логин" value="{{ old('login') }}"
+                                        type="text" name="login" placeholder="логин" value="{{ old('login') }}"
                                         required autofocus>
                                 </div>
 

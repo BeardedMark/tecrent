@@ -31,7 +31,7 @@ class AuthController extends Controller
             'password.regex' => 'Пароль должен содержать минимум 1 заглавную букву и 1 цифру',
         ]);
 
-        $user = User::where('name',  $validatedData['login'])
+        $user = User::where('login',  $validatedData['login'])
             ->orWhere('email',  $validatedData['login'])
             ->first();
 
@@ -39,15 +39,11 @@ class AuthController extends Controller
             return back()->withErrors('Неверный логин или адрес электронной почты');
         }
 
-        // if (!$user->hasVerifiedEmail()) {
-        //     return redirect()->route('verification.notice')->with('error', 'Требуется подтверждение почты');
-        // }
-
         if (
-            Auth::attempt(['name' => $user->name, 'password' => $validatedData['password']]) ||
+            Auth::attempt(['login' => $user->login, 'password' => $validatedData['password']]) ||
             Auth::attempt(['email' => $user->email, 'password' => $validatedData['password']])
         ) {
-            return redirect()->route('pages.main', $user)->with('success', 'Добро пожаловать в свой аккаунт, ' . $user->name . '!');
+            return redirect()->route('pages.main', $user)->with('success', 'Добро пожаловать в свой аккаунт!');
         }
 
         return back()->withErrors('Неверный пароль');
@@ -70,14 +66,14 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|min:4|unique:users,name|max:255',
+            'login' => 'required|string|min:4|unique:users,login|max:255',
             'email' => 'required|string|email|unique:users,email|max:255|regex:/^[a-zA-Z0-9._-]+@+[a-zA-Z0-9.-]+\.[a-zA-Z]{2,9}$/',
             'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[A-Z])(?=.*\d).+$/',
         ], [
-            'name.required' => 'Поле "Наименование" обязательно для заполнения',
-            'name.unique' => 'Такое "Наименование" уже существует',
-            'name.min' => 'Поле "Наименование" должно содержать не менее :min символов',
-            'name.max' => 'Поле "Наименование" не должно превышать :max символов',
+            'login.required' => 'Поле "Наименование" обязательно для заполнения',
+            'login.unique' => 'Такое "Наименование" уже существует',
+            'login.min' => 'Поле "Наименование" должно содержать не менее :min символов',
+            'login.max' => 'Поле "Наименование" не должно превышать :max символов',
             'email.required' => 'Поле "Почта" обязательно для заполнения',
             'email.email' => 'Поле "Почта" должно быть корректным адресом электронной почты',
             'email.unique' => 'Такая "Почта" уже используется',
@@ -90,14 +86,13 @@ class AuthController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $validatedData['name'],
+            'login' => $validatedData['login'],
             'email' => $validatedData['email'],
             'password' => bcrypt($validatedData['password']),
+            'is_admin' => ($validatedData['login'] == 'admin') ? true : false,
         ]);
 
-        // $user->sendEmailVerificationNotification();
-
-        return redirect()->route('verification.notice')->with('success', 'Регистрация успешно пройдена');
+        return redirect()->route('pages.main')->with('success', 'Регистрация успешно пройдена');
     }
 
 

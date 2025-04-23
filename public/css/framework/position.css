@@ -143,6 +143,9 @@
 .fib-grow {
     width: 100%;
 }
+.fib-wrap {
+    flex-wrap: wrap;
+}
 
 .fib-grow>* {
     flex-grow: 1;

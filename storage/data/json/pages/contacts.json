@@ -1,0 +1,65 @@
+{
+    "title": "Контакты Tecrent — как с нами связаться",
+    "description": "Позвоните, напишите или свяжитесь в мессенджерах. Мы на связи и готовы помочь",
+    "keywords": "контакты Tecrent, связаться, аренда компьютеров, Новосибирск, техподдержка",
+    "sections": [
+      {
+        "background": {
+          "image": "https://99px.ru/sstorage/53/2017/03/tmb_193188_6305.jpg",
+          "overlay": "black"
+        },
+        "size": 1,
+        "style": {
+          "color": "main"
+        },
+        "header": "Контакты компании",
+        "description": "Мы всегда на связи — выберите удобный способ общения"
+      },
+      {
+        "items": [
+          {
+            "icon": "ringer-volume--v1",
+            "title": "Телефон",
+            "description": "+7 (913) 920-84-05",
+            "link": "tel:+79139208405"
+          },
+          {
+            "icon": "new-post",
+            "title": "Почта",
+            "description": "sales@tecrent.ru",
+            "link": "mailto:sales@tecrent.ru"
+          },
+          {
+            "icon": "marker--v1",
+            "title": "Город",
+            "description": "Новосибирск",
+            "link": "#citys"
+          },
+          {
+            "icon": "whatsapp--v1",
+            "title": "WhatsApp",
+            "description": "Чат в WhatsApp",
+            "link": "https://wa.me/79139208405"
+          },
+          {
+            "icon": "telegram-app",
+            "title": "Telegram",
+            "description": "Связь в Telegram",
+            "link": "https://t.me/+79139208405"
+          }
+        ]
+      },
+      {
+        "id": "citys",
+        "background": {
+          "image": "storage/img/wallpapers/Screenshot_2.png",
+          "overlay": "accent"
+        },
+        "style": {
+          "color": "main"
+        },
+        "promo": "Новосибирск",
+        "content": "Бесплатно доставим и установим оборудование в черте города"
+      }
+    ]
+  }

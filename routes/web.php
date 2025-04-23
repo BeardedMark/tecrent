@@ -2,17 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
-use App\Http\Controllers\GameController;
-use App\Http\Controllers\ComputerController;
-use App\Http\Controllers\BasketController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\GpuController;
-use App\Http\Controllers\CpuController;
-use App\Http\Controllers\RequirementController;
-use App\Http\Controllers\CommentController;
+use App\Http\Controllers\OfferController;
 use App\Http\Controllers\PostController;
 
 use App\Http\Controllers\DataBase\AuthController;
@@ -22,34 +16,25 @@ use App\Http\Controllers\DataBase\ContentController;
 use App\Http\Controllers\DataBase\BackupController;
 use App\Http\Controllers\DataBase\ConnectorController;
 
-
 Route::get('/',[PageController::class, 'main'])->name('pages.main');
 Route::get('about',[PageController::class, 'about'])->name('pages.about');
 Route::get('contacts',[PageController::class, 'contacts'])->name('pages.contacts');
 Route::get('work',[PageController::class, 'work'])->name('pages.work');
-Route::get('assembly',[PageController::class, 'assembly'])->name('pages.assembly');
-Route::get('servers',[PageController::class, 'servers'])->name('pages.servers');
 Route::get('menu',[PageController::class, 'menu'])->name('pages.menu');
-Route::get('services',[PageController::class, 'services'])->name('pages.services');
+Route::get('business',[PageController::class, 'business'])->name('pages.business');
+Route::get('gamers',[PageController::class, 'gamers'])->name('pages.gamers');
+Route::get('policy',[PageController::class, 'policy'])->name('pages.policy');
+
+Route::get('/offers/search',[OfferController::class, 'search'])->name('offers.search');
+Route::patch('/offers/{id}/toggle-main', [OfferController::class, 'toggleMain'])->name('offers.toggleMain');
+Route::patch('/offers/{id}/toggle-favorite', [OfferController::class, 'toggleFavorite'])->name('offers.toggleFavorite');
+Route::patch('/offers/{id}/toggle-published', [OfferController::class, 'togglePublished'])->name('offers.togglePublished');
+Route::patch('/offers/{id}/toggle-archived', [OfferController::class, 'toggleArchived'])->name('offers.toggleArchived');
+Route::resource('offers', OfferController::class);
 
 // Редиеркты
-Route::redirect('/chat', 'https://crm.dnlmarket.ru/online/tecrent', 301)->name('chat');
-
-// Компоненты по API
-Route::get('games/list',[GameController::class, 'list'])->name('games.list');
-Route::get('gpus/list',[GpuController::class, 'list'])->name('gpus.list');
-Route::get('cpus/list',[CpuController::class, 'list'])->name('cpus.list');
-// Route::post('/comments/{commentable}', [CommentController::class, 'store'])->name('comments.store');
-
-
-// Ресурсные страницы
-Route::resource('basket', BasketController::class);
-Route::resource('computers', ComputerController::class);
-Route::resource('games', GameController::class);
-Route::resource('gpus', GpuController::class);
-Route::resource('cpus', CpuController::class);
-// Route::resource('comments', CommentController::class);
-// Route::resource('posts', PostController::class);
+Route::redirect('/whatsapp', 'https://wa.me/79139208405', 301)->name('chat.whatsapp');
+Route::redirect('/telegram', 'https://t.me/+79139208405', 301)->name('chat.telegram');
 
 // Гостевые страницы
 Route::middleware(['guest'])->group(function () {
@@ -73,18 +58,8 @@ Route::middleware(['admin'])->group(function () {
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin',  [AdminController::class, 'dashboard'])->name('admin');
-    Route::get('/palette',  [AdminController::class, 'dashboard'])->name('palette');
-    Route::view('/palette', 'palette')->name('pages.palette');
     Route::resource('/users', UserController::class)->except(['show']);
     Route::resource('/content', ContentController::class);
-    
-    Route::resource('requirements', RequirementController::class);
-    Route::resource('computers', ComputerController::class)->except(['show', 'index']);
-    Route::resource('games', GameController::class)->except(['show', 'index']);
-    Route::resource('gpus', GpuController::class)->except(['show', 'index']);
-    Route::resource('cpus', CpuController::class)->except(['show', 'index']);
-    // Route::resource('posts', PostController::class)->except(['show', 'index']);
-    // Route::resource('comments', CommentController::class)->except(['show', 'index']);
 
     Route::resource('/tables', TableController::class);
     Route::prefix('/tables')->group(function () {
@@ -103,20 +78,6 @@ Route::middleware(['admin'])->group(function () {
             Route::get('/{id}', [ItemController::class, 'show'])->name('items.show');
         });
     });
-});
-
-// Почтовые сообщения
-// Route::post('/mail/sendCart', 'CartController@sendCart')->name('cart.send');
-// Route::post('/mail/feedback', 'MailController@feedback')->name('mail.feedback');
-
-Route::post('/basket/send', [BasketController::class, 'send'])->name('basket.send');
-
-Route::post('/connector/discord/{subject}', [ConnectorController::class, 'sendDiscord'])->name('send.discord');
-
-Route::view('/any', 'main')->name('mail.feedback');
-// Route::view('/rosbank', 'rosbank');
-Route::get('/404', function () {
-    abort(404);
 });
 
 Route::get('/sitemap', function () {
@@ -143,7 +104,7 @@ Route::get('/sitemap', function () {
     $filePath ='sitemap.xml';
 
     File::put($filePath, $xml);
-    
+
     return response($xml, 200, [
         'Content-Type' => 'application/xml'
     ]);

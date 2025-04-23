@@ -1,0 +1,97 @@
+{
+    "title": "Карта сайта Tecrent — навигация и структура",
+    "description": "Быстрый доступ ко всем разделам сайта: аренда, услуги, информация о компании, контакты и каталог",
+    "keywords": "карта сайта, меню, Tecrent, аренда техники, структура сайта, навигация",
+    "sections": [
+      {
+        "size": 1,
+        "header": "Главное меню",
+        "description": "Быстрый доступ к основным страницам",
+        "items": [
+          {
+            "icon": "home--v1",
+            "header": "Главная страница",
+            "link": "/"
+          },
+          {
+            "icon": "about",
+            "header": "О нас и проекте",
+            "link": "about"
+          },
+          {
+            "icon": "faq",
+            "header": "Как мы работаем",
+            "link": "work"
+          },
+          {
+            "icon": "contacts",
+            "header": "Наши контакты",
+            "link": "contacts"
+          }
+        ]
+      },
+      {
+        "background": {
+          "color": "main"
+        },
+        "items": [
+          {
+            "icon": "business--v1",
+            "header": "Юридическим лицам",
+            "link": "business"
+          },
+          {
+            "icon": "controller",
+            "header": "Для геймеров",
+            "link": "gamers"
+          }
+        ]
+      },
+      {
+        "header": "Каталог предложений",
+        "description": "Всё, что вы можете взять в аренду или заказать у нас",
+        "items": [
+          {
+            "icon": "overtime",
+            "title": "Аренда",
+            "link": "/offers/search?type=Аренда"
+          },
+          {
+            "icon": "price-tag-usd",
+            "title": "Товары",
+            "link": "/offers/search?type=Товары"
+          },
+          {
+            "icon": "handshake-heart",
+            "title": "Услуги",
+            "link": "/offers/search?type=Услуги"
+          }
+        ],
+        "link": {
+          "label": "Весь каталог",
+          "style": "accent",
+          "href": "offers"
+        }
+      },
+      {
+        "background": {
+          "color": "main"
+        },
+        "items": [
+          {
+            "icon": "user--v1",
+            "header": "Личный кабинет",
+            "link": "login"
+          },
+          {
+            "icon": "winner-document",
+            "header": "Политика сайта",
+            "link": "policy"
+          }
+        ]
+      },
+      {
+        "content": "Если вы не нашли нужную страницу — воспользуйтесь поиском или свяжитесь с нами. Мы поможем!"
+      }
+    ]
+  }

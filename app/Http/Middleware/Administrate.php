@@ -18,8 +18,8 @@ class Administrate
         }
 
         if (!auth()->user()->is_admin) {
-            // return redirect()->back();
-            abort(403, 'Доступ запрещен. Вы не администратор.');
+            return redirect()->back()->withErrors('Неверный логин или адрес электронной почты');
+            // abort(403, 'Доступ запрещен. Вы не администратор.');
         }
 
         return $next($request);

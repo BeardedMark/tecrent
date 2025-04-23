@@ -11,7 +11,7 @@
                         <div class="fib fib-col fib-gap-8 fib-center font-center">
                             <h1 class="font-size-1 font-bold">Страница не найдена</h1>
                             <p class="font-size-5">Извините, но мы не можем найти страницу, которую вы ищете. Попробуйте вернуться на главную страницу и найти нужную информацию там.</p>
-                            <p class="font-size-large emoji">🫥</p>
+                            <img width="96" height="96" src="https://img.icons8.com/fluency-systems-regular/96/333333/page-not-found.png" alt="page-not-found"/>
                         </div>
                     </div>
                 </div>

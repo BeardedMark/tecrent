@@ -1,42 +1,132 @@
 /* root */
 .t-brand {
-  color: var(--brand);
-}
-.form-feedback {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.form-feedback-button {
-  margin-top: 32px;
-  display: flex;
-  justify-content: center;
+    color: var(--brand);
 }
 
-.about-newspaper{
-  text-align: justify;
+.form-feedback {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-feedback-button {
+    margin-top: 32px;
+    display: flex;
+    justify-content: center;
+}
+
+.about-newspaper {
+    text-align: justify;
 }
 
 .contact-frame {
-  padding: 20px;
-  height: 100%;
-  border: 1px solid transparent;
+    padding: 20px;
+    height: 100%;
+    border: 1px solid transparent;
 }
+
 .contact-frame:hover {
-  background-color: var(--accent);
-  color: var(--main);
+    background-color: var(--accent);
+    color: var(--main);
 }
+
 .contact-ico {
-  font-size: 36px;
-  text-align: center;
-  font-family: "Noto Emoji", sans-serif;
-  user-select: none;
+    font-size: 36px;
+    text-align: center;
+    font-family: "Noto Emoji", sans-serif;
+    user-select: none;
 }
+
 .contact-title {
-  font-size: 28px;
-  text-align: center;
+    font-size: 28px;
+    text-align: center;
 }
+
 .contact-description {
-  font-size: 12px;
-  text-align: center;
+    font-size: 12px;
+    text-align: center;
+}
+
+.hover-icon {
+    transition: .3s;
+}
+
+.hover-icon:hover {
+    transform: translateY(-3px);
+}
+
+.hover-link {
+    transition: .3s;
+}
+
+.hover-link:hover {
+    color: var(--accent);
+}
+
+.hover-scale {
+    transition: .3s;
+}
+
+.hover-scale:hover {
+    transform: scale(1.1);
+}
+
+.hover-opacity {
+    transition: .3s;
+    opacity: .3;
+}
+
+.hover-opacity:hover {
+    opacity: 1;
+}
+
+.hover-fill::after {
+    display: block;
+    content: '';
+    position: absolute;
+}
+
+.hover-fill:hover::after {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.real-shadow {
+    box-shadow:
+        0px 2.07px 2.21px 0px rgba(46, 60, 80, 0.01),
+        0px 4.98px 5.32px 0px rgba(46, 60, 80, 0.02),
+        0px 9.39px 10.01px 0px rgba(46, 60, 80, 0.03),
+        0px 16.75px 17.86px 0px rgba(46, 60, 80, 0.04),
+        0px 31.33px 33.42px 0px rgba(46, 60, 80, 0.05),
+        0px 75px 80px 0px rgba(46, 60, 80, 0.07);
+}
+
+.real-shadow-up {
+    box-shadow:
+        0px -2.07px 2.21px 0px rgba(46, 60, 80, 0.01),
+        0px -4.98px 5.32px 0px rgba(46, 60, 80, 0.02),
+        0px -9.39px 10.01px 0px rgba(46, 60, 80, 0.03),
+        0px -16.75px 17.86px 0px rgba(46, 60, 80, 0.04),
+        0px -31.33px 33.42px 0px rgba(46, 60, 80, 0.05),
+        0px 75px 80px 0px rgba(46, 60, 80, 0.07);
+}
+
+.pointer-none {
+    pointer-events: none;
+}
+
+.pointer-auto {
+    pointer-events: auto;
+}
+
+.font-through {
+    text-decoration: line-through;
+}
+
+.separator {
+    flex-grow: 1;
+    border-bottom: 1px dotted #000;
+    margin: 0 10px;
 }
